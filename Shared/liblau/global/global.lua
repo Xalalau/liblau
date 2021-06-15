@@ -13,32 +13,24 @@ SERVER = Server and true
     Return:
         bool
 ]]
-local function is(var, checkType, checkFields)
+local function is_checktype(var, checkType)
     if not var or not checkType or type(checkType) ~= "string" then return false end
-
-    if checkFields then
-        if type(checkFields) == "table" then
-            for _,field in ipairs(checkFields) do
-                if not var[field] then
-                    return false
-                end
-            end
-        else
-            return false
-        end
-    end
-
     return type(var) == checkType or false
 end
 
-function isbool(var) return is(var, "boolean") end
-function isfunction(var) return is(var, "function") end
-function isnumber(var) return is(var, "number") end
-function isrotator(var) return is(var, "table", { "Pitch", "Yall", "Roll", "RotateVector" }) end
-function isstring(var) return is(var, "string") end
-function istable(var) return is(var, "table") and not isvector2d(var) and not isvector(var) and not isrotator(var) end
-function isvector(var) return is(var, "table", { "X", "Y", "Z", "Distance" }) end
-function isvector2d(var) return is(var, "table", { "X", "Y" }) and not var["Z"] end
+local function is_checkmeta(var, checkMeta)
+    if not var or not checkMeta or not istable(var) then return false end
+    return getmetatable(var) == checkMeta or false
+end
+
+function isbool(var) return is_checktype(var, "boolean") end
+function isfunction(var) return is_checktype(var, "function") end
+function isnumber(var) return is_checktype(var, "number") end
+function isrotator(var) return is_checkmeta(var, Rotator) end
+function isstring(var) return is_checktype(var, "string") end
+function istable(var) return is_checktype(var, "table") end
+function isvector(var) return is_checkmeta(var, Vector) end
+function isvector2d(var) return is_checkmeta(var, Vector2D) end
 
 --[[
     Make print accept multiple arguments (detour)
