@@ -1,0 +1,73 @@
+--[[
+    Check if the table has a given value
+
+    Arguments:
+        table tab    = The table where to search
+        string value = The value to be found
+
+    Return:
+        bool
+]]
+function table.hasvalue(tab, value)
+    if not value then return false end
+
+    for k,v in pairs(tab) do
+        if v == value then return true end
+    end
+
+    return false
+end
+
+--[[
+    Safely prints a entire table to the console
+
+    Arguments:
+        table tab      = The table to convert
+        string tabName = A name to identify the table
+
+    Return:
+]]
+function table.print(tab, tabName)
+    if not tab then return end
+
+    local lines = string.getlines(table.tostring(tab, tabName))
+
+    for k,v in ipairs(lines) do
+        print(v)
+    end
+end
+
+--[[
+    Covert a table into a string
+
+    Arguments:
+        table tab      = The table to convert
+        string tabName = A name to identify the table
+
+        str and indent are for internal use
+
+    Return:
+        string str = The converted table
+        nil
+]]
+function table.tostring(tab, tabName, str, indent)
+    if not tab then return end
+
+    if not str then str = (tabName or "Table") .. " = {\n" end
+
+    local lastIndent = indent or ""
+    indent = "    " .. (indent or "")
+
+    for k,v in pairs(tab) do
+        if istable(v) then
+            str = str .. indent ..  tostring(k) .. " = {\n"
+            str = table.tostring(v, tabName, str, indent)
+        else
+            str = str .. indent .. tostring(k) .. " = " .. tostring(v) .. "\n"
+        end
+    end
+
+    str = str .. lastIndent .. "}\n"
+
+    return str
+end
