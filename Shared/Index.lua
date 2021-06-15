@@ -8,7 +8,7 @@ LL = {
             [number index] = {
                 [string scope] = {
                     string path = relative file path,
-                    number time = file creation time
+                    (Server) number time = file creation time
                 }
             },
             ...
@@ -94,9 +94,13 @@ function LL:ReadFolder(addonPath, packageName, currentScope)
 
                 -- Store the file path and file creation time
                 if scope then
-                    local luaFile = File("Packages/" .. packageName .. "/" .. path)
-                    table.insert(LL.read[packageName][addonPath][scope], { path = path, time = luaFile:Time() })
-                    luaFile:Close()
+                    if SERVER then
+                        local luaFile = File("Packages/" .. packageName .. "/" .. path)
+                        table.insert(LL.read[packageName][addonPath][scope], { path = path, time = luaFile:Time() })
+                        luaFile:Close()
+                    else
+                        table.insert(LL.read[packageName][addonPath][scope], { path = path })
+                    end
                 end
             end
         end
