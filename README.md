@@ -11,7 +11,7 @@ For singleplayer and multiplayer.
 ## Usage Instructions
 
 ### 1) Download
-> Obviously you'll need to download the lib and place it in your Packages folder on your server before anything.
+> Obviously you'll need to download the lib and place it in your Packages folder on your server before anything. The folder name must be "liblau".
 
 ### 2) Initialize liblau to access its functions
 > Now just include the code in another package and start using the custom functions.
@@ -56,42 +56,42 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | Function
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | LL:GetCallInfo
-![img](https://i.imgur.com/jsK5p2b.png) | LL:ReadFolder
-![img](https://i.imgur.com/jsK5p2b.png) | LL:RequireFolder
-![img](https://i.imgur.com/0QDsDU6.png) | LL:SetLiveReloading
+![img](https://i.imgur.com/jsK5p2b.png) | [LL:GetCallInfo](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [LL:ReadFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [LL:RequireFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
+![img](https://i.imgur.com/0QDsDU6.png) | [LL:SetLiveReloading](https://github.com/Xalalau/liblau/blob/master/Server/Index.lua)
 
 <br/>
 
 :white_medium_small_square: | Function
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | isbool
-![img](https://i.imgur.com/jsK5p2b.png) | isfunction
-![img](https://i.imgur.com/jsK5p2b.png) | isnumber
-![img](https://i.imgur.com/jsK5p2b.png) | isrotator
-![img](https://i.imgur.com/jsK5p2b.png) | isstring
-![img](https://i.imgur.com/jsK5p2b.png) | istable
-![img](https://i.imgur.com/jsK5p2b.png) | isvector
-![img](https://i.imgur.com/jsK5p2b.png) | isvector2d
+![img](https://i.imgur.com/jsK5p2b.png) | [isbool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [isfunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [isnumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [isrotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [isstring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [istable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [isvector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [isvector2d](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 
 <br/>
 
 :white_medium_small_square: | Function
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | print
+![img](https://i.imgur.com/jsK5p2b.png) | [print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 
 <br/>
 
 :white_medium_small_square: | Function
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | string.getextension
-![img](https://i.imgur.com/jsK5p2b.png) | string.getlines
-![img](https://i.imgur.com/jsK5p2b.png) | string.split
+![img](https://i.imgur.com/jsK5p2b.png) | [string.getextension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.getlines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.split](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 
 <br/>
 
 :white_medium_small_square: | Function
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | table.hasvalue
-![img](https://i.imgur.com/jsK5p2b.png) | table.print
-![img](https://i.imgur.com/jsK5p2b.png) | table.tostring
+![img](https://i.imgur.com/jsK5p2b.png) | [table.hasvalue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.tostring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
