@@ -8,6 +8,8 @@ A Nano's World package that consists of:
 
 For singleplayer and multiplayer.
 
+Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see an example of real usage.
+
 ## Usage Instructions
 
 ### 1) Download
