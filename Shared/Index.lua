@@ -28,14 +28,11 @@ LL = {
         nil
 
     Return:
-        string tbl[1] = The calling package name
-        string tbl[2] = The calling scope
-        string file   = The calling file
+        string tbl[1] = The calling package name; string tbl[2] = The calling scope; string file = The calling file
 ]]
-function LL:GetCallInfo()
+function LL:GetCallInfo(upThreads)
     local tbl, i = {}, 0
-
-    local file = debug.getinfo(3).source
+    local file = debug.getinfo(upThreads).source
 
     for info in file:gsub("\\", "/"):gmatch("([^/]+)") do
         i = i + 1
@@ -134,8 +131,9 @@ function LL:RequireFolder(addonPath, listFiles)
     addonPath:gsub("/", "")
     addonPath:gsub("\\", "")
 
-    local packageName, currentScope = self.GetCallInfo()
-
+    -- Get call info
+    local packageName, currentScope = self:GetCallInfo(3)
+    
     -- Set package title (once)
     local title = not self.loaded[packageName] and packageName
 

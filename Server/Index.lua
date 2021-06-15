@@ -28,7 +28,7 @@ function LL:SetLiveReloading(scope, path, packageName)
     end
 
     local title
-    packageName = packageName or self.GetCallInfo()
+    packageName = packageName or self:GetCallInfo()
 
     -- Remove folder bars
     path:gsub("/", "")
