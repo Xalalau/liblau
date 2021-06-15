@@ -8,9 +8,9 @@ A Nano's World package that consists of:
 
 For singleplayer and multiplayer.
 
-Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see an example of real usage.
-
 ## Usage Instructions
+
+Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see an example of real usage.
 
 ### 1) Download
 > Obviously you'll need to download the lib and place it in your Packages folder on your server before anything. The folder name must be "liblau".
