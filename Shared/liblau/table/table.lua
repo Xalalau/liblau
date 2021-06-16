@@ -22,15 +22,15 @@ end
     Safely prints a entire table to the console
 
     Arguments:
-        table tab      = The table to convert
-        string tabName = A name to identify the table
+        table tab       = The table to convert
+        string tab_name = A name to identify the table
 
     Return:
 ]]
-function table.Print(tab, tabName)
+function table.Print(tab, tab_name)
     if not tab then return end
 
-    local lines = string.GetLines(table.ToString(tab, tabName))
+    local lines = string.GetLines(table.ToString(tab, tab_name))
 
     for k,v in ipairs(lines) do
         print(v)
@@ -41,8 +41,8 @@ end
     Covert a table into a string
 
     Arguments:
-        table tab      = The table to convert
-        string tabName = A name to identify the table
+        table tab       = The table to convert
+        string tab_name = A name to identify the table
 
         str and indent are for internal use
 
@@ -50,24 +50,24 @@ end
         string str = The converted table
         nil
 ]]
-function table.ToString(tab, tabName, str, indent)
+function table.ToString(tab, tab_name, str, indent)
     if not tab then return end
 
-    if not str then str = (tabName or "Table") .. " = {\n" end
+    if not str then str = (tab_name or "Table") .. " = {\n" end
 
-    local lastIndent = indent or ""
+    local last_indent = indent or ""
     indent = "    " .. (indent or "")
 
     for k,v in pairs(tab) do
         if IsTable(v) then
             str = str .. indent ..  tostring(k) .. " = {\n"
-            str = table.ToString(v, tabName, str, indent)
+            str = table.ToString(v, tab_name, str, indent)
         else
             str = str .. indent .. tostring(k) .. " = " .. tostring(v) .. "\n"
         end
     end
 
-    str = str .. lastIndent .. "}\n"
+    str = str .. last_indent .. "}\n"
 
     return str
 end

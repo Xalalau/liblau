@@ -14,10 +14,10 @@ Bind = {}
 ]]
 function Bind:Add(key_name, target, extra)
     if key_name and target and not extra then
-        local targetAux = ConCommand:Get(target) or _G[target]
+        local target_aux = ConCommand:Get(target) or _G[target]
 
-        if targetAux then
-            self[string.upper(key_name)] = targetAux
+        if target_aux then
+            self[string.upper(key_name)] = target_aux
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
         end

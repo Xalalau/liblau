@@ -25,14 +25,14 @@ LL = {
     This function is intended to work only within this file
 
     Arguments:
-        nil
+        up_threads = The amount of call levels to go up
 
     Return:
         string tbl[1] = The calling package name; string tbl[2] = The calling scope; string file = The calling file
 ]]
-function LL:GetCallInfo(upThreads)
+function LL:GetCallInfo(up_threads)
     local tbl, i = {}, 0
-    local file = debug.getinfo(upThreads).source
+    local file = debug.getinfo(up_threads).source
 
     for info in file:gsub("\\", "/"):gmatch("([^/]+)") do
         i = i + 1
@@ -47,22 +47,22 @@ end
     Populate a entry in LL.read folder
 
     Arguments:
-        string addonPath    = The relative target addon path in any scope
-        string packageName  = The calling package name
-        string currentScope = The calling scope
+        string addon_path    = The relative target addon path in any scope
+        string package_name  = The calling package name
+        string current_scope = The calling scope
 
     Return:
         nil
 ]]
-function LL:ReadFolder(addonPath, packageName, currentScope)
+function LL:ReadFolder(addon_path, package_name, current_scope)
     -- Init files structure
-    if not LL.read[packageName] then
-        LL.read[packageName] = {}
+    if not LL.read[package_name] then
+        LL.read[package_name] = {}
     end
 
-    if not LL.read[packageName][addonPath] then
-        LL.read[packageName] = {
-            [addonPath] = {
+    if not LL.read[package_name][addon_path] then
+        LL.read[package_name] = {
+            [addon_path] = {
                 ["Shared"] = {},
                 ["Server"] = {},
                 ["Client"] = {}
@@ -76,8 +76,8 @@ function LL:ReadFolder(addonPath, packageName, currentScope)
     for _,path in ipairs(Package:GetFiles()) do
         -- Filter Lua files
         if string.sub(path, -4, -1) == ".lua" then
-            -- Filter addonPath files
-            if addonPath == "" or string.find(path, addonPath .. "/") then
+            -- Filter addon_path files
+            if addon_path == "" or string.find(path, addon_path .. "/") then
                 local scope 
 
                 -- Get the current file scope
@@ -92,11 +92,11 @@ function LL:ReadFolder(addonPath, packageName, currentScope)
                 -- Store the file path and file creation time
                 if scope then
                     if SERVER then
-                        local luaFile = File("Packages/" .. packageName .. "/" .. path)
-                        table.insert(LL.read[packageName][addonPath][scope], { path = path, time = luaFile:Time() })
-                        luaFile:Close()
+                        local lua_file = File("Packages/" .. package_name .. "/" .. path)
+                        table.insert(LL.read[package_name][addon_path][scope], { path = path, time = lua_file:Time() })
+                        lua_file:Close()
                     else
-                        table.insert(LL.read[packageName][addonPath][scope], { path = path })
+                        table.insert(LL.read[package_name][addon_path][scope], { path = path })
                     end
                 end
             end
@@ -107,7 +107,7 @@ end
 --[[
     Require lua files from "Package/Scope/MyAddon" folder
 
-    To load files from a scope (Shared/Server/Client) just call LL:RequireFolder(addonPath) in the respective Index.lua
+    To load files from a scope (Shared/Server/Client) just call LL:RequireFolder(addon_path) in the respective Index.lua
 
     In addition, internal dependencies must also be structured in folders for everything to work well. e.g.
 
@@ -118,61 +118,61 @@ end
     So iuselibA.lua and ialsouselibA.lua will load after libA.lua and access its global functions and variables
 
     Arguments:
-        string addonPath = The relative target addon path in any scope
-        bool   listFiles = Show all the loaded files for a detailed overview
+        string addon_path = The relative target addon path in any scope
+        bool   list_files = Show all the loaded files for a detailed overview
 
     Return:
         nil
 ]]
-function LL:RequireFolder(addonPath, listFiles)
-    if not addonPath then return end
+function LL:RequireFolder(addon_path, list_files)
+    if not addon_path then return end
 
     -- Remove folder bars
-    addonPath:gsub("/", "")
-    addonPath:gsub("\\", "")
+    addon_path:gsub("/", "")
+    addon_path:gsub("\\", "")
 
     -- Get call info
-    local packageName, currentScope = self:GetCallInfo(3)
+    local package_name, current_scope = self:GetCallInfo(3)
     
     -- Set package title (once)
-    local title = not self.loaded[packageName] and packageName
+    local title = not self.loaded[package_name] and package_name
 
     -- Read folder
-    self:ReadFolder(addonPath, packageName, currentScope)
+    self:ReadFolder(addon_path, package_name, current_scope)
 
     -- Prepare / Check the LL.loaded table
-    if not self.loaded[packageName] then
-        self.loaded[packageName] = {}
+    if not self.loaded[package_name] then
+        self.loaded[package_name] = {}
     end
 
-    if not self.loaded[packageName][addonPath] then
-        self.loaded[packageName][addonPath] = {}
+    if not self.loaded[package_name][addon_path] then
+        self.loaded[package_name][addon_path] = {}
     end
 
-    if not self.loaded[packageName][addonPath][currentScope] then
-        self.loaded[packageName][addonPath][currentScope] = self.read[packageName][addonPath][currentScope]
+    if not self.loaded[package_name][addon_path][current_scope] then
+        self.loaded[package_name][addon_path][current_scope] = self.read[package_name][addon_path][current_scope]
     else
         return
     end
 
     -- Print the package name
     if title then
-        Package:Warn("# Loading - " .. packageName)
+        Package:Warn("# Loading - " .. package_name)
     end
 
-    for _,info in ipairs(self.loaded[packageName][addonPath][currentScope]) do
+    for _,info in ipairs(self.loaded[package_name][addon_path][current_scope]) do
         -- Require Lua file
         Package:Require(string.sub(info.path, 7, -1))
 
         -- Print message (file)
-        if listFiles then
-            Package:Log("| " .. currentScope .. "/" .. info.path)
+        if list_files then
+            Package:Log("| " .. current_scope .. "/" .. info.path)
         end
     end
 
     -- Print message (folder)
-    if not listFiles then
-        Package:Log("| " .. currentScope .. "/" .. addonPath .. "/*")
+    if not list_files then
+        Package:Log("| " .. current_scope .. "/" .. addon_path .. "/*")
     end
 end
 
