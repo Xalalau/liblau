@@ -78,15 +78,6 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | LibLau
------------- | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [LL:GetCallInfo](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [LL:ReadFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [LL:RequireFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
-![img](https://i.imgur.com/0QDsDU6.png) | [LL:SetLiveReloading](https://github.com/Xalalau/liblau/blob/master/Server/Index.lua)
-
-<br/>
-
 :white_medium_small_square: | Global
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [isbool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
@@ -100,18 +91,27 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
+:white_medium_small_square: | Global - Events
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
+
+<br/>
+
+:white_medium_small_square: | LibLau
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [LL:GetCallInfo](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [LL:ReadFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [LL:RequireFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
+![img](https://i.imgur.com/0QDsDU6.png) | [LL:SetLiveReloading](https://github.com/Xalalau/liblau/blob/master/Server/Index.lua)
+
+<br/>
+
 :white_medium_small_square: | string
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.getextension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.getlines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-
-<br/>
-
-:white_medium_small_square: | Global - Events
------------- | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
 
 <br/>
 
