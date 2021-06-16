@@ -32,8 +32,8 @@ Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see a
 >
 > If you want to do so, the files will be loaded from the most superficial folder layers to the deepest ones, following the alphabetical order. This means you can build code dependencies through the folder hierarchy. It looks like this:
 > 
-> - /Server/MyStuff/LibA.lua
-> - /Server/MyStuff/Subfolder/ICanAccessLibAGlobalThings.lua
+> - /Server/MyStuff/Lib1.lua
+> - /Server/MyStuff/Subfolder/ICanAccessLib1GlobalThings.lua
 
 1. Create your Lua files like ``Scope/MyAddon/mycode.lua``. e.g _Client/FlyingCars/tothemoon.lua_
 1. Open ``Scope/Index.lua``. e.g. _Client/Index.lua_
@@ -80,14 +80,14 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | Global
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [isbool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [isfunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [isnumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [isrotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [isstring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [istable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [isvector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [isvector2d](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsFunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsNumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsRotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsString](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsVector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsVector2d](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 
 <br/>
 
@@ -109,15 +109,15 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | string
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [string.getextension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.getlines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.GetExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.GetLines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.Explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 
 <br/>
 
 :white_medium_small_square: | table
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [table.count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.hasvalue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.tostring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.HasValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.TosTring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
