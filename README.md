@@ -56,6 +56,23 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
   Client: https://i.imgur.com/NTaK5Vd.png
  --->
 
+:white_medium_small_square: | Function  | Commands
+------------ | -------------
+![img](https://i.imgur.com/NTaK5Vd.png) | --- | bind, unbind
+![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Add](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
+![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Remove](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
+
+<br/>
+
+:white_medium_small_square: | Function
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Run](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
+
+<br/>
+
 :white_medium_small_square: | Function
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [LL:GetCallInfo](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
@@ -90,6 +107,15 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
+
+<br/>
+
+:white_medium_small_square: | Function
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [table.count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.hasvalue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.tostring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 
 <br/>
 
