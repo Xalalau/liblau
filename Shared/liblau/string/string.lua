@@ -44,23 +44,18 @@ end
     Arguments:
         string str           = The string to be exploded
         string sep           = The pattern to be used as separator
-        bool disablePatterns = Don't allow using extra patterns
 
     Return:
         table list = Table with the exploded values
         nil
 ]]
-function string.explode(str, sep, disablePatterns)
+function string.explode(str, sep)
     if not str or not sep then return end
     str = string.patternformat(str)
 
-    if disablePatterns then
-        sep = string.patternformat(str)
-    end
-
     local list = {}
 
-    for subStr in str:gmatch("([^" .. (disablePatterns and "%b.(%" .. sep ..  ")" or sep) .. "]+)") do
+    for subStr in str:gmatch("([^" .. sep .. "]+)") do
         table.insert(list, subStr)
     end
 
