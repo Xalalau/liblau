@@ -82,7 +82,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.getextension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.getlines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.split](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 
 <br/>
 

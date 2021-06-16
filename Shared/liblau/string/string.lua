@@ -35,7 +35,7 @@ end
         nil
 ]]
 function string.getlines(str)
-    return string.split(str, "\r\n")
+    return string.explode(str, "\r\n")
 end
 
 --[[
@@ -50,7 +50,7 @@ end
         table list = Table with the exploded values
         nil
 ]]
-function string.split(str, sep, disablePatterns)
+function string.explode(str, sep, disablePatterns)
     if not str or not sep then return end
     str = string.patternformat(str)
 
