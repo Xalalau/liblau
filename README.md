@@ -56,15 +56,15 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
   Client: https://i.imgur.com/NTaK5Vd.png
 
   Shared Command: https://i.imgur.com/sNwqGrO.png
-  Server Command: https://i.imgur.com/DEGvkBi.png
-  Client Command: https://i.imgur.com/18cor6U.png
+  Server Command: https://i.imgur.com/18cor6U.png
+  Client Command: https://i.imgur.com/DEGvkBi.png
  --->
 
 :white_medium_small_square: | Function
 ------------ | -------------
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Add](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Remove](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
-![img](https://i.imgur.com/18cor6U.png) | bind, unbind
+![img](https://i.imgur.com/DEGvkBi.png) | bind, unbind
 
 <br/>
 
