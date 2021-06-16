@@ -60,15 +60,16 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
   Client Command: https://i.imgur.com/DEGvkBi.png
  --->
 
-:white_medium_small_square: | Function
+:white_medium_small_square: | Bind
 ------------ | -------------
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Add](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Remove](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
-![img](https://i.imgur.com/DEGvkBi.png) | bind, unbind
+![img](https://i.imgur.com/DEGvkBi.png) | bind
+![img](https://i.imgur.com/DEGvkBi.png) | unbind
 
 <br/>
 
-:white_medium_small_square: | Function
+:white_medium_small_square: | ConCommand
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
@@ -77,7 +78,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | Function
+:white_medium_small_square: | LibLau
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [LL:GetCallInfo](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [LL:ReadFolder](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua)
@@ -86,7 +87,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | Function
+:white_medium_small_square: | Global
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [isbool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [isfunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
@@ -99,7 +100,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | Function
+:white_medium_small_square: | string
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.getextension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.getlines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
@@ -107,23 +108,14 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | Function
+:white_medium_small_square: | Global - Events
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
 
 <br/>
 
-:white_medium_small_square: | Function
------------- | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [table.count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.hasvalue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.tostring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-
-<br/>
-
-:white_medium_small_square: | Function
+:white_medium_small_square: | table
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.hasvalue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
