@@ -63,7 +63,7 @@ end
 -- Call stored console commands
 if Client then
     Client:Subscribe("Console", function(text)
-        local parts = string.explode(text, " ")
+        local parts = string.Explode(text, " ")
 
         if parts[1] and ConCommand:Get(parts[1]) then
             ConCommand:Run(table.unpack(parts))

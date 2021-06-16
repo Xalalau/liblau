@@ -11,11 +11,11 @@ SERVER = Server and true
     Return:
         bool
 ]]
-function isbool(var) return type(var) == "boolean" end
-function isfunction(var) return type(var) == "function" end
-function isnumber(var) return type(var) == "number" end
-function isrotator(var) return getmetatable(var) == Rotator end
-function isstring(var) return type(var) == "string" end
-function istable(var) return type(var) == "table" end
-function isvector(var) return getmetatable(var) == Vector end
-function isvector2d(var) return getmetatable(var) == Vector2D end
+function IsBool(var) return type(var) == "boolean" end
+function IsFunction(var) return type(var) == "function" end
+function IsNumber(var) return type(var) == "number" end
+function IsRotator(var) return getmetatable(var) == Rotator end
+function IsString(var) return type(var) == "string" end
+function IsTable(var) return type(var) == "table" end
+function IsVector(var) return getmetatable(var) == Vector end
+function IsVector2d(var) return getmetatable(var) == Vector2D end

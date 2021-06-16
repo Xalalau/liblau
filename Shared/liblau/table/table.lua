@@ -8,7 +8,7 @@
     Return:
         bool
 ]]
-function table.hasvalue(tab, value)
+function table.HasValue(tab, value)
     if not value then return false end
 
     for k,v in pairs(tab) do
@@ -27,10 +27,10 @@ end
 
     Return:
 ]]
-function table.print(tab, tabName)
+function table.Print(tab, tabName)
     if not tab then return end
 
-    local lines = string.getlines(table.tostring(tab, tabName))
+    local lines = string.GetLines(table.ToString(tab, tabName))
 
     for k,v in ipairs(lines) do
         print(v)
@@ -50,7 +50,7 @@ end
         string str = The converted table
         nil
 ]]
-function table.tostring(tab, tabName, str, indent)
+function table.ToString(tab, tabName, str, indent)
     if not tab then return end
 
     if not str then str = (tabName or "Table") .. " = {\n" end
@@ -59,9 +59,9 @@ function table.tostring(tab, tabName, str, indent)
     indent = "    " .. (indent or "")
 
     for k,v in pairs(tab) do
-        if istable(v) then
+        if IsTable(v) then
             str = str .. indent ..  tostring(k) .. " = {\n"
-            str = table.tostring(v, tabName, str, indent)
+            str = table.ToString(v, tabName, str, indent)
         else
             str = str .. indent .. tostring(k) .. " = " .. tostring(v) .. "\n"
         end
@@ -83,7 +83,7 @@ end
         int i = Total keys
         nil
 ]]
-function table.count(tab)
+function table.Count(tab)
     if not tab then return end
 
     local i = 0

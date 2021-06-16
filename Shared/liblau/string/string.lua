@@ -8,7 +8,7 @@
         string ext = Extension starting with a dot
         nil
 ]]
-function string.getextension(path)
+function string.GetExtension(path)
     -- Note: the extension is max. 4 digits and min. 2 digits
     if not path or string.len(path) < 2 then return end
 
@@ -34,8 +34,8 @@ end
         table list = Table with the chopped lines
         nil
 ]]
-function string.getlines(str)
-    return string.explode(str, "\r\n")
+function string.GetLines(str)
+    return string.Explode(str, "\r\n")
 end
 
 --[[
@@ -49,9 +49,9 @@ end
         table list = Table with the exploded values
         nil
 ]]
-function string.explode(str, sep)
+function string.Explode(str, sep)
     if not str or not sep then return end
-    str = string.patternformat(str)
+    str = string.PatternFormat(str)
 
     local list = {}
 
@@ -71,7 +71,7 @@ end
     Return:
         string str = The formatted string
 ]]
-function string.patternformat(str)
+function string.PatternFormat(str)
     return str:gsub(".", {
         ["["] = "%[",
         ["]"] = "%]",
