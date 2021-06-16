@@ -42,21 +42,25 @@ end
     Explode a string
 
     Arguments:
-        string str = The string to be exploded
-        string sep = The pattern to be used as separator
+        string str           = The string to be exploded
+        string sep           = The pattern to be used as separator
+        bool disablePatterns = Don't allow using extra patterns
 
     Return:
         table list = Table with the exploded values
         nil
 ]]
-function string.split(str, sep)
-    if not str then return end
+function string.split(str, sep, disablePatterns)
+    if not str or not sep then return end
     str = string.patternformat(str)
-    if not sep or sep == " " then sep = "s" end
+
+    if disablePatterns then
+        sep = string.patternformat(str)
+    end
 
     local list = {}
 
-    for subStr in str:gmatch("([^" .. sep .. "]+)") do
+    for subStr in str:gmatch("([^" .. (disablePatterns and "%b.(%" .. sep ..  ")" or sep) .. "]+)") do
         table.insert(list, subStr)
     end
 
