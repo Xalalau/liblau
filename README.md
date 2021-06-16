@@ -88,6 +88,14 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | Function
 ------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/events.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/events.lua)
+
+<br/>
+
+:white_medium_small_square: | Function
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [table.count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.hasvalue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.tostring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
