@@ -71,3 +71,26 @@ function table.tostring(tab, tabName, str, indent)
 
     return str
 end
+
+--[[
+    Counts the amount of keys in a table
+    Use # when a table is numerically and sequentially indexed
+
+    Arguments:
+        table tab = The table to count the keys
+
+    Return:
+        int i = Total keys
+        nil
+]]
+function table.count(tab)
+    if not tab then return end
+
+    local i = 0
+
+    for k,v in pairs(tab) do
+        i = i + 1
+    end
+
+    return i
+end
