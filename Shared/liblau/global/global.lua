@@ -19,25 +19,3 @@ function isstring(var) return type(var) == "string" end
 function istable(var) return type(var) == "table" end
 function isvector(var) return getmetatable(var) == Vector end
 function isvector2d(var) return getmetatable(var) == Vector2D end
-
---[[
-    Make print accept multiple arguments (detour)
-
-    Arguments:
-        any var = The variable to be printed
-        ...
-
-    Return:
-        nil
-]]
-local _print = print
-function print(...)
-    local str = ""
-    local args = { ... }
-
-    for _,arg in ipairs(args) do
-        str = str .. tostring(arg) .. "    "
-    end
-
-    _print(str)
-end
