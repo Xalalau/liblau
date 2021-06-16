@@ -51,13 +51,41 @@ end
 ]]
 function string.split(str, sep)
     if not str then return end
-    if not sep then sep = "%s" end
+    str = string.patternformat(str)
+    if not sep or sep == " " then sep = "s" end
 
     local list = {}
 
-    for subStr in str:gmatch("([^"..sep.."]+)") do
+    for subStr in str:gmatch("([^" .. sep .. "]+)") do
         table.insert(list, subStr)
     end
 
     return list
+end
+
+--[[
+    Escape some string characters to use it with Lua pattern
+
+    Arguments:
+        string str = The string to be formatted
+
+    Return:
+        string str = The formatted string
+]]
+function string.patternformat(str)
+    return str:gsub(".", {
+        ["["] = "%[",
+        ["]"] = "%]",
+        ["("] = "%(",
+        [")"] = "%)",
+        ["+"] = "%+",
+        ["-"] = "%-",
+        ["."] = "%.",
+        ["^"] = "%^",
+        ["\0"] = "%z",
+        ["$"] = "%$",
+        ["%"] = "%%",
+        ["*"] = "%*",
+        ["?"] = "%?"
+    })
 end
