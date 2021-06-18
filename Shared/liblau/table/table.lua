@@ -63,7 +63,7 @@ function table.ToString(tab, tab_name, str, indent)
             str = str .. indent ..  tostring(k) .. " = {\n"
             str = table.ToString(v, tab_name, str, indent)
         else
-            str = str .. indent .. tostring(k) .. " = " .. tostring(v) .. "\n"
+            str = str .. indent .. tostring(k) .. " = " .. tostring(v) .. ",\n"
         end
     end
 
