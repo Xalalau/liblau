@@ -123,6 +123,26 @@ function Timer:Left(identifier)
 end
 
 --[[
+    Restart a timer
+
+    Arguments:
+        string identifier = Timer name
+
+    Return:
+        bool
+]]
+function Timer:Restart(identifier)
+    local timer = identifier and self.list[identifier]
+
+    if not timer then return false end
+
+    self:ClearTimeout(timer.id)
+    timer.current_repetition = 1
+    self:Create(identifier, timer.delay, timer.repetitions, timer.func)
+end
+
+
+--[[
     Create a simple timer that executes once
 
     Arguments:
