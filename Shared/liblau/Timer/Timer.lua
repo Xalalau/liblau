@@ -14,6 +14,63 @@ Timer.list = {
 }
 
 --[[
+    Change a running timer
+
+    Arguments:
+        string   identifier  = Timer name
+        float    delay       = Timer delay (seconds)
+        int      repetitions = How many times we should loop. 0 = infinite
+        function func        = Callback
+
+    Return:
+        bool
+]]
+function Timer:Change(identifier, delay, repetitions, func)
+    local timer = identifier and self.list[identifier]
+
+    -- Check if we have something to change
+    if not timer then return false end
+
+    if (timer.delay == delay or not delay) and
+       (timer.repetitions == repetitions or not repetitions) and
+       (timer.func == func or not func)
+       then
+        return false
+    end
+
+    -- Get the correct func
+    func = func or timer.func
+
+    -- Remove old timer
+    self:ClearTimeout(timer.id)
+
+    -- Check if repetitions are ok
+    repetitions = repetitions or timer.repetitions
+
+    if repetitions ~= 0 and timer.current_repetition >= repetitions then
+        self.list[identifier] = nil
+
+        return true
+    end
+
+    -- Check the delay and change the timer
+    delay = delay or timer.delay
+    local last_cycle_start = timer.start + timer.delay * timer.current_repetition
+    local time_diff = os.clock() - last_cycle_start
+    local time_to_next = delay - time_diff
+
+    self:Simple(time_to_next < 0 and 0 or time_to_next, function()
+        timer.current_repetition = timer.current_repetition + 1
+
+        timer.func()
+
+        self:Create(identifier, delay, repetitions, func)
+    end)
+
+    return true
+end
+
+--[[
     Create and register a timer
 
     Arguments:
@@ -32,14 +89,15 @@ function Timer:Create(identifier, delay, repetitions, func)
 
     self.list[identifier] = {
         id = self:SetTimeout(1000 * delay, function()
+            if repetitions ~= 0 and i >= repetitions + 1 then
+                self.list[identifier] = nil
+
+                return false
+            end
+
             func()
 
             self.list[identifier].current_repetition = i
-
-            if repetitions~= 0 and i == repetitions then
-                self.list[identifier] = nil
-                return false
-            end
 
             i = i + 1
         end),
