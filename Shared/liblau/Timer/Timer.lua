@@ -38,10 +38,7 @@ function Timer:Create(identifier, delay, repetitions, func)
 
                 i = i + 1
             else
-                print(Timer.list[identifier].stop)
-
                 Timer.list[identifier].stop = Timer.list[identifier].stop + delay/(repetitions == 0 and 1 or repetitions)
-                print(Timer.list[identifier].stop)
             end
         end),
         repetitions = repetitions ~= 0 and repetitions,
