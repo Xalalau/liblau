@@ -57,8 +57,6 @@ end
         bool
 ]]
 function Timer:Exists(identifier)
-    if not identifier or not Timer.list[identifier] then return end
-
     return Timer.list[identifier] and true or false
 end
 
@@ -69,12 +67,14 @@ end
         string identifier = Timer name
 
     Return:
-        nil
+        bool
 ]]
 function Timer:Pause(identifier)
-    if not identifier or not Timer.list[identifier] then return end
+    if not identifier or not Timer.list[identifier] then return false end
 
     Timer.list[identifier].pause = true
+
+    return true
 end
 
 --[[
@@ -106,8 +106,6 @@ end
         float timeLeft        = Time left (seconds)
 ]]
 function Timer:Left(identifier)
-    if not identifier or not Timer.list[identifier] then return end
-
     local repetitionsLeft = not Timer.list[identifier].repetitions and "infinite" or (Timer.list[identifier].repetitions - Timer.list[identifier].currentRepetition)
     local timeLeft = not Timer.list[identifier].stop and "infinite" or Timer.list[identifier].stop - os.clock()
 
@@ -140,12 +138,14 @@ end
         string identifier = Timer name
 
     Return:
-        nil
+        bool
 ]]
 function Timer:Toggle(identifier)
-    if not identifier or not Timer.list[identifier] then return end
+    if not identifier or not Timer.list[identifier] then return false end
 
     Timer.list[identifier].pause = not Timer.list[identifier].pause
+
+    return true
 end
 
 --[[
@@ -155,10 +155,12 @@ end
         string identifier = Timer name
 
     Return:
-        nil
+        bool
 ]]
 function Timer:UnPause(identifier)
-    if not identifier or not Timer.list[identifier] then return end
+    if not identifier or not Timer.list[identifier] then return false end
 
     Timer.list[identifier].pause = false
+
+    return true
 end
