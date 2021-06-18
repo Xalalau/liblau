@@ -32,20 +32,16 @@ function Timer:Create(identifier, delay, repetitions, func)
 
     self.list[identifier] = {
         id = self:SetTimeout(1000 * delay, function()
-            if not self.list[identifier].pause then 
-                func()
+            func()
 
-                self.list[identifier].current_repetition = i
+            self.list[identifier].current_repetition = i
 
-                if repetitions~= 0 and i == repetitions then
-                    self.list[identifier] = nil
-                    return false
-                end
-
-                i = i + 1
-            else
-                self.list[identifier].stop = self.list[identifier].stop + delay/(repetitions == 0 and 1 or repetitions)
+            if repetitions~= 0 and i == repetitions then
+                self.list[identifier] = nil
+                return false
             end
+
+            i = i + 1
         end),
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
