@@ -121,3 +121,16 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.HasValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.Print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.TosTring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+
+<br/>
+
+:white_medium_small_square: | Timer
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Create](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Left](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Simple](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Toggle](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:UnPause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
