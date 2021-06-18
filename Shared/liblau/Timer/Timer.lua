@@ -1,7 +1,7 @@
 Timer.list = {
     --[[
     [identifier] = {
-        int      id                 = Timer address
+        int      id                 = Timer identification
         float    delay              = The time until the function is called
         float    start              = Time when the timer started
         float    stop               = Time when the timer finishes
