@@ -137,6 +137,7 @@ function Timer:Simple(delay, func)
 
     return self:SetTimeout(1000 * delay, function()
         func()
+
         return false
     end)
 end
