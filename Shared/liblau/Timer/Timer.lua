@@ -28,23 +28,23 @@ Timer.list = {
 function Timer:Create(identifier, delay, repetitions, func)
     if not identifier or not delay or not repetitions or not func then return end
 
-    local i = Timer.list[identifier] and Timer.list[identifier].currentRepetition or 1
+    local i = self.list[identifier] and self.list[identifier].currentRepetition or 1
 
-    Timer.list[identifier] = {
-        id = Timer:SetTimeout(1000 * delay, function()
-            if not Timer.list[identifier].pause then 
+    self.list[identifier] = {
+        id = self:SetTimeout(1000 * delay, function()
+            if not self.list[identifier].pause then 
                 func()
 
-                Timer.list[identifier].currentRepetition = i
+                self.list[identifier].currentRepetition = i
 
                 if repetitions~= 0 and i == repetitions then
-                    Timer.list[identifier] = nil
+                    self.list[identifier] = nil
                     return false
                 end
 
                 i = i + 1
             else
-                Timer.list[identifier].stop = Timer.list[identifier].stop + delay/(repetitions == 0 and 1 or repetitions)
+                self.list[identifier].stop = self.list[identifier].stop + delay/(repetitions == 0 and 1 or repetitions)
             end
         end),
         repetitions = repetitions ~= 0 and repetitions,
@@ -65,7 +65,7 @@ end
         bool
 ]]
 function Timer:Exists(identifier)
-    return Timer.list[identifier] and true or false
+    return self.list[identifier] and true or false
 end
 
 --[[
@@ -78,11 +78,13 @@ end
         bool
 ]]
 function Timer:Pause(identifier)
-    if not identifier or not Timer.list[identifier] then return false end
+    local timer = identifier and self.list[identifier]
 
-    Timer:ClearTimeout(Timer.list[identifier].id)
-    Timer.list[identifier].pause = os.clock()
-    Timer.list[identifier].id = nil
+    if not timer then return false end
+
+    self:ClearTimeout(timer.id)
+    timer.pause = os.clock()
+    timer.id = nil
 
     return true
 end
@@ -97,10 +99,10 @@ end
         bool
 ]]
 function Timer:Remove(identifier)
-    if not identifier or not Timer.list[identifier] then return false end
+    if not (identifier and self.list[identifier]) then return false end
 
-    Timer:ClearTimeout(Timer.list[identifier].id)
-    Timer.list[identifier] = nil
+    self:ClearTimeout(self.list[identifier].id)
+    self.list[identifier] = nil
 
     return true
 end
@@ -116,8 +118,10 @@ end
         float timeLeft        = Time left (seconds)
 ]]
 function Timer:Left(identifier)
-    local repetitionsLeft = not Timer.list[identifier].repetitions and "infinite" or (Timer.list[identifier].repetitions - Timer.list[identifier].currentRepetition)
-    local timeLeft = not Timer.list[identifier].stop and "infinite" or Timer.list[identifier].stop - os.clock()
+    local timer = self.list[identifier]
+
+    local repetitionsLeft = not timer.repetitions and "infinite" or (timer.repetitions - timer.currentRepetition)
+    local timeLeft = not timer.stop and "infinite" or timer.stop - os.clock()
 
     return repetitionsLeft, timeLeft
 end
@@ -135,7 +139,7 @@ end
 function Timer:Simple(delay, func)
     if not delay or not func then return end
 
-    return Timer:SetTimeout(1000 * delay, function()
+    return self:SetTimeout(1000 * delay, function()
         func()
         return false
     end)
@@ -151,9 +155,11 @@ end
         bool
 ]]
 function Timer:Toggle(identifier)
-    if not identifier or not Timer.list[identifier] then return false end
+    local timer = identifier and self.list[identifier]
 
-    Timer.list[identifier].pause = not Timer.list[identifier].pause
+    if not timer then return false end
+
+    timer.pause = not timer.pause
 
     return true
 end
@@ -168,17 +174,19 @@ end
         bool
 ]]
 function Timer:UnPause(identifier)
-    if not identifier or not Timer.list[identifier] then return false end
+    local timer = identifier and self.list[identifier]
 
-    local lastCycleStart = Timer.list[identifier].start + Timer.list[identifier].delay * Timer.list[identifier].currentRepetition
-    local timeDiff =  Timer.list[identifier].pause - lastCycleStart
+    if not timer then return false end
 
-    Timer:Simple(timeDiff, function()
-        Timer.list[identifier].currentRepetition = Timer.list[identifier].currentRepetition + 1
+    local lastCycleStart = timer.start + timer.delay * timer.currentRepetition
+    local timeDiff =  timer.pause - lastCycleStart
 
-        Timer.list[identifier].func()
+    self:Simple(timeDiff, function()
+        timer.currentRepetition = timer.currentRepetition + 1
 
-        Timer:Create(identifier, Timer.list[identifier].delay, Timer.list[identifier].repetitions, Timer.list[identifier].func)
+        timer.func()
+
+        self:Create(identifier, timer.delay, timer.repetitions, timer.func)
     end)
 
     return true
