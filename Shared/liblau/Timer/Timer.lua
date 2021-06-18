@@ -197,8 +197,9 @@ function Timer:UnPause(identifier)
 
     local last_cycle_start = timer.start + timer.delay * timer.current_repetition
     local time_diff =  timer.pause - last_cycle_start
+    local time_to_next = timer.delay - time_diff
 
-    self:Simple(time_diff, function()
+    self:Simple(time_to_next, function()
         timer.current_repetition = timer.current_repetition + 1
 
         timer.func()
