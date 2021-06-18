@@ -1,8 +1,12 @@
 Timer.list = {
     --[[
     [identifier] = {
-        int  id    = Timer identifier number
-        bool pause = false
+        int   id                = Timer address
+        float start             = Time when the timer started
+        float stop              = Time when the timer finishes
+        float pause             = Time when the timer got paused
+        int   repetitions       = How many times we should loop (0 = infinite)
+        int   currentRepetition = The current execution number
     }
     ]]
 }
