@@ -1,14 +1,14 @@
 Timer.list = {
     --[[
     [identifier] = {
-        int      id                = Timer address
-        float    delay             = The time until the function is called
-        float    start             = Time when the timer started
-        float    stop              = Time when the timer finishes
-        float    pause             = Time when the timer got paused
-        int      repetitions       = How many times we should loop (0 = infinite)
-        int      currentRepetition = The current execution number
-        function func              = Callback
+        int      id                 = Timer address
+        float    delay              = The time until the function is called
+        float    start              = Time when the timer started
+        float    stop               = Time when the timer finishes
+        float    pause              = Time when the timer got paused
+        int      repetitions        = How many times we should loop (0 = infinite)
+        int      current_repetition = The current execution number
+        function func               = Callback
     }
     ]]
 }
@@ -28,14 +28,14 @@ Timer.list = {
 function Timer:Create(identifier, delay, repetitions, func)
     if not identifier or not delay or not repetitions or not func then return end
 
-    local i = self.list[identifier] and self.list[identifier].currentRepetition or 1
+    local i = self.list[identifier] and self.list[identifier].current_repetition or 1
 
     self.list[identifier] = {
         id = self:SetTimeout(1000 * delay, function()
             if not self.list[identifier].pause then 
                 func()
 
-                self.list[identifier].currentRepetition = i
+                self.list[identifier].current_repetition = i
 
                 if repetitions~= 0 and i == repetitions then
                     self.list[identifier] = nil
@@ -114,16 +114,16 @@ end
         string identifier = Timer name
 
     Return:
-        int   repetitionsLeft = Repetitions left
-        float timeLeft        = Time left (seconds)
+        int   repetitions_left = Repetitions left
+        float time_left        = Time left (seconds)
 ]]
 function Timer:Left(identifier)
     local timer = self.list[identifier]
 
-    local repetitionsLeft = not timer.repetitions and "infinite" or (timer.repetitions - timer.currentRepetition)
-    local timeLeft = not timer.stop and "infinite" or timer.stop - os.clock()
+    local repetitions_left = not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
+    local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
 
-    return repetitionsLeft, timeLeft
+    return repetitions_left, time_left
 end
 
 --[[
@@ -178,11 +178,11 @@ function Timer:UnPause(identifier)
 
     if not timer then return false end
 
-    local lastCycleStart = timer.start + timer.delay * timer.currentRepetition
-    local timeDiff =  timer.pause - lastCycleStart
+    local last_cycle_start = timer.start + timer.delay * timer.current_repetition
+    local time_diff =  timer.pause - last_cycle_start
 
-    self:Simple(timeDiff, function()
-        timer.currentRepetition = timer.currentRepetition + 1
+    self:Simple(time_diff, function()
+        timer.current_repetition = timer.current_repetition + 1
 
         timer.func()
 
