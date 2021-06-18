@@ -1,12 +1,14 @@
 Timer.list = {
     --[[
     [identifier] = {
-        int   id                = Timer address
-        float start             = Time when the timer started
-        float stop              = Time when the timer finishes
-        float pause             = Time when the timer got paused
-        int   repetitions       = How many times we should loop (0 = infinite)
-        int   currentRepetition = The current execution number
+        int      id                = Timer address
+        float    delay             = The time until the function is called
+        float    start             = Time when the timer started
+        float    stop              = Time when the timer finishes
+        float    pause             = Time when the timer got paused
+        int      repetitions       = How many times we should loop (0 = infinite)
+        int      currentRepetition = The current execution number
+        function func              = Callback
     }
     ]]
 }
@@ -26,7 +28,7 @@ Timer.list = {
 function Timer:Create(identifier, delay, repetitions, func)
     if not identifier or not delay or not repetitions or not func then return end
 
-    local i = 1
+    local i = Timer.list[identifier] and Timer.list[identifier].currentRepetition or 1
 
     Timer.list[identifier] = {
         id = Timer:SetTimeout(1000 * delay, function()
@@ -47,7 +49,9 @@ function Timer:Create(identifier, delay, repetitions, func)
         end),
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
-        stop = repetitions ~= 0 and os.clock() + delay * repetitions
+        stop = repetitions ~= 0 and os.clock() + delay * repetitions,
+        delay = delay,
+        func = func
     }
 end
 
@@ -65,7 +69,7 @@ function Timer:Exists(identifier)
 end
 
 --[[
-    "Pause" a timer
+    Pause a timer
 
     Arguments:
         string identifier = Timer name
@@ -76,7 +80,9 @@ end
 function Timer:Pause(identifier)
     if not identifier or not Timer.list[identifier] then return false end
 
-    Timer.list[identifier].pause = true
+    Timer:ClearTimeout(Timer.list[identifier].id)
+    Timer.list[identifier].pause = os.clock()
+    Timer.list[identifier].id = nil
 
     return true
 end
@@ -153,7 +159,7 @@ function Timer:Toggle(identifier)
 end
 
 --[[
-    "Unpause" a timer
+    Unpause a timer
 
     Arguments:
         string identifier = Timer name
@@ -164,7 +170,16 @@ end
 function Timer:UnPause(identifier)
     if not identifier or not Timer.list[identifier] then return false end
 
-    Timer.list[identifier].pause = false
+    local lastCycleStart = Timer.list[identifier].start + Timer.list[identifier].delay * Timer.list[identifier].currentRepetition
+    local timeDiff =  Timer.list[identifier].pause - lastCycleStart
+
+    Timer:Simple(timeDiff, function()
+        Timer.list[identifier].currentRepetition = Timer.list[identifier].currentRepetition + 1
+
+        Timer.list[identifier].func()
+
+        Timer:Create(identifier, Timer.list[identifier].delay, Timer.list[identifier].repetitions, Timer.list[identifier].func)
+    end)
 
     return true
 end
