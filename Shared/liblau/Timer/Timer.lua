@@ -42,7 +42,7 @@ function Timer:Change(identifier, delay, repetitions, func, args)
     end
 
     -- Deal with a new function
-    args = func and (IsTable(args) and args or {}) or timer.args
+    args = IsBasicTable(args) and args or timer.args
     func = func or timer.func
 
     -- Remove old timer
@@ -112,7 +112,7 @@ function Timer:Create(identifier, delay, repetitions, func, args)
 
             i = i + 1
         end),
-        args = IsTable(args) and args or {},
+        args = IsBasicTable(args) and args or {},
         current_repetition = 0,
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
@@ -247,7 +247,7 @@ function Timer:Simple(delay, func, args)
         if error_break then return false end
     
         error_break = true
-        func(IsTable(args) and table.unpack(args))
+        func(IsBasicTable(args) and table.unpack(args))
         error_break = false
 
         return false

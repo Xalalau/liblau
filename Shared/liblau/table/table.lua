@@ -9,7 +9,7 @@
         bool
 ]]
 function table.HasValue(tab, value)
-    if not tab or not IsTable(tab) then return false end
+    if not IsBasicTable(tab) then return false end
 
     for k,v in pairs(tab) do
         if v == value then return true end
@@ -28,7 +28,7 @@ end
     Return:
 ]]
 function table.Print(tab, tab_name)
-    if not tab or not IsTable(tab) then return end
+    if not IsBasicTable(tab) then return end
 
     local lines = string.GetLines(table.ToString(tab, tab_name))
 
@@ -51,7 +51,7 @@ end
         nil
 ]]
 function table.ToString(tab, tab_name, str, indent)
-    if not tab or not IsBasicTable(tab) then return end
+    if not IsBasicTable(tab) then return end
 
     local first_call = not str
 
@@ -90,7 +90,7 @@ end
         nil
 ]]
 function table.Count(tab)
-    if not tab or not IsTable(tab) then return end
+    if not IsBasicTable(tab) then return end
 
     local i = 0
 
