@@ -66,13 +66,14 @@ end
     Escape some string characters to use it with Lua pattern
 
     Arguments:
-        string str = The string to be formatted
+        string str       = The string to be formatted
+        bool   setUnsafe = Restore scaped characters
 
     Return:
         string str = The formatted string
 ]]
-function string.PatternFormat(str)
-    return str:gsub(".", {
+function string.PatternFormat(str, setUnsafe)
+    local replace = {
         ["["] = "%[",
         ["]"] = "%]",
         ["("] = "%(",
@@ -86,5 +87,20 @@ function string.PatternFormat(str)
         ["%"] = "%%",
         ["*"] = "%*",
         ["?"] = "%?"
-    })
+    }
+
+    if setUnsafe then
+        for k,v in pairs(replace) do
+            replace[k] = nil
+        end
+        replace["%"] = ""
+    end
+
+    str = str:gsub(".", replace)
+
+    if setUnsafe then
+        str = str:gsub(".", { ["%"] = "" })
+    end
+
+    return str
 end
