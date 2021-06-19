@@ -51,12 +51,11 @@ end
 ]]
 function string.Explode(str, sep)
     if not str or not sep then return end
-    str = string.PatternFormat(str)
 
     local list = {}
 
-    for subStr in str:gmatch("([^" .. sep .. "]+)") do
-        table.insert(list, subStr)
+    for subStr in str:PatternFormat():gmatch("([^" .. sep .. "]+)") do
+        table.insert(list, subStr:PatternFormat(true))
     end
 
     return list
