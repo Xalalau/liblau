@@ -9,6 +9,7 @@ Timer.list = {
         int      repetitions        = How many times we should loop (0 = infinite)
         int      current_repetition = The current execution number
         function func               = Callback
+        table    args               = { any var, ... } -- Arguments table for func
     }
     ]]
 }
@@ -21,11 +22,12 @@ Timer.list = {
         float    delay       = Timer delay (seconds)
         int      repetitions = How many times we should loop. 0 = infinite
         function func        = Callback
+        table    args  = { any var, ... }
 
     Return:
         bool
 ]]
-function Timer:Change(identifier, delay, repetitions, func)
+function Timer:Change(identifier, delay, repetitions, func, args)
     local timer = identifier and self.list[identifier]
 
     -- Check if we have something to change
@@ -33,12 +35,14 @@ function Timer:Change(identifier, delay, repetitions, func)
 
     if (timer.delay == delay or not delay) and
        (timer.repetitions == repetitions or not repetitions) and
-       (timer.func == func or not func)
+       (timer.func == func or not func) and
+       (not args)
        then
         return false
     end
 
-    -- Get the correct func
+    -- Deal with a new function
+    args = func and (IsTable(args) and args or {}) or timer.args
     func = func or timer.func
 
     -- Remove old timer
@@ -62,9 +66,9 @@ function Timer:Change(identifier, delay, repetitions, func)
     self:Simple(time_to_next < 0 and 0 or time_to_next, function()
         timer.current_repetition = timer.current_repetition + 1
 
-        func()
+        func(table.unpack(args))
 
-        self:Create(identifier, delay, repetitions, func)
+        self:Create(identifier, delay, repetitions, func, args)
     end)
 
     return true
@@ -78,11 +82,12 @@ end
         float    delay       = Timer delay (seconds)
         int      repetitions = How many times we should loop. 0 = infinite
         function func        = Callback
+        table    args  = { any var, ... }
 
     Return:
         nil
 ]]
-function Timer:Create(identifier, delay, repetitions, func)
+function Timer:Create(identifier, delay, repetitions, func, args)
     if not identifier or not delay or not repetitions or not func then return end
 
     local i = self.list[identifier] and self.list[identifier].current_repetition or 1
@@ -102,13 +107,14 @@ function Timer:Create(identifier, delay, repetitions, func)
             end
 
             emergency_brake = true
-            func()
+            func(table.unpack(self.list[identifier].args))
             emergency_brake = false
 
             self.list[identifier].current_repetition = i
 
             i = i + 1
         end),
+        args = IsTable(args) and args or {},
         current_repetition = 0,
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
@@ -215,11 +221,12 @@ end
     Arguments:
         float    delay = Timer delay (seconds)
         function func  = Callback
+        table    args  = { any var, ... }
 
     Return:
         nil
 ]]
-function Timer:Simple(delay, func)
+function Timer:Simple(delay, func, args)
     if not delay or not func then return end
 
     local emergency_brake = false
@@ -230,7 +237,7 @@ function Timer:Simple(delay, func)
         end
     
         emergency_brake = true
-        func()
+        func(IsTable(args) and table.unpack(args))
         emergency_brake = false
 
         return false
