@@ -138,6 +138,20 @@ function Timer:Exists(identifier)
 end
 
 --[[
+    Get a timer
+
+    Arguments:
+        string identifier = Timer name
+
+    Return:
+        table Timer.list[identifier]
+        nil
+]]
+function Timer:Get(identifier)
+    return self.list[identifier]
+end
+
+--[[
     Pause a timer
 
     Arguments:
