@@ -197,16 +197,16 @@ end
         string identifier = Timer name
 
     Return:
-        int   repetitions_left = Repetitions left
         float time_left        = Time left (seconds)
+        int   repetitions_left = Repetitions left
 ]]
 function Timer:Remaining(identifier)
     local timer = self.list[identifier]
 
-    local repetitions_left = not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
     local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
+    local repetitions_left = not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
 
-    return repetitions_left, time_left
+    return time_left, repetitions_left
 end
 
 --[[
