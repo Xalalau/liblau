@@ -67,7 +67,9 @@ function table.ToString(tab, tab_name, str, indent)
         else
             local is_k_string = IsString(k)
             local is_v_string = IsString(v)
-            str = str .. indent .. (is_k_string and "[\"" or "") .. tostring(k) .. (is_k_string and "\"]" or "") .. " = " .. (is_v_string and "\"" or "") .. tostring(v) .. (is_v_string and "\"" or "") .. ",\n"
+            str = str .. indent .. (is_k_string and "[\"" or "") .. tostring(k) .. (is_k_string and "\"]" or "") -- K
+            str = str .. " = "
+            str = str .. (is_v_string and "\"" or "") .. tostring(v) .. (is_v_string and "\"" or "") .. ",\n" -- V
         end
     end
 
