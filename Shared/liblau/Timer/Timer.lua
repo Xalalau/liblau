@@ -200,7 +200,7 @@ end
         int   repetitions_left = Repetitions left
         float time_left        = Time left (seconds)
 ]]
-function Timer:Left(identifier)
+function Timer:Remaining(identifier)
     local timer = self.list[identifier]
 
     local repetitions_left = not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
