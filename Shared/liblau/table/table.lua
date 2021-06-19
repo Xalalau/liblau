@@ -53,7 +53,9 @@ end
 function table.ToString(tab, tab_name, str, indent)
     if not tab or not IsBasicTable(tab) then return end
 
-    if not str then str = (tab_name or "Table") .. " = {\n" end
+    local first_call = not str
+
+    if first_call then str = (tab_name or "Table") .. " = {\n" end
 
     local last_indent = indent or ""
     indent = "    " .. (indent or "")
@@ -69,7 +71,7 @@ function table.ToString(tab, tab_name, str, indent)
         end
     end
 
-    str = str .. last_indent .. "}\n"
+    str = str .. last_indent .. "}" .. (not first_call and "," or "") .. "\n"
 
     return str
 end
