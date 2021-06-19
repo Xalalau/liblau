@@ -41,9 +41,9 @@ function Timer:Change(identifier, delay, repetitions, func, args)
         return false
     end
 
-    -- Deal with a new function
-    args = IsBasicTable(args) and args or timer.args
+    -- Deal with new function and arguments
     func = func or timer.func
+    args = IsBasicTable(args) and args or timer.args
 
     -- Remove old timer
     self:ClearTimeout(timer.id)
