@@ -51,7 +51,7 @@ end
         nil
 ]]
 function table.ToString(tab, tab_name, str, indent)
-    if not tab or not IsTable(tab) then return end
+    if not tab or not IsBasicTable(tab) then return end
 
     if not str then str = (tab_name or "Table") .. " = {\n" end
 
@@ -59,7 +59,7 @@ function table.ToString(tab, tab_name, str, indent)
     indent = "    " .. (indent or "")
 
     for k,v in pairs(tab) do
-        if IsTable(v) then
+        if IsBasicTable(v) then
             str = str .. indent ..  tostring(k) .. " = {\n"
             str = table.ToString(v, tab_name, str, indent)
         else
