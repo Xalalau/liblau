@@ -22,7 +22,7 @@ Timer.list = {
         float    delay       = Timer delay (seconds)
         int      repetitions = How many times we should loop. 0 = infinite
         function func        = Callback
-        table    args  = { any var, ... }
+        table    args        = { any var, ... }
 
     Return:
         bool
@@ -82,7 +82,7 @@ end
         float    delay       = Timer delay (seconds)
         int      repetitions = How many times we should loop. 0 = infinite
         function func        = Callback
-        table    args  = { any var, ... }
+        table    args        = { any var, ... }
 
     Return:
         nil
