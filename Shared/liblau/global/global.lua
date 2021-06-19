@@ -18,4 +18,4 @@ function IsRotator(var) return getmetatable(var) == Rotator end
 function IsString(var) return type(var) == "string" end
 function IsTable(var) return type(var) == "table" end
 function IsVector(var) return getmetatable(var) == Vector end
-function IsVector2d(var) return getmetatable(var) == Vector2D end
+function IsVector2D(var) return getmetatable(var) == Vector2D end
