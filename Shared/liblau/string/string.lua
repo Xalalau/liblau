@@ -92,7 +92,6 @@ function string.PatternFormat(str, setUnsafe)
         for k,v in pairs(replace) do
             replace[k] = nil
         end
-        replace["%"] = ""
     end
 
     str = str:gsub(".", replace)
