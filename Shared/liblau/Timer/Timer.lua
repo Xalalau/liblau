@@ -64,7 +64,7 @@ function Timer:Change(identifier, delay, repetitions, func, args)
     local time_to_next = delay - time_diff
 
     self:Simple(time_to_next < 0 and 0 or time_to_next, function()
-        timer.current_repetition = timer.current_repetition + 1
+        timer.current_repetition = timer.current_repetition + 2
 
         func(table.unpack(args))
 
