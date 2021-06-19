@@ -20,3 +20,4 @@ function IsTable(var) return type(var) == "table" end -- All kinds of tables, ev
 function IsBasicTable(var) return type(var) == "table" and not getmetatable(var) end -- Pure Lua table type
 function IsVector(var) return getmetatable(var) == Vector end
 function IsVector2D(var) return getmetatable(var) == Vector2D end
+function IsUserdata(var) return type(var) == "userdata" end
