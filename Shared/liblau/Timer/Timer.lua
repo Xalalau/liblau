@@ -62,7 +62,7 @@ function Timer:Change(identifier, delay, repetitions, func)
     self:Simple(time_to_next < 0 and 0 or time_to_next, function()
         timer.current_repetition = timer.current_repetition + 1
 
-        timer.func()
+        func()
 
         self:Create(identifier, delay, repetitions, func)
     end)
