@@ -109,6 +109,7 @@ function Timer:Create(identifier, delay, repetitions, func)
 
             i = i + 1
         end),
+        current_repetition = 0,
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
         stop = repetitions ~= 0 and os.clock() + delay * repetitions,
