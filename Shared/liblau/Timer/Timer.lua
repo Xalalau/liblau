@@ -92,23 +92,21 @@ function Timer:Create(identifier, delay, repetitions, func, args)
 
     local i = self.list[identifier] and self.list[identifier].current_repetition or 1
 
-    local emergency_brake = false
+    local error_break = false
 
     self.list[identifier] = {
         id = self:SetTimeout(1000 * delay, function()
+            if error_break then return false end
+
             if repetitions ~= 0 and i >= repetitions + 1 then
                 self.list[identifier] = nil
 
                 return false
             end
 
-            if emergency_brake then
-                return false
-            end
-
-            emergency_brake = true
+            error_break = true
             func(table.unpack(self.list[identifier].args))
-            emergency_brake = false
+            error_break = false
 
             self.list[identifier].current_repetition = i
 
@@ -243,16 +241,14 @@ end
 function Timer:Simple(delay, func, args)
     if not delay or not func then return end
 
-    local emergency_brake = false
+    local error_break = false
 
     return self:SetTimeout(1000 * delay, function()
-        if emergency_brake then
-            return false
-        end
+        if error_break then return false end
     
-        emergency_brake = true
+        error_break = true
         func(IsTable(args) and table.unpack(args))
-        emergency_brake = false
+        error_break = false
 
         return false
     end)
