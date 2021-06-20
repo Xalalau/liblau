@@ -197,7 +197,7 @@ end
     Return:
         int repetitions_left = Repetitions left
 ]]
-function Timer:RepetitionsLeft(identifier)
+function Timer:RepsLeft(identifier)
     local timer = self.list[identifier]
 
     return not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
