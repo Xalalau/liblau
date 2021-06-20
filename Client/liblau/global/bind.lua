@@ -46,6 +46,8 @@ function Bind:Remove(...)
     end
 end
 
+-- ------------------------------------------------------------------------
+
 -- Set bind and unbind commands
 Client:Subscribe("Console", function(text)
     local parts = string.Explode(text, " ")
