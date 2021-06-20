@@ -7,7 +7,7 @@ ConCommand = {}
 
     Arguments:
         string command = Console command
-        function func  = Function name
+        function func  = Function callback
 
     Return:
         nil
