@@ -16,7 +16,7 @@ Bind = {}
 ]]
 function Bind:Add(key_name, target, extra)
     if key_name and target and not extra then
-        local target_aux = ConCommand:Get(target) or _G[target]
+        local target_aux = ConCommand:GetFunction(target) or _G[target]
 
         if target_aux then
             self[string.upper(key_name)] = target_aux

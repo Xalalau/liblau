@@ -68,7 +68,7 @@ end
         nil
 ]]
 function ConCommand:Run(command, ...)
-    if self:Get(command) then
+    if self:GetFunction(command) then
         ConCommand[command](ConCommand[command], ...)
     else
         Package:Error(command .. "not found")
@@ -80,7 +80,7 @@ if Client then
     Client:Subscribe("Console", function(text)
         local parts = string.Explode(text, " ")
 
-        if parts[1] and ConCommand:Get(parts[1]) then
+        if parts[1] and ConCommand:GetFunction(parts[1]) then
             ConCommand:Run(table.unpack(parts))
         end
     end)
