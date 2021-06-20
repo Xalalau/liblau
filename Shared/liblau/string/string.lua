@@ -42,8 +42,8 @@ end
     Explode a string
 
     Arguments:
-        string str           = The string to be exploded
-        string sep           = The pattern to be used as separator
+        string str = The string to be exploded
+        string sep = The pattern to be used as separator
 
     Return:
         table list = Table with the exploded values
