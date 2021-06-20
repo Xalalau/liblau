@@ -134,8 +134,9 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:RepetitionsLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)v
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Restart](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remaining](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Simple](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:TimeLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Toggle](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:UnPause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)

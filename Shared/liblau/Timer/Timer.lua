@@ -189,22 +189,18 @@ function Timer:Remove(identifier)
 end
 
 --[[
-    Get what's left to finish a timer
+    Get amount of repetitions left to finish a timer
 
     Arguments:
         string identifier = Timer name
 
     Return:
-        float time_left        = Time left (seconds)
-        int   repetitions_left = Repetitions left
+        int repetitions_left = Repetitions left
 ]]
-function Timer:Remaining(identifier)
+function Timer:RepetitionsLeft(identifier)
     local timer = self.list[identifier]
 
-    local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
-    local repetitions_left = not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
-
-    return time_left, repetitions_left
+    return not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
 end
 
 --[[
@@ -225,7 +221,6 @@ function Timer:Restart(identifier)
     timer.current_repetition = 1
     self:Create(identifier, timer.delay, timer.repetitions, timer.func)
 end
-
 
 --[[
     Create a simple timer that executes once
@@ -252,6 +247,25 @@ function Timer:Simple(delay, func, args)
 
         return false
     end)
+end
+
+--[[
+    Get amount of time left to finish a timer
+
+    Arguments:
+        string identifier = Timer name
+
+    Return:
+        float time_left       = Time left to finish the current repetition (seconds)
+        float total_time_left = Time left to finish the current and next repetitions (seconds)
+]]
+function Timer:TimeLeft(identifier)
+    local timer = self.list[identifier]
+
+    local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
+    local total_time_left = time_left + timer.delay * (timer.repetitions - timer.current_repetition)
+
+    return time_left, total_time_left
 end
 
 --[[
