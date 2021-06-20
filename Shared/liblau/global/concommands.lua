@@ -1,3 +1,5 @@
+-- Command list
+-- { [string command] = function callback, ... }
 ConCommand = {}
 
 --[[
@@ -39,6 +41,19 @@ end
 ]]
 function ConCommand:Get(command)
     return ConCommand[command]
+end
+
+--[[
+    Get registered console commands
+
+    Arguments:
+        nil
+
+    Return:
+        table commands = ConCommand table
+]]
+function ConCommand:GetTable()
+    return ConCommand
 end
 
 --[[
