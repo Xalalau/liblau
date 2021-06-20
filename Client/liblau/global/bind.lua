@@ -1,3 +1,5 @@
+-- Bind list
+-- { [string command] = function callback, ... }
 Bind = {}
 
 --[[
