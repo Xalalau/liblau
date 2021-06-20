@@ -39,7 +39,7 @@ end
         function return = The associated function
         nil
 ]]
-function ConCommand:Get(command)
+function ConCommand:GetFunction(command)
     return ConCommand[command]
 end
 
