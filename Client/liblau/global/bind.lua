@@ -1,5 +1,5 @@
 -- Bind list
--- { [string command] = function callback, ... }
+-- { [string command] = { func = function callback, args = table arguments }, ... }
 Bind = {}
 
 --[[
@@ -8,18 +8,18 @@ Bind = {}
     Arguments:
         string key_name = Keyboard key
         string target   = Command or function
-        
-        extra is used to block overflow
+        any arg         = Argument
+        ...
 
     Return:
         nil
 ]]
-function Bind:Add(key_name, target, extra)
-    if key_name and target and not extra then
+function Bind:Add(key_name, target, ...)
+    if key_name and target then
         local target_aux = ConCommand:GetFunction(target) or _G[target]
 
         if target_aux then
-            self[string.upper(key_name)] = target_aux
+            self[string.upper(key_name)] = { func = target_aux, args = { ... } }
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
         end
@@ -32,7 +32,7 @@ end
     Remove key binds
 
     Arguments:
-        string = bind name
+        string = Bind name
         ...
 
     Return:
@@ -68,6 +68,6 @@ end)
 -- Call binds
 Client:Subscribe("KeyPress", function(key_name)
     if Bind[string.upper(key_name)] then
-        return Bind[string.upper(key_name)](Bind[string.upper(key_name)])
+        return Bind[string.upper(key_name)].func(table.unpack(Bind[string.upper(key_name)].args))
     end
 end)
