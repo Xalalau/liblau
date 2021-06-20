@@ -12,8 +12,8 @@ LL.live_reloading = {
     Set live reloading to a folder
 
     Arguments:
-        string scope       = "Server", "Client" or "Shared". Can be set as "All" to easyly select the three
-        string path        = Any path from any package and scope. No path = the entire scope
+        string scope        = "Server", "Client" or "Shared". Can be set as "All" to easyly select the three
+        string path         = Any path from any package and scope. No path = the entire scope
         string package_name = Repass the package name, internal use only
 
     Return:
