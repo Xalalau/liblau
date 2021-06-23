@@ -1,5 +1,5 @@
 -- Bind list
--- { [string command] = { func = function callback, args = table arguments }, ... }
+-- { [string key name] = { func = function callback, args = table arguments }, ... }
 Bind = {}
 
 --[[
@@ -26,6 +26,20 @@ function Bind:Add(key_name, target, ...)
     else
         Package:Error("Usage: bind <keyname> <command or function>")
     end
+end
+
+--[[
+    Get a key bind
+
+    Arguments:
+        string key_name = Keyboard key
+
+    Return:
+        table bind = Bind list entry
+        nil
+]]
+function Bind:Get(key_name)
+    return self[string.upper(key_name or "")]
 end
 
 --[[
