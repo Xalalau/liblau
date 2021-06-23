@@ -61,15 +61,12 @@ function table.ToString(tab, tab_name, str, indent)
     indent = "    " .. (indent or "")
 
     for k,v in pairs(tab) do
+        str = str .. indent .. "[" .. (IsString(k) and "\"" or "") .. tostring(k) .. (IsString(k) and "\"" or "") .. "]" -- K
         if IsBasicTable(v) then
-            str = str .. indent ..  tostring(k) .. " = {\n"
+            str = str .. " = {\n"
             str = table.ToString(v, tab_name, str, indent)
         else
-            local is_k_string = IsString(k)
-            local is_v_string = IsString(v)
-            str = str .. indent .. (is_k_string and "[\"" or "") .. tostring(k) .. (is_k_string and "\"]" or "") -- K
-            str = str .. " = "
-            str = str .. (is_v_string and "\"" or "") .. tostring(v) .. (is_v_string and "\"" or "") .. ",\n" -- V
+            str = str .. " = " .. (IsString(v) and "\"" or "") .. tostring(v) .. (IsString(v) and "\"" or "") .. ",\n" -- V
         end
     end
 
