@@ -20,7 +20,7 @@ function ConCommand:Add(command, func)
     if not ConCommand:Exists(command) then
         self.list[string.upper(command)] = func
     else
-        Package:Error("Console command '" .. cvar .. "' already exists")
+        Package:Error("Console command '" .. command .. "' already exists")
     end
 end
 
