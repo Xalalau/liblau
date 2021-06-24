@@ -134,6 +134,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Create](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [Timer:RepsLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)

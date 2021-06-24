@@ -152,6 +152,19 @@ function Timer:Get(identifier)
 end
 
 --[[
+    Get all timers
+
+    Arguments:
+        nil
+
+    Return:
+        table Timer.list
+]]
+function Timer:GetAll()
+    return self.list
+end
+
+--[[
     Pause a timer
 
     Arguments:
