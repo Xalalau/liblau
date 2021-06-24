@@ -76,6 +76,41 @@ function table.ToString(tab, tab_name, str, indent)
 end
 
 --[[
+    Creates a table copy
+
+    Arguments:
+        table tab = The table to be copied
+
+    Return:
+        table copy = The new allocated table
+]]
+function table.Copy(tab)
+    if not IsTable(tab) then return end
+
+    local copy = {}
+
+    for k,v in pairs(tab) do
+        if IsBasicTable(v) then
+            table.Copy(v, tab_name, str, indent)
+        else
+            if IsVector(v) then
+                v = Vector(v.X, v.Y, v.Z)
+            elseif IsRotator(v) then
+                v = Rotator(v.Pitch, v.Yaw, v.Roll)
+            elseif IsColor(v) then
+                v = Color(v.R, v.G, v.B, v.A)
+            elseif IsQuaternion(v) then
+                v = Quat(v.X, v.Y, v.Z, v.W)
+            end
+
+            copy[k] = v
+        end
+    end
+
+    return copy
+end
+
+--[[
     Counts the amount of keys in a table
     Use # when a table is numerically and sequentially indexed
 
