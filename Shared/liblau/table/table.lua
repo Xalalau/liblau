@@ -26,6 +26,7 @@ end
 
     Return:
         bool
+        nil
 ]]
 function table.HasValue(tab, value)
     if not IsTable(tab) then return false end
@@ -45,6 +46,7 @@ end
         string tab_name = A name to identify the table
 
     Return:
+        nil
 ]]
 function table.Print(tab, tab_name)
     if not IsTable(tab) then return end
@@ -102,6 +104,7 @@ end
 
     Return:
         table copy = The new allocated table
+        nil
 ]]
 function table.Copy(tab)
     if not IsTable(tab) then return end
