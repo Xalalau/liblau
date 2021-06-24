@@ -173,8 +173,8 @@ function table.Transfer(base, target, modify_base, override_target)
 
             base[k] = not modify_base and base[k] or nil
         else
-            local IsKInBoth = target[k] and base[k]
-            if IsKInBoth and not override_target then
+            local is_k_in_both = target[k] and base[k]
+            if is_k_in_both and not override_target then
                 goto continue
             end
 
