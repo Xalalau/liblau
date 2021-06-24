@@ -65,32 +65,37 @@ end
         table tab       = The table to convert
         string tab_name = A name to identify the table
 
-        str and indent are for internal use
-
     Return:
         string str = The converted table
         nil
 ]]
-function table.ToString(tab, tab_name, str, indent)
+function table.ToString(tab, tab_name)
     if not IsTable(tab) then return end
 
-    local first_call = not str
+    local str = (tab_name or "Table") .. " = {\n"
 
-    if first_call then str = (tab_name or "Table") .. " = {\n" end
+    local function printContent(tab, str, indent)
+        indent = "\t" .. indent
 
-    indent = "    " .. (indent or "")
+        for k,v in pairs(tab) do
+            local k_quotation = IsString(k) and "\"" or ""
+            local v_quotation = IsString(v) and "\"" or ""
+ 
+            str = str .. indent .. "[" .. k_quotation .. k .. k_quotation .. "]"
 
-    for k,v in pairs(tab) do
-        str = str .. indent .. "[" .. (IsString(k) and "\"" or "") .. tostring(k) .. (IsString(k) and "\"" or "") .. "]" -- K
-        if IsBasicTable(v) then
-            str = str .. " = {\n"
-            str = table.ToString(v, tab_name, str, indent)
-        else
-            str = str .. " = " .. (IsString(v) and "\"" or "") .. tostring(v) .. (IsString(v) and "\"" or "") .. ",\n" -- V
+            if IsBasicTable(v) then
+                str = str .. " = {\n"
+                str = printContent(v, str, indent)
+                str = str .. indent .. "},\n"
+            else
+                str = str .. " = " .. v_quotation .. v .. v_quotation .. ",\n"
+            end
         end
+
+        return str
     end
 
-    str = str .. (not first_call and indent or "") .. "}" .. (not first_call and "," or "") .. "\n"
+    str = printContent(tab, str, "") .. "}\n"
 
     return str
 end
