@@ -76,7 +76,6 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Run](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
 
 <br/>
@@ -120,6 +119,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.GetExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.GetLines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.Explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.PatternFormat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 
 <br/>
 
