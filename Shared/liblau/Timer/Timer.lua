@@ -9,7 +9,9 @@ Timer.list = {
         int      repetitions        = How many times we should loop (0 = infinite)
         int      current_repetition = The current execution number
         function func               = Callback
-        table    args               = { any var, ... } -- Arguments table for func
+        table    args               = { any var, ... } -- Arguments table for func.
+
+        -- Note: "args" actually has only one use: making Timer:Change capable of keeping a function state. Otherwise it's useless.
     }
     ]]
 }
