@@ -39,6 +39,22 @@ function table.HasValue(tab, value)
 end
 
 --[[
+    Check if the table is empty
+
+    Arguments:
+        table tab = The table to be verifyed
+
+    Return:
+        bool
+        nil
+]]
+function table.IsEmpty(tab, value)
+    if not IsTable(tab) then return end
+
+    return not next(tab) and true or false
+end
+
+--[[
     Safely prints a entire table to the console
 
     Arguments:
