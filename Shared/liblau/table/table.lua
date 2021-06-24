@@ -95,6 +95,8 @@ function table.Copy(tab)
         else
             if IsVector(v) then
                 v = Vector(v.X, v.Y, v.Z)
+            elseif IsVector2D(v) then
+                v = Vector2D(v.X, v.Y)
             elseif IsRotator(v) then
                 v = Rotator(v.Pitch, v.Yaw, v.Roll)
             elseif IsColor(v) then
