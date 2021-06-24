@@ -102,3 +102,25 @@ function string.PatternFormat(str, setUnsafe)
 
     return str
 end
+
+--[[
+    Get the file path without the extension
+
+    Arguments:
+        string path = Full file path
+
+    Return:
+        string str = File path without the extension
+]]
+function string.StripExtension(path)
+    -- Note: the extension is max. 4 digits and min. 2 digits
+    if not path or string.len(path) < 2 then return end
+
+    for i = 2, 5, 1 do
+        if string.sub(path, -i, -i) == "." then
+            return string.sub(path, 1, - (i + 1))
+        end
+    end
+
+    return path
+end
