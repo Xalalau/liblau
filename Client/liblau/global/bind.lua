@@ -1,6 +1,8 @@
 -- Bind list
 -- { [string key name] = { func = function callback, args = table arguments }, ... }
-Bind = {}
+Bind = {
+    list = {}
+}
 
 --[[
     Add a key bind
@@ -19,7 +21,7 @@ function Bind:Add(key_name, target, ...)
         local target_aux = ConCommand:GetFunction(target) or _G[target]
 
         if target_aux then
-            self[string.upper(key_name)] = { func = target_aux, args = { ... } }
+            self.list[string.upper(key_name)] = { func = target_aux, args = { ... } }
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
         end
@@ -39,7 +41,7 @@ end
         nil
 ]]
 function Bind:Get(key_name)
-    return self[string.upper(key_name or "")]
+    return self.list[string.upper(key_name or "")]
 end
 
 --[[
@@ -52,7 +54,7 @@ end
         table binds = Bind list
 ]]
 function Bind:GetAll()
-    return self
+    return self.list
 end
 
 --[[
@@ -69,7 +71,7 @@ function Bind:Remove(...)
     local binds = table.pack(...)
 
     for _,key_name in ipairs(binds) do
-        self[string.upper(key_name)] = nil
+        self.list[string.upper(key_name)] = nil
     end
 end
 
