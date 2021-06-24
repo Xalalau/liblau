@@ -5,7 +5,7 @@ LL = {
         List loaded folders
 
         read[string package name] = {
-            [number index] = {
+            [string addon folder] = {
                 [string scope] = {
                     string path = relative file path,
                     (Server) number time = file creation time
@@ -72,33 +72,57 @@ function LL:ReadFolder(addon_path, package_name, current_scope)
         return
     end
 
+    -- Get module files 
+    local package_files = {}
+    for k,v in ipairs(Package:GetFiles()) do
+        if not string.find(v, ".git") and
+           string.sub(v, -4, -1) == ".lua" and
+           not string.find(v, "/Index.lua") and
+           string.find(v, addon_path .. "/") then
+            table.insert(package_files, v)
+        end
+    end
+
+    -- Sort module files
+    -- Less points = the file has precedence
+    table.sort(package_files, function(a, b)
+        local points_a = 0
+        local points_b = 0
+        a:gsub("([^/]+)", function()
+            points_a = points_a + 1
+        end)
+        b:gsub("([^/]+)", function()
+            points_b = points_b + 1
+        end)
+        if a:lower() < b:lower() then
+            points_b = points_b + 0.02
+        else
+            points_a = points_a + 0.01
+        end
+        return points_a < points_b
+    end)
+
     -- Get package files
-    for _,path in ipairs(Package:GetFiles()) do
-        -- Filter Lua files
-        if string.sub(path, -4, -1) == ".lua" then
-            -- Filter addon_path files
-            if addon_path == "" or string.find(path, addon_path .. "/") then
-                local scope 
+    for _,path in ipairs(package_files) do
+        local scope 
 
-                -- Get the current file scope
-                if string.find(path, "Shared/") then
-                    scope = "Shared"
-                elseif Server and string.find(path, "Server/") then
-                    scope = "Server"
-                elseif string.find(path, "Client/") then
-                    scope = "Client"
-                end
+        -- Get the current file scope
+        if string.find(path, "Shared/") then
+            scope = "Shared"
+        elseif Server and string.find(path, "Server/") then
+            scope = "Server"
+        elseif string.find(path, "Client/") then
+            scope = "Client"
+        end
 
-                -- Store the file path and file creation time
-                if scope then
-                    if SERVER then
-                        local lua_file = File("Packages/" .. package_name .. "/" .. path)
-                        table.insert(LL.read[package_name][addon_path][scope], { path = path, time = lua_file:Time() })
-                        lua_file:Close()
-                    else
-                        table.insert(LL.read[package_name][addon_path][scope], { path = path })
-                    end
-                end
+        -- Store the file path and file creation time
+        if scope then
+            if Server then
+                local lua_file = File("Packages/" .. package_name .. "/" .. path)
+                table.insert(LL.read[package_name][addon_path][scope], { path = path, time = lua_file:Time() })
+                lua_file:Close()
+            else
+                table.insert(LL.read[package_name][addon_path][scope], { path = path })
             end
         end
     end
