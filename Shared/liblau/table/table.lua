@@ -148,8 +148,8 @@ end
     Arguments:
         table base                   = Get table entries from base
         table target                 = Send table entries to target
-        bool  modify_base     (true) = Set if the base table entries will be copied or moved
-        bool  override_target (true) = Set if the target table existing entries will be kept or overridden
+        bool  modify_base     (true) = Set if the base table entries will be moved or copied
+        bool  override_target (true) = Set if the target table existing entries will be overridden or kept
 
     Return:
         nil
