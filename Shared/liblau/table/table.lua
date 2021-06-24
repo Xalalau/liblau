@@ -143,6 +143,41 @@ function table.Copy(tab)
 end
 
 --[[
+    Concatenate all values of a sequential table 
+    Note: It doesn't read subtables
+
+    Arguments:
+        table  tab                 = Sequential table to generate the string
+        string concatenator ("")   = Text to be pacled between each value
+        int    startPos     (1)    = Starting point
+        int    endPos       (#tab) = Finishing point
+
+    Return:
+        string text = Concatenated values
+        nil
+]]
+function table.Concat(tab, concatenator, startPos, endPos)
+    if not IsTable(tab) then return end
+
+    concatenator = concatenator or ""
+    startPos = startPos or 1
+    endPos = endPos or #tab
+
+    local str = ""
+
+    for k,v in ipairs(tab) do
+        if k > endPos then break end
+        if not IsTable(v) then
+            if k >= startPos then
+                str = str .. concatenator .. v
+            end
+        end
+    end
+
+    return str:sub(concatenator:len() + 1, #str)
+end
+
+--[[
     Counts the amount of keys in a table
     Use # when a table is numerically and sequentially indexed
 
