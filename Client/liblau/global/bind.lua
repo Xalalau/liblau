@@ -43,6 +43,19 @@ function Bind:Get(key_name)
 end
 
 --[[
+    Get a all binds
+
+    Arguments:
+        nil
+
+    Return:
+        table binds = Bind list
+]]
+function Bind:GetAll()
+    return self
+end
+
+--[[
     Remove key binds
 
     Arguments:

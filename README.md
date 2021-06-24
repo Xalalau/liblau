@@ -64,6 +64,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ------------ | -------------
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Add](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Get](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
+![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:GetAll](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Remove](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
 ![img](https://i.imgur.com/DEGvkBi.png) | bind
 ![img](https://i.imgur.com/DEGvkBi.png) | unbind
