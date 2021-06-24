@@ -1,3 +1,22 @@
+-- Create a new var instead of copying the address
+local function CopyCustomTableType(v)
+    if IsVector(v) then
+        v = Vector(v.X, v.Y, v.Z)
+    elseif IsVector2D(v) then
+        v = Vector2D(v.X, v.Y)
+    elseif IsRotator(v) then
+        v = Rotator(v.Pitch, v.Yaw, v.Roll)
+    elseif IsColor(v) then
+        v = Color(v.R, v.G, v.B, v.A)
+    elseif IsQuat(v) then
+        v = Quat(v.X, v.Y, v.Z, v.W)
+    end
+
+    return v
+end
+
+-- ------------------------------------------------------------------------
+
 --[[
     Check if the table has a given value
 
@@ -93,19 +112,7 @@ function table.Copy(tab)
         if IsBasicTable(v) then
             copy[k] = table.Copy(v, v)
         else
-            if IsVector(v) then
-                v = Vector(v.X, v.Y, v.Z)
-            elseif IsVector2D(v) then
-                v = Vector2D(v.X, v.Y)
-            elseif IsRotator(v) then
-                v = Rotator(v.Pitch, v.Yaw, v.Roll)
-            elseif IsColor(v) then
-                v = Color(v.R, v.G, v.B, v.A)
-            elseif IsQuat(v) then
-                v = Quat(v.X, v.Y, v.Z, v.W)
-            end
-
-            copy[k] = v
+            copy[k] = CopyTableWithMetatable(v)
         end
     end
 
@@ -133,4 +140,59 @@ function table.Count(tab)
     end
 
     return i
+end
+
+--[[
+    Transfer elements from one table to another
+
+    Arguments:
+        table  base      = Run the selected operation to
+        table  target    = Get elements from
+        string operation =
+            Add     = Copy elements from base to target keeping existing values
+            Inherit = Move elements from base to target keeping existing values
+            Merge   = Move elements from base to target overriding existing values
+
+    Return:
+        nil
+]]
+function table.Transfer(base, target, operation)
+    if not IsTable(base) or not IsTable(target) then return end
+    if operation ~= "Add" and operation ~= "Inherit" and operation ~= "Merge" then
+        Package:Error("Unknown table transfer operation. Available options: Add, Inherit and Merge")
+        Package:Error(debug.traceback())
+
+        return
+    end
+
+    for k,v in pairs(base) do
+        if IsBasicTable(v) then
+            target[k] = target[k] or {}
+            table.Transfer(v, target[k], operation)
+
+            if operation == "Merge" or operation == "Inherit" and table.Count(v) == 0 then
+                base[k] = nil
+            end
+        else
+            local IsKInBoth = target[k] and base[k]
+
+            if operation == "Add" then
+                if IsKInBoth then
+                    goto continue
+                end
+
+                v = CopyTableWithMetatable(v)
+            else
+                base[k] = nil
+
+                if operation == "Inherit" and IsKInBoth then
+                    goto continue
+                end
+            end
+
+            target[k] = v
+        end
+
+        ::continue::
+    end
 end

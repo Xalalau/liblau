@@ -129,6 +129,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.HasValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.Print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [table.TosTring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Transfer](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
 
 <br/>
 
