@@ -79,6 +79,8 @@ end
 --[[
     Create and register a timer
 
+    Note: for timers that run only once, use Timer:Simple
+
     Arguments:
         string   identifier  = Timer name
         float    delay       = Timer delay (seconds)
