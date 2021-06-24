@@ -59,7 +59,7 @@ end
         bool
 ]]
 function Bind:Exists(key_name)
-    return self.list[string.upper(key_name and "")] and true or false
+    return self.list[string.upper(key_name or "")] and true or false
 end
 
 --[[
