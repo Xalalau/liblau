@@ -98,7 +98,7 @@ end)
 
 -- Call binds
 Client:Subscribe("KeyPress", function(key_name)
-    if Bind[string.upper(key_name)] then
-        return Bind[string.upper(key_name)].func(table.unpack(Bind[string.upper(key_name)].args))
+    if Bind.list[string.upper(key_name)] then
+        return Bind.list[string.upper(key_name)].func(table.unpack(Bind.list[string.upper(key_name)].args))
     end
 end)
