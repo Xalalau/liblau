@@ -158,6 +158,8 @@ end
         bool  modify_base     (true) = Set if the base table entries will be moved or copied
         bool  override_target (true) = Set if the target table existing entries will be overridden or kept
 
+        Note: when modify_base and override_target are true, matching keys will be left behind in the base table
+
     Return:
         nil
 ]]
