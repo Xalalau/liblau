@@ -18,6 +18,90 @@ end
 -- ------------------------------------------------------------------------
 
 --[[
+    Creates a table copy
+
+    Arguments:
+        table tab = The table to be copied
+
+    Return:
+        table copy = The new allocated table
+        nil
+]]
+function table.Copy(tab)
+    if not IsTable(tab) then return end
+
+    local copy = {}
+
+    for k,v in pairs(tab) do
+        if IsBasicTable(v) then
+            copy[k] = table.Copy(v, v)
+        else
+            copy[k] = CopyCustomTableType(v)
+        end
+    end
+
+    return copy
+end
+
+--[[
+    Concatenate all values of a sequential table 
+    Note: It doesn't read subtables
+
+    Arguments:
+        table  tab                 = Sequential table to generate the string
+        string concatenator ("")   = Text to be pacled between each value
+        int    startPos     (1)    = Starting point
+        int    endPos       (#tab) = Finishing point
+
+    Return:
+        string text = Concatenated values
+        nil
+]]
+function table.Concat(tab, concatenator, startPos, endPos)
+    if not IsTable(tab) then return end
+
+    concatenator = concatenator or ""
+    startPos = startPos or 1
+    endPos = endPos or #tab
+
+    local str = ""
+
+    for k,v in ipairs(tab) do
+        if k > endPos then break end
+        if not IsTable(v) then
+            if k >= startPos then
+                str = str .. concatenator .. v
+            end
+        end
+    end
+
+    return str:sub(concatenator:len() + 1, #str)
+end
+
+--[[
+    Counts the amount of keys in a table
+    Use # when a table is numerically and sequentially indexed
+
+    Arguments:
+        table tab = The table to count the keys
+
+    Return:
+        int i = Total keys
+        nil
+]]
+function table.Count(tab)
+    if not IsTable(tab) then return end
+
+    local i = 0
+
+    for k,v in pairs(tab) do
+        i = i + 1
+    end
+
+    return i
+end
+
+--[[
     Check if the table has a given value
 
     Arguments:
@@ -114,90 +198,6 @@ function table.ToString(tab, tab_name)
     str = stringify(tab, str, "") .. "}\n"
 
     return str
-end
-
---[[
-    Creates a table copy
-
-    Arguments:
-        table tab = The table to be copied
-
-    Return:
-        table copy = The new allocated table
-        nil
-]]
-function table.Copy(tab)
-    if not IsTable(tab) then return end
-
-    local copy = {}
-
-    for k,v in pairs(tab) do
-        if IsBasicTable(v) then
-            copy[k] = table.Copy(v, v)
-        else
-            copy[k] = CopyCustomTableType(v)
-        end
-    end
-
-    return copy
-end
-
---[[
-    Concatenate all values of a sequential table 
-    Note: It doesn't read subtables
-
-    Arguments:
-        table  tab                 = Sequential table to generate the string
-        string concatenator ("")   = Text to be pacled between each value
-        int    startPos     (1)    = Starting point
-        int    endPos       (#tab) = Finishing point
-
-    Return:
-        string text = Concatenated values
-        nil
-]]
-function table.Concat(tab, concatenator, startPos, endPos)
-    if not IsTable(tab) then return end
-
-    concatenator = concatenator or ""
-    startPos = startPos or 1
-    endPos = endPos or #tab
-
-    local str = ""
-
-    for k,v in ipairs(tab) do
-        if k > endPos then break end
-        if not IsTable(v) then
-            if k >= startPos then
-                str = str .. concatenator .. v
-            end
-        end
-    end
-
-    return str:sub(concatenator:len() + 1, #str)
-end
-
---[[
-    Counts the amount of keys in a table
-    Use # when a table is numerically and sequentially indexed
-
-    Arguments:
-        table tab = The table to count the keys
-
-    Return:
-        int i = Total keys
-        nil
-]]
-function table.Count(tab)
-    if not IsTable(tab) then return end
-
-    local i = 0
-
-    for k,v in pairs(tab) do
-        i = i + 1
-    end
-
-    return i
 end
 
 --[[
