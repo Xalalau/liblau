@@ -95,6 +95,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsVector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsVector2D](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsUserdata](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [toBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 
 <br/>
 

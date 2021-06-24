@@ -24,3 +24,16 @@ function IsTable(var) return type(var) == "table" end -- All kinds of tables, ev
 function IsVector(var) return getmetatable(var) == Vector end
 function IsVector2D(var) return getmetatable(var) == Vector2D end
 function IsUserdata(var) return type(var) == "userdata" end
+
+--[[
+    Change variable type to boolean
+
+    Arguments:
+        any var = The variable to be converted
+    
+    Return:
+        bool
+]]
+function toBool(var)
+    return var and var ~= 0 and true or false
+end
