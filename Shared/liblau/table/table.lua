@@ -74,7 +74,7 @@ function table.ToString(tab, tab_name)
 
     local str = (tab_name or "Table") .. " = {\n"
 
-    local function printContent(tab, str, indent)
+    local function stringify(tab, str, indent)
         indent = "\t" .. indent
 
         for k,v in pairs(tab) do
@@ -85,7 +85,7 @@ function table.ToString(tab, tab_name)
 
             if IsBasicTable(v) then
                 str = str .. " = {\n"
-                str = printContent(v, str, indent)
+                str = stringify(v, str, indent)
                 str = str .. indent .. "},\n"
             else
                 str = str .. " = " .. v_quotation .. v .. v_quotation .. ",\n"
@@ -95,7 +95,7 @@ function table.ToString(tab, tab_name)
         return str
     end
 
-    str = printContent(tab, str, "") .. "}\n"
+    str = stringify(tab, str, "") .. "}\n"
 
     return str
 end
