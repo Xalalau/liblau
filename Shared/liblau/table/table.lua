@@ -78,7 +78,6 @@ function table.ToString(tab, tab_name, str, indent)
 
     if first_call then str = (tab_name or "Table") .. " = {\n" end
 
-    local last_indent = indent or ""
     indent = "    " .. (indent or "")
 
     for k,v in pairs(tab) do
@@ -91,7 +90,7 @@ function table.ToString(tab, tab_name, str, indent)
         end
     end
 
-    str = str .. last_indent .. "}" .. (not first_call and "," or "") .. "\n"
+    str = str .. (not first_call and indent or "") .. "}" .. (not first_call and "," or "") .. "\n"
 
     return str
 end
