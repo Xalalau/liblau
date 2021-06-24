@@ -18,6 +18,8 @@ local function RefreshSubscriptions(originator, event)
     end)
 end
 
+-- ------------------------------------------------------------------------
+
 --[[
     Subscribe to event
 
