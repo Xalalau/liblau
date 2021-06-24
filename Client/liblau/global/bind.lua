@@ -1,6 +1,6 @@
 Bind = {
     -- Bind list
-    -- { [string key name] = { func = function callback, args = table arguments }, ... }
+    -- { [string key name] = { function func = callback, table args = { ... } }, ... }
     list = {}
 }
 
@@ -18,7 +18,7 @@ Bind = {
 ]]
 function Bind:Add(key_name, target, ...)
     if key_name and target then
-        local target_aux = ConCommand:GetFunction(target) or _G[target]
+        local target_aux = ConCommand:Get(target) or _G[target]
 
         if target_aux then
             self.list[string.upper(key_name)] = { func = target_aux, args = { ... } }
