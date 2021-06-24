@@ -101,7 +101,7 @@ function table.Copy(tab)
                 v = Rotator(v.Pitch, v.Yaw, v.Roll)
             elseif IsColor(v) then
                 v = Color(v.R, v.G, v.B, v.A)
-            elseif IsQuaternion(v) then
+            elseif IsQuat(v) then
                 v = Quat(v.X, v.Y, v.Z, v.W)
             end
 

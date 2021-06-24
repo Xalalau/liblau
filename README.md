@@ -88,7 +88,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsColor](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsFunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsNumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsQuaternion](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsQuat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsRotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsString](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
