@@ -150,6 +150,7 @@ end
         table  target    = Run the selected operation to
         string operation =
             Add     = Copy elements from base to target keeping existing values
+            Copy    = Copy elements from base to target overriding existing values
             Inherit = Move elements from base to target keeping existing values
             Merge   = Move elements from base to target overriding existing values
 
@@ -158,8 +159,8 @@ end
 ]]
 function table.Transfer(base, target, operation)
     if not IsTable(base) or not IsTable(target) then return end
-    if operation ~= "Add" and operation ~= "Inherit" and operation ~= "Merge" then
-        Package:Error("Unknown table transfer operation. Available options: Add, Inherit and Merge")
+    if operation ~= "Add" and operation ~= "Copy" and operation ~= "Inherit" and operation ~= "Merge" then
+        Package:Error("Unknown table transfer operation. Available options: Add, Copy, Inherit and Merge")
         Package:Error(debug.traceback())
 
         return
@@ -176,8 +177,8 @@ function table.Transfer(base, target, operation)
         else
             local IsKInBoth = target[k] and base[k]
 
-            if operation == "Add" then
-                if IsKInBoth then
+            if operation == "Add" or operation == "Copy" then
+                if IsKInBoth and operation == "Add" then
                     goto continue
                 end
 
