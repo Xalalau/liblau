@@ -82,13 +82,14 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | Global
 ------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [IsBasicTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsColor](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsFunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsNumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsRotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsString](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsBasicTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsVector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsVector2D](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsUserdata](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
