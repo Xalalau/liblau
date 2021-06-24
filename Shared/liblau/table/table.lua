@@ -146,52 +146,34 @@ end
     Transfer elements from one table to another
 
     Arguments:
-        table  base      = Get elements from
-        table  target    = Run the selected operation to
-        string operation =
-            Add     = Copy elements from base to target keeping existing values
-            Copy    = Copy elements from base to target overriding existing values
-            Inherit = Move elements from base to target keeping existing values
-            Merge   = Move elements from base to target overriding existing values
+        table base                   = Get table entrie from base
+        table target                 = Send table entries to target
+        bool  modify_base     (true) = Set if the base table entries will be copied or moved
+        bool  override_target (true) = Set if the target table existing entries will be kept or overridden
 
     Return:
         nil
 ]]
-function table.Transfer(base, target, operation)
+function table.Transfer(base, target, modify_base, override_target)
     if not IsTable(base) or not IsTable(target) then return end
-    if operation ~= "Add" and operation ~= "Copy" and operation ~= "Inherit" and operation ~= "Merge" then
-        Package:Error("Unknown table transfer operation. Available options: Add, Copy, Inherit and Merge")
-        Package:Error(debug.traceback())
-
-        return
-    end
+    modify_base = modify_base == nil and true or modify_base
+    override_target = override_target == nil and true or override_target
 
     for k,v in pairs(base) do
         if IsBasicTable(v) then
             target[k] = target[k] or {}
-            table.Transfer(v, target[k], operation)
+            table.Transfer(v, target[k], modify_base, override_target)
 
-            if operation == "Merge" or operation == "Inherit" and table.Count(v) == 0 then
-                base[k] = nil
-            end
+            base[k] = not modify_base and base[k] or nil
         else
             local IsKInBoth = target[k] and base[k]
-
-            if operation == "Add" or operation == "Copy" then
-                if IsKInBoth and operation == "Add" then
-                    goto continue
-                end
-
-                v = CopyCustomTableType(v)
-            else
-                base[k] = nil
-
-                if operation == "Inherit" and IsKInBoth then
-                    goto continue
-                end
+            if IsKInBoth and not override_target then
+                goto continue
             end
 
-            target[k] = v
+            base[k] = not modify_base and base[k] or nil
+
+            target[k] = not modify_base and CopyCustomTableType(v) or v
         end
 
         ::continue::
