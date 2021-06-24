@@ -146,8 +146,8 @@ end
     Transfer elements from one table to another
 
     Arguments:
-        table  base      = Run the selected operation to
-        table  target    = Get elements from
+        table  base      = Get elements from
+        table  target    = Run the selected operation to
         string operation =
             Add     = Copy elements from base to target keeping existing values
             Inherit = Move elements from base to target keeping existing values
