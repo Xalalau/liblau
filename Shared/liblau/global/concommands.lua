@@ -52,7 +52,7 @@ end
     Return:
         table commands = ConCommand table
 ]]
-function ConCommand:GetTable()
+function ConCommand:GetAll()
     return ConCommand
 end
 
