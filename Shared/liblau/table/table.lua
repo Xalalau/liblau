@@ -146,7 +146,7 @@ end
     Transfer elements from one table to another
 
     Arguments:
-        table base                   = Get table entrie from base
+        table base                   = Get table entries from base
         table target                 = Send table entries to target
         bool  modify_base     (true) = Set if the base table entries will be copied or moved
         bool  override_target (true) = Set if the target table existing entries will be kept or overridden
