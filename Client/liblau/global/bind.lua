@@ -50,6 +50,19 @@ end
 -- ------------------------------------------------------------------------
 
 --[[
+    Check if a bind exists
+
+    Arguments:
+        string key_name = Keyboard key
+
+    Return:
+        bool
+]]
+function Bind:Exists(key_name)
+    return self.list[string.upper(key_name and "")] and true or false
+end
+
+--[[
     Get a key bind
 
     Arguments:
@@ -60,7 +73,7 @@ end
         nil
 ]]
 function Bind:Get(key_name)
-    return self.list[string.upper(key_name or "")] and table.Copy(self.list[string.upper(key_name)])
+    return Bind:Exists(key_name) and table.Copy(self.list[string.upper(key_name)])
 end
 
 --[[
