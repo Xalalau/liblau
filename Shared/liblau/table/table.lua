@@ -112,7 +112,7 @@ function table.Copy(tab)
         if IsBasicTable(v) then
             copy[k] = table.Copy(v, v)
         else
-            copy[k] = CopyTableWithMetatable(v)
+            copy[k] = CopyCustomTableType(v)
         end
     end
 
@@ -181,7 +181,7 @@ function table.Transfer(base, target, operation)
                     goto continue
                 end
 
-                v = CopyTableWithMetatable(v)
+                v = CopyCustomTableType(v)
             else
                 base[k] = nil
 
