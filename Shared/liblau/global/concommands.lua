@@ -1,6 +1,8 @@
--- Command list
--- { [string command] = function callback, ... }
-ConCommand = {}
+ConCommand = {
+    -- Command list
+    -- { [string command] = function callback, ... }
+    list = {}
+}
 
 --[[
     Add console commands
@@ -13,7 +15,13 @@ ConCommand = {}
         nil
 ]]
 function ConCommand:Add(command, func)
-    ConCommand[command] = func
+    if not command or not func then return end
+
+    if not ConCommand:Exists(command) then
+        self.list[string.upper(command)] = func
+    else
+        Package:Error("Console command '" .. cvar .. "' already exists")
+    end
 end
 
 --[[
@@ -26,38 +34,25 @@ end
         bool
 ]]
 function ConCommand:Exists(command)
-    return self.list[string.upper(command and "")] and true or false
+    return self.list[string.upper(command or "")] and true or false
 end
 
 --[[
-    Remove registered console commands
+    Get a console command callback
 
     Arguments:
         string command = Console command
 
     Return:
-        nil
-]]
-function ConCommand:Remove(command)
-    ConCommand[command] = nil
-end
-
---[[
-    Get registered console commands
-
-    Arguments:
-        string command = Console command
-
-    Return:
-        function return = The associated function
+        function func = Callback
         nil
 ]]
 function ConCommand:Get(command)
-    return ConCommand[command]
+    return ConCommand:Exists(command) and self.list[string.upper(command)] or nil
 end
 
 --[[
-    Get registered console commands
+    Get a copy of all console commands
 
     Arguments:
         nil
@@ -66,7 +61,7 @@ end
         table commands = ConCommand table
 ]]
 function ConCommand:GetAll()
-    return ConCommand
+    return table.Copy(self.list)
 end
 
 --[[
@@ -81,20 +76,20 @@ end
         nil
 ]]
 function ConCommand:Run(command, ...)
-    if self:Get(command) then
-        ConCommand[command](ConCommand[command], ...)
+    if ConCommand:Exists(command) then
+        ConCommand:Get(command)(...)
     else
         Package:Error(command .. "not found")
     end
 end
 
--- Call stored console commands
-if Client then
-    Client:Subscribe("Console", function(text)
-        local parts = string.Explode(text, " ")
+-- ------------------------------------------------------------------------
 
-        if parts[1] and ConCommand:Get(parts[1]) then
-            ConCommand:Run(table.unpack(parts))
-        end
-    end)
-end
+-- Call stored console commands
+Subscribe(Client or Server, "Console", "LL_CommandsConsole", function(text)
+    local parts = string.Explode(text, " ")
+
+    if ConCommand:Exists(parts[1]) then
+        ConCommand:Run(table.unpack(parts))
+    end
+end)
