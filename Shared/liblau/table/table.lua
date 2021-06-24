@@ -91,7 +91,7 @@ function table.Copy(tab)
 
     for k,v in pairs(tab) do
         if IsBasicTable(v) then
-            table.Copy(v, tab_name, str, indent)
+            copy[k] = table.Copy(v, v)
         else
             if IsVector(v) then
                 v = Vector(v.X, v.Y, v.Z)
