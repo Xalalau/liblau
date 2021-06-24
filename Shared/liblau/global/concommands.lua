@@ -17,6 +17,19 @@ function ConCommand:Add(command, func)
 end
 
 --[[
+    Check if a console command exists
+
+    Arguments:
+        string command = Console command
+
+    Return:
+        bool
+]]
+function ConCommand:Exists(command)
+    return self.list[string.upper(command and "")] and true or false
+end
+
+--[[
     Remove registered console commands
 
     Arguments:
