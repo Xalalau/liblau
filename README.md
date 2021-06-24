@@ -116,9 +116,9 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | string
 ------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [string.Explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.GetExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.GetLines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.Explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [string.PatternFormat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
 
 <br/>

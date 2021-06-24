@@ -1,4 +1,27 @@
 --[[
+    Explode a string
+
+    Arguments:
+        string str = The string to be exploded
+        string sep = The pattern to be used as separator
+
+    Return:
+        table list = Table with the exploded values
+        nil
+]]
+function string.Explode(str, sep)
+    if not str or not sep then return end
+
+    local list = {}
+
+    for subStr in str:PatternFormat():gmatch("([^" .. sep .. "]+)") do
+        table.insert(list, subStr:PatternFormat(true))
+    end
+
+    return list
+end
+
+--[[
     Get the file extension
 
     Arguments:
@@ -36,29 +59,6 @@ end
 ]]
 function string.GetLines(str)
     return string.Explode(str, "\r\n")
-end
-
---[[
-    Explode a string
-
-    Arguments:
-        string str = The string to be exploded
-        string sep = The pattern to be used as separator
-
-    Return:
-        table list = Table with the exploded values
-        nil
-]]
-function string.Explode(str, sep)
-    if not str or not sep then return end
-
-    local list = {}
-
-    for subStr in str:PatternFormat():gmatch("([^" .. sep .. "]+)") do
-        table.insert(list, subStr:PatternFormat(true))
-    end
-
-    return list
 end
 
 --[[
