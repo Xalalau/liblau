@@ -1,6 +1,6 @@
--- Bind list
--- { [string key name] = { func = function callback, args = table arguments }, ... }
 Bind = {
+    -- Bind list
+    -- { [string key name] = { func = function callback, args = table arguments }, ... }
     list = {}
 }
 
