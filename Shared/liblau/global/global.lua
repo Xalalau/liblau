@@ -17,6 +17,7 @@ function IsColor(var) return getmetatable(var) == Color end
 function IsFunction(var) return type(var) == "function" end
 function IsNumber(var) return type(var) == "number" end
 function IsQuat(var) return getmetatable(var) == Quat end -- Quaternion
+function IsQuaternion(var) return IsQuat(var) end -- Alias to IsQuat()
 function IsRotator(var) return getmetatable(var) == Rotator end
 function IsString(var) return type(var) == "string" end
 function IsTable(var) return type(var) == "table" end -- All kinds of tables, even Vector() and Rotator()
