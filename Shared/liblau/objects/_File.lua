@@ -27,7 +27,9 @@ local function Init()
         end
     end
 end
-Init()
+if SERVER then
+    Init()
+end
 
 -- ------------------------------------------------------------------------
 
@@ -51,6 +53,11 @@ function _File:Find(name, path, sorting)
     local extension = string.GetExtension(name)
     path = path or ""
     sorting = sorting or "nameasc"
+
+    if CLIENT and sorting == "dateasc" or sorting == "datedesc" then
+        Package:Error("Error. Nano's World doesn't support reading file dates in the clientside yet")
+        return
+    end
 
     -- Remove bar from the beginning
     if path:sub(1,1) == "/" then
