@@ -78,11 +78,11 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | ConCommand
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Run](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Run](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
 
 <br/>
 
