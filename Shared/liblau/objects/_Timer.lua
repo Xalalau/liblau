@@ -50,7 +50,7 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
     args = IsBasicTable(args) and args or timer.args
 
     -- Remove old timer
-    _Timer:ClearTimeout(timer.id)
+    Timer:ClearTimeout(timer.id)
 
     -- Check if repetitions are ok
     repetitions = repetitions or timer.repetitions
@@ -101,7 +101,7 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
     local error_break = false
 
     self.list[identifier] = {
-        id = _Timer:SetTimeout(1000 * delay, function()
+        id = Timer:SetTimeout(1000 * delay, function()
             if error_break then return false end
 
             if repetitions ~= 0 and i >= repetitions + 1 then
@@ -182,7 +182,7 @@ function _Timer:Pause(identifier)
 
     if not timer then return false end
 
-    _Timer:ClearTimeout(timer.id)
+    Timer:ClearTimeout(timer.id)
     timer.pause = os.clock()
     timer.id = nil
 
@@ -201,7 +201,7 @@ end
 function _Timer:Remove(identifier)
     if not (identifier and self.list[identifier]) then return false end
 
-    _Timer:ClearTimeout(self.list[identifier].id)
+    Timer:ClearTimeout(self.list[identifier].id)
     self.list[identifier] = nil
 
     return true
@@ -236,7 +236,7 @@ function _Timer:Restart(identifier)
 
     if not timer then return false end
 
-    _Timer:ClearTimeout(timer.id)
+    Timer:ClearTimeout(timer.id)
     timer.current_repetition = 1
     _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func)
 end
@@ -257,7 +257,7 @@ function _Timer:Simple(delay, func, args)
 
     local error_break = false
 
-    return _Timer:SetTimeout(1000 * delay, function()
+    return Timer:SetTimeout(1000 * delay, function()
         if error_break then return false end
     
         error_break = true
