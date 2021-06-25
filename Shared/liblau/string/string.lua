@@ -35,16 +35,11 @@ function string.GetExtension(path)
     -- Note: the extension is max. 4 digits and min. 2 digits
     if not path or string.len(path) < 2 then return end
 
-    local ext
-
     for i = 2, 5, 1 do
         if string.sub(path, -i, -i) == "." then
-            ext = string.sub(path, -i, -1)
-            break
+            return string.sub(path, -i, -1)
         end
     end
-
-    return ext
 end
 
 --[[
