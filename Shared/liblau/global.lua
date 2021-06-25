@@ -35,5 +35,5 @@ function IsUserdata(var) return type(var) == "userdata" end
         bool
 ]]
 function toBool(var)
-    return var and var ~= 0 and true or false
+    return var and var ~= 0 and var ~= "false" and true or false
 end
