@@ -60,6 +60,12 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
   Client Command: https://i.imgur.com/DEGvkBi.png
  --->
 
+:white_medium_small_square: | _File
+------------ | -------------
+![img](https://i.imgur.com/jsK5p2b.png) | [_File:Find](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/file/file.lua)
+
+<br/>
+
 :white_medium_small_square: | Bind
 ------------ | -------------
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Exists](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
