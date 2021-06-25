@@ -1,4 +1,5 @@
-Timer.list = {
+_Timer = {
+    list = {
     --[[
     [identifier] = {
         int      id                 = Timer identification
@@ -11,9 +12,10 @@ Timer.list = {
         function func               = Callback
         table    args               = { any var, ... } -- Arguments table for func.
 
-        -- Note: "args" actually has only one use: making Timer:Change capable of keeping a function state. Otherwise it's useless.
+        -- Note: "args" actually has only one use: making _Timer:Change capable of keeping a function state. Otherwise it's useless.
     }
     ]]
+    }
 }
 
 --[[
@@ -29,7 +31,7 @@ Timer.list = {
     Return:
         bool
 ]]
-function Timer:Change(identifier, delay, repetitions, func, args)
+function _Timer:Change(identifier, delay, repetitions, func, args)
     local timer = identifier and self.list[identifier]
 
     -- Check if we have something to change
@@ -48,7 +50,7 @@ function Timer:Change(identifier, delay, repetitions, func, args)
     args = IsBasicTable(args) and args or timer.args
 
     -- Remove old timer
-    self:ClearTimeout(timer.id)
+    _Timer:ClearTimeout(timer.id)
 
     -- Check if repetitions are ok
     repetitions = repetitions or timer.repetitions
@@ -65,12 +67,12 @@ function Timer:Change(identifier, delay, repetitions, func, args)
     local time_diff = os.clock() - last_cycle_start
     local time_to_next = delay - time_diff
 
-    self:Simple(time_to_next < 0 and 0 or time_to_next, function()
+    _Timer:Simple(time_to_next < 0 and 0 or time_to_next, function()
         timer.current_repetition = timer.current_repetition + 2
 
         func(table.unpack(args))
 
-        self:Create(identifier, delay, repetitions, func, args)
+        _Timer:Create(identifier, delay, repetitions, func, args)
     end)
 
     return true
@@ -79,7 +81,7 @@ end
 --[[
     Create and register a timer
 
-    Note: for timers that run only once, use Timer:Simple
+    Note: for timers that run only once, use _Timer:Simple
 
     Arguments:
         string   identifier  = Timer name
@@ -91,7 +93,7 @@ end
     Return:
         nil
 ]]
-function Timer:Create(identifier, delay, repetitions, func, args)
+function _Timer:Create(identifier, delay, repetitions, func, args)
     if not identifier or not delay or not repetitions or not func then return end
 
     local i = self.list[identifier] and self.list[identifier].current_repetition or 1
@@ -99,7 +101,7 @@ function Timer:Create(identifier, delay, repetitions, func, args)
     local error_break = false
 
     self.list[identifier] = {
-        id = self:SetTimeout(1000 * delay, function()
+        id = _Timer:SetTimeout(1000 * delay, function()
             if error_break then return false end
 
             if repetitions ~= 0 and i >= repetitions + 1 then
@@ -135,7 +137,7 @@ end
     Return:
         bool
 ]]
-function Timer:Exists(identifier)
+function _Timer:Exists(identifier)
     return self.list[identifier] and true or false
 end
 
@@ -146,10 +148,10 @@ end
         string identifier = Timer name
 
     Return:
-        table Timer.list[identifier]
+        table _Timer.list[identifier]
         nil
 ]]
-function Timer:Get(identifier)
+function _Timer:Get(identifier)
     return self.list[identifier]
 end
 
@@ -160,9 +162,9 @@ end
         nil
 
     Return:
-        table Timer.list
+        table _Timer.list
 ]]
-function Timer:GetAll()
+function _Timer:GetAll()
     return self.list
 end
 
@@ -175,12 +177,12 @@ end
     Return:
         bool
 ]]
-function Timer:Pause(identifier)
+function _Timer:Pause(identifier)
     local timer = identifier and self.list[identifier]
 
     if not timer then return false end
 
-    self:ClearTimeout(timer.id)
+    _Timer:ClearTimeout(timer.id)
     timer.pause = os.clock()
     timer.id = nil
 
@@ -196,10 +198,10 @@ end
     Return:
         bool
 ]]
-function Timer:Remove(identifier)
+function _Timer:Remove(identifier)
     if not (identifier and self.list[identifier]) then return false end
 
-    self:ClearTimeout(self.list[identifier].id)
+    _Timer:ClearTimeout(self.list[identifier].id)
     self.list[identifier] = nil
 
     return true
@@ -214,7 +216,7 @@ end
     Return:
         int repetitions_left = Repetitions left
 ]]
-function Timer:RepsLeft(identifier)
+function _Timer:RepsLeft(identifier)
     local timer = self.list[identifier]
 
     return not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
@@ -229,14 +231,14 @@ end
     Return:
         bool
 ]]
-function Timer:Restart(identifier)
+function _Timer:Restart(identifier)
     local timer = identifier and self.list[identifier]
 
     if not timer then return false end
 
-    self:ClearTimeout(timer.id)
+    _Timer:ClearTimeout(timer.id)
     timer.current_repetition = 1
-    self:Create(identifier, timer.delay, timer.repetitions, timer.func)
+    _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func)
 end
 
 --[[
@@ -250,12 +252,12 @@ end
     Return:
         nil
 ]]
-function Timer:Simple(delay, func, args)
+function _Timer:Simple(delay, func, args)
     if not delay or not func then return end
 
     local error_break = false
 
-    return self:SetTimeout(1000 * delay, function()
+    return _Timer:SetTimeout(1000 * delay, function()
         if error_break then return false end
     
         error_break = true
@@ -276,7 +278,7 @@ end
         float time_left       = Time left to finish the current repetition (seconds)
         float total_time_left = Time left to finish the current and next repetitions (seconds)
 ]]
-function Timer:TimeLeft(identifier)
+function _Timer:TimeLeft(identifier)
     local timer = self.list[identifier]
 
     local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
@@ -294,7 +296,7 @@ end
     Return:
         bool
 ]]
-function Timer:Toggle(identifier)
+function _Timer:Toggle(identifier)
     local timer = identifier and self.list[identifier]
 
     if not timer then return false end
@@ -313,7 +315,7 @@ end
     Return:
         bool
 ]]
-function Timer:UnPause(identifier)
+function _Timer:UnPause(identifier)
     local timer = identifier and self.list[identifier]
 
     if not timer then return false end
@@ -322,12 +324,12 @@ function Timer:UnPause(identifier)
     local time_diff =  timer.pause - last_cycle_start
     local time_to_next = timer.delay - time_diff
 
-    self:Simple(time_to_next, function()
+    _Timer:Simple(time_to_next, function()
         timer.current_repetition = timer.current_repetition + 1
 
         timer.func()
 
-        self:Create(identifier, timer.delay, timer.repetitions, timer.func)
+        _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func)
     end)
 
     return true
