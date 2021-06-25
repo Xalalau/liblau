@@ -62,7 +62,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | _File
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [_File:Find](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_File_.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_File:Find](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_File.lua)
 
 <br/>
 
