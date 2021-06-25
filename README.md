@@ -87,6 +87,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 <br/>
 
 :white_medium_small_square: | CVar:Add
+------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | [CVar:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [CVar:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [CVar:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
