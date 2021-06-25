@@ -47,9 +47,8 @@ Init()
         bool
 ]]
 function _File:Find(name, path, sorting)
-    local filename = string.StripExtension(name)
+    local filename = not name and "*" or string.StripExtension(name)
     local extension = string.GetExtension(name)
-    name = name or "*"
     path = path or ""
     sorting = sorting or "nameasc"
 
