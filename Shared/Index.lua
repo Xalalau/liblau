@@ -202,3 +202,6 @@ end
 
 -- Load liblau
 LL:RequireFolder("liblau")
+
+-- CVars
+CVar:Add("sv_cheats", "Enable cheat commands", false, false, { FCVAR_GAMEDLL, FCVAR_NOTIFY, FCVAR_REPLICATED })

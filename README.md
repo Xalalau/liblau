@@ -62,15 +62,15 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | _File
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [_File:Find](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/file/file.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_File:Find](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_File_.lua)
 
 <br/>
 
 :white_medium_small_square: | Bind
 ------------ | -------------
-![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Exists](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
-![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Get](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
-![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:GetAll](https://github.com/Xalalau/liblau/blob/master/Client/liblau/global/concommands.lua)
+![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Exists](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
+![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Get](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
+![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:GetAll](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
 ![img](https://i.imgur.com/DEGvkBi.png) | bind
 ![img](https://i.imgur.com/DEGvkBi.png) | unbind
 
@@ -78,36 +78,46 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | ConCommand
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Run](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/concommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [ConCommand:Run](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommands.lua)
+
+<br/>
+
+:white_medium_small_square: | CVar:Add
+![img](https://i.imgur.com/jsK5p2b.png) | [CVar:Add](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [CVar:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [CVar:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [CVar:GetValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [CVar:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [CVar:SetValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
 
 <br/>
 
 :white_medium_small_square: | Global
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [IsBasicTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsColor](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsFunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsNumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsQuat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsRotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsString](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsVector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsVector2D](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [IsUserdata](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [toBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsBasicTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsColor](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsFunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsNumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsQuat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsRotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsString](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsTable](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsVector](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsVector2D](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsUserdata](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [toBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 
 <br/>
 
 :white_medium_small_square: | Global - Events
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global/events.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Subscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/events.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Unubscribe](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/events.lua)
 
 <br/>
 
@@ -122,39 +132,39 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | string
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [string.Explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.GetExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.GetLines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.PatternFormat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [string.StripExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/string/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.Explode](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.GetExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.GetLines](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.PatternFormat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/string.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [string.StripExtension](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/string.lua)
 
 <br/>
 
 :white_medium_small_square: | table
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [table.Copy](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.Concat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.Count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.HasValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.IsEmpty](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.Print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.TosTring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [table.Transfer](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/table/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Copy](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Concat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Count](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.HasValue](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.IsEmpty](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Print](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.TosTring](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [table.Transfer](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
 
 <br/>
 
 :white_medium_small_square: | Timer
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Change](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Create](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:RepsLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Restart](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Simple](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:TimeLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Toggle](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:UnPause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/Timer/Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Change](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Create](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:RepsLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Restart](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Simple](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:TimeLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Toggle](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [Timer:UnPause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
