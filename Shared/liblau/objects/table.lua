@@ -45,7 +45,7 @@ end
 
 --[[
     Concatenate all values of a sequential table 
-    Note: It doesn't read subtables
+    It doesn't read subtables
 
     Arguments:
         table  tab                 = Sequential table to generate the string
@@ -81,6 +81,7 @@ end
 --[[
     Counts the amount of keys in a table
     Use # when a table is numerically and sequentially indexed
+    It doesn't read subtables
 
     Arguments:
         table tab = The table to count the keys
@@ -132,7 +133,7 @@ end
         bool
         nil
 ]]
-function table.IsEmpty(tab, value)
+function table.IsEmpty(tab)
     if not IsTable(tab) then return end
 
     return not next(tab) and true or false
