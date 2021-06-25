@@ -182,14 +182,14 @@ function table.ToString(tab, tab_name)
             local k_quotation = IsString(k) and "\"" or ""
             local v_quotation = IsString(v) and "\"" or ""
  
-            str = str .. indent .. "[" .. k_quotation .. k .. k_quotation .. "]"
+            str = str .. indent .. "[" .. k_quotation .. tostring(k) .. k_quotation .. "]"
 
             if IsBasicTable(v) then
                 str = str .. " = {\n"
                 str = stringify(v, str, indent)
                 str = str .. indent .. "},\n"
             else
-                str = str .. " = " .. v_quotation .. v .. v_quotation .. ",\n"
+                str = str .. " = " .. v_quotation .. tostring(v) .. v_quotation .. ",\n"
             end
         end
 
