@@ -68,11 +68,11 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
     local time_to_next = delay - time_diff
 
     _Timer:Simple(time_to_next < 0 and 0 or time_to_next, function()
-        timer.current_repetition = timer.current_repetition + 2
+        _Timer:Create(identifier, delay, repetitions, func, args)
 
         func(table.unpack(args))
 
-        _Timer:Create(identifier, delay, repetitions, func, args)
+        timer.current_repetition = timer.current_repetition + 1
     end)
 
     return true
@@ -121,7 +121,7 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
             end
         end),
         args = IsBasicTable(args) and args or {},
-        current_repetition = 1,
+        current_repetition = i,
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
         stop = repetitions ~= 0 and os.clock() + delay * repetitions,
@@ -332,9 +332,9 @@ function _Timer:UnPause(identifier)
     local time_to_next = timer.delay - time_diff
 
     _Timer:Simple(time_to_next, function()
-        timer.current_repetition = timer.current_repetition + 1
-
         timer.func(table.unpack(timer.args))
+
+        timer.current_repetition = timer.current_repetition + 1
 
         _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
     end)
