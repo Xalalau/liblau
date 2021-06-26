@@ -14,7 +14,7 @@ FCVAR_USERINFO   = 512   -- Sends the CVar value to the server
 
 CVar = {
     --[[
-    Cvars.list = {
+    Cvar.list = {
         [string owner] = { -- "Scope" or some player
             [string cvar name] = {
                 func = function callback or nil,
@@ -112,7 +112,7 @@ end
         Player player = A player. Only used with FCVAR_USERINFO
 
     Return:
-        table cvar = Cvars list entry
+        table cvar = Cvar list entry
         nil
 ]]
 function CVar:Get(cvar, player)
@@ -151,7 +151,7 @@ end
         Player player = A player. Only used with FCVAR_USERINFO
 
     Return:
-        table cvars = Cvars list
+        table cvars = Cvar list
 ]]
 function CVar:GetAll(player)
     return table.Copy(self.list[player or "Scope"])
@@ -249,7 +249,7 @@ end
 -- ------------------------------------------------------------------------
 
 -- Interact with cvars in the console
-Subscribe(Client or Server, "Console", "LL_CvarsConsole", function(text)
+Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
     local parts = string.Explode(text, " ")
 
     local function checkConsoleCommands(parts, player)
