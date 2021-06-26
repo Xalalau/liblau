@@ -119,7 +119,7 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
             i = i + 1
         end),
         args = IsBasicTable(args) and args or {},
-        current_repetition = 0,
+        current_repetition = 1,
         repetitions = repetitions ~= 0 and repetitions,
         start = os.clock(),
         stop = repetitions ~= 0 and os.clock() + delay * repetitions,
