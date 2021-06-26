@@ -110,6 +110,8 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
                 return false
             end
 
+            self.list[identifier].start = os.clock()
+
             error_break = true
             func(table.unpack(self.list[identifier].args))
             error_break = false
@@ -288,7 +290,7 @@ function _Timer:TimeLeft(identifier)
 
     if not timer then return end
 
-    local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
+    local time_left = not timer.stop and "infinite" or os.clock() - timer.start
     local total_time_left = time_left + timer.delay * (timer.repetitions - timer.current_repetition)
 
     return time_left, total_time_left
