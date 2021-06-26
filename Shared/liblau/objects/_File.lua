@@ -105,7 +105,7 @@ function _File:Find(name, path, sorting)
            sorting == "dateasc" and self.list_easy_check[a] < self.list_easy_check[b] or
            sorting == "datedesc" and self.list_easy_check[a] > self.list_easy_check[b]
             then
-            points_b = points_b + 0.0002
+            points_b = points_b + 0.0001
         else
             points_a = points_a + 0.0001
         end
