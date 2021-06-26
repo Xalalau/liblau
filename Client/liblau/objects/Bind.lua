@@ -17,7 +17,7 @@ Bind = {
 ]]
 local function BindAdd(key_name, target, ...)
     if key_name and target then
-        local target_function = Cvar:Get(target) or ConCommand:Get(target) or _G[target]
+        local target_function = CVar:Get(target) or ConCommand:Get(target) or _G[target]
 
         if target_function then
             Bind.list[string.upper(key_name)] = { func = target_function, args = { ... } }
