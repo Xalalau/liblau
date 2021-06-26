@@ -114,11 +114,11 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
             func(table.unpack(self.list[identifier].args))
             error_break = false
 
+            i = i + 1
+
             if self.list[identifier] then
                 self.list[identifier].current_repetition = i
             end
-
-            i = i + 1
         end),
         args = IsBasicTable(args) and args or {},
         current_repetition = 1,
