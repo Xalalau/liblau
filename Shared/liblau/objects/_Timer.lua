@@ -221,6 +221,8 @@ end
 function _Timer:RepsLeft(identifier)
     local timer = self.list[identifier]
 
+    if not timer then return end
+
     return not timer.repetitions and "infinite" or (timer.repetitions - timer.current_repetition)
 end
 
@@ -279,9 +281,12 @@ end
     Return:
         float time_left       = Time left to finish the current repetition (seconds)
         float total_time_left = Time left to finish the current and next repetitions (seconds)
+        nil
 ]]
 function _Timer:TimeLeft(identifier)
     local timer = self.list[identifier]
+
+    if not timer then return end
 
     local time_left = not timer.stop and "infinite" or timer.stop - os.clock()
     local total_time_left = time_left + timer.delay * (timer.repetitions - timer.current_repetition)
