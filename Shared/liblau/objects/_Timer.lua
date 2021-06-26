@@ -184,7 +184,7 @@ end
 function _Timer:Pause(identifier)
     local timer = identifier and self.list[identifier]
 
-    if not timer then return false end
+    if not timer or not timer.id then return false end
 
     Timer:ClearTimeout(timer.id)
     timer.pause = os.clock()
@@ -203,7 +203,9 @@ end
         bool
 ]]
 function _Timer:Remove(identifier)
-    if not (identifier and self.list[identifier]) then return false end
+    local timer = identifier and self.list[identifier]
+
+    if not timer or not timer.id then return false end
 
     Timer:ClearTimeout(self.list[identifier].id)
     self.list[identifier] = nil
@@ -240,7 +242,7 @@ end
 function _Timer:Restart(identifier)
     local timer = identifier and self.list[identifier]
 
-    if not timer then return false end
+    if not timer or not timer.id then return false end
 
     Timer:ClearTimeout(timer.id)
     timer.current_repetition = 1
@@ -297,7 +299,7 @@ function _Timer:TimeLeft(identifier)
 end
 
 --[[
-    "Pause" a timer
+    Pause or unpause a timer
 
     Arguments:
         string identifier = Timer name
@@ -310,7 +312,11 @@ function _Timer:Toggle(identifier)
 
     if not timer then return false end
 
-    timer.pause = not timer.pause
+    if timer.pause then
+        _Timer:UnPause(identifier)
+    else
+        _Timer:Pause(identifier)
+    end
 
     return true
 end
