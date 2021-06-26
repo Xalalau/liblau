@@ -114,7 +114,9 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
             func(table.unpack(self.list[identifier].args))
             error_break = false
 
-            self.list[identifier].current_repetition = i
+            if self.list[identifier] then
+                self.list[identifier].current_repetition = i
+            end
 
             i = i + 1
         end),
