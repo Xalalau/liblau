@@ -225,7 +225,9 @@ function table.Transfer(base, target, modify_base, override_target)
             target[k] = target[k] or {}
             table.Transfer(v, target[k], modify_base, override_target)
 
-            base[k] = not modify_base and base[k] or nil
+            if table.Count(base[k]) == 0 then
+                base[k] = not modify_base and base[k] or nil
+            end
         else
             local is_k_in_both = target[k] and base[k]
             if is_k_in_both and not override_target then
