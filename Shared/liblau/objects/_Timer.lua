@@ -61,12 +61,11 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
         return true
     end
 
-    -- Check the delay and change the timer
+    -- Check the delay
     delay = delay or timer.delay
-    local last_cycle_start = timer.start + timer.delay * timer.current_repetition
-    local time_diff = os.clock() - last_cycle_start
-    local time_to_next = delay - time_diff
 
+    -- Do a delay compensation and start the changed timer
+    local time_to_next = _Timer:TimeLeft(identifier)
     _Timer:Simple(time_to_next < 0 and 0 or time_to_next, function()
         _Timer:Create(identifier, delay, repetitions, func, args)
 
@@ -130,6 +129,7 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
         delay = delay,
         func = func
     }
+    print("reg")
 end
 
 --[[
@@ -335,9 +335,8 @@ function _Timer:UnPause(identifier)
 
     if not timer then return false end
 
-    local last_cycle_start = timer.start + timer.delay * timer.current_repetition
-    local time_diff =  timer.pause - last_cycle_start
-    local time_to_next = timer.delay - time_diff
+    local time_to_next = timer.pause - timer.start
+    timer.pause = nil
 
     _Timer:Simple(time_to_next, function()
         timer.func(table.unpack(timer.args))
