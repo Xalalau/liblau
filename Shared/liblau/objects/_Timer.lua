@@ -242,7 +242,7 @@ function _Timer:Restart(identifier)
 
     Timer:ClearTimeout(timer.id)
     timer.current_repetition = 1
-    _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func)
+    _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
 end
 
 --[[
@@ -334,9 +334,9 @@ function _Timer:UnPause(identifier)
     _Timer:Simple(time_to_next, function()
         timer.current_repetition = timer.current_repetition + 1
 
-        timer.func()
+        timer.func(table.unpack(timer.args))
 
-        _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func)
+        _Timer:Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
     end)
 
     return true
