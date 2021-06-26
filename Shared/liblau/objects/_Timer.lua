@@ -125,7 +125,6 @@ function _Timer:Create(identifier, delay, repetitions, func, args)
         delay = delay,
         func = func
     }
-    print("reg")
 end
 
 --[[
