@@ -332,6 +332,7 @@ function _Timer:UnPause(identifier)
     if not timer then return false end
 
     local time_to_next = timer.pause - timer.start
+    timer.start = os.clock() - time_to_next
     timer.pause = nil
 
     _Timer:Simple(time_to_next, function()
