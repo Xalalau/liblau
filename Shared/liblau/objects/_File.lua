@@ -102,8 +102,8 @@ function _File:Find(name, path, sorting)
         -- Precedence: selected sorting
         if sorting == "nameasc" and a:lower() < b:lower() or 
            sorting == "namedesc" and a:lower() > b:lower() or 
-           sorting == "dateasc" and self.list2[a] < self.list2[b] or
-           sorting == "datedesc" and self.list2[a] > self.list2[b]
+           sorting == "dateasc" and self.list_easy_check[a] < self.list_easy_check[b] or
+           sorting == "datedesc" and self.list_easy_check[a] > self.list_easy_check[b]
             then
             points_b = points_b + 0.0002
         else
