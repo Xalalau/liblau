@@ -48,17 +48,11 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
     -- Remove old timer
     Timer:ClearTimeout(timer.id)
 
-    -- Deal with the args
-    func = func or timer.func
-    args = IsBasicTable(args) and args or timer.args
-    repetitions = repetitions or timer.repetitions
-    delay = delay or timer.delay
-
     -- Manualy update fields, so other functions can already return the new values
-    timer.delay = delay
-    timer.func = func
-    timer.args = args
-    timer.repetitions = repetitions
+    timer.func = func or timer.func
+    timer.args = IsBasicTable(args) and args or timer.args
+    timer.repetitions = repetitions or timer.repetitions
+    timer.delay = delay or timer.delay
 
     -- Do a delay compensation and start the changed timer
     local time_to_next = _Timer:TimeLeft(identifier)
