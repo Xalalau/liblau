@@ -35,7 +35,7 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
     local timer = identifier and self.list[identifier]
 
     -- Check if we have something to change
-    if not timer then return false end
+    if not timer or not timer.id then return false end
 
     if (timer.delay == delay or not delay) and
        (timer.repetitions == repetitions or not repetitions) and
