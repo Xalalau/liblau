@@ -45,24 +45,20 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
         return false
     end
 
-    -- Deal with new function and arguments
-    func = func or timer.func
-    args = IsBasicTable(args) and args or timer.args
-
     -- Remove old timer
     Timer:ClearTimeout(timer.id)
 
-    -- Check if repetitions are ok
+    -- Deal with the args
+    func = func or timer.func
+    args = IsBasicTable(args) and args or timer.args
     repetitions = repetitions or timer.repetitions
-
-    if repetitions ~= 0 and timer.current_repetition >= repetitions then
-        self.list[identifier] = nil
-
-        return true
-    end
-
-    -- Check the delay
     delay = delay or timer.delay
+
+    -- Manualy update fields, so other functions can already return the new values
+    timer.delay = delay
+    timer.func = func
+    timer.args = args
+    timer.repetitions = repetitions
 
     -- Do a delay compensation and start the changed timer
     local time_to_next = _Timer:TimeLeft(identifier)
