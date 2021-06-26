@@ -264,7 +264,7 @@ function _Timer:Simple(delay, func, args)
         if error_break then return false end
     
         error_break = true
-        func(IsBasicTable(args) and table.unpack(args))
+        func(table.unpack(IsBasicTable(args) and args or {}))
         error_break = false
 
         return false
