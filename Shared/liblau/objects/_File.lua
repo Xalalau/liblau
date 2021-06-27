@@ -33,7 +33,7 @@ end
 
 -- Sort file list according to the documentation of _File:Find
 -- Less points = the file has precedence
-local function SortFileList(list)
+local function SortFileList(list, sorting)
     table.sort(list, function(a, b)
         local points_a = 0
         local points_b = 0
@@ -152,7 +152,7 @@ function _File:Find(name, path, sorting)
     end
 
     -- Sort list
-    SortFileList(package_files)
+    SortFileList(package_files, sorting)
 
     -- Build dir structure
     local dir_tree = {}
