@@ -178,7 +178,7 @@ function table.ToString(tab, tab_name)
     local function stringify(tab, str, indent)
         indent = "\t" .. indent
 
-        for k,v in pairs(tab) do
+        for k,v in SortedPairs(tab) do
             local k_quotation = IsString(k) and "\"" or ""
             local v_quotation = IsString(v) and "\"" or ""
  
