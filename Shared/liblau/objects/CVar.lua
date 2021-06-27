@@ -225,12 +225,12 @@ function CVar:SetValue(cvar, value, player)
                 return
             end
 
-            if CLIENT and (IsFlagSet(flags, FCVAR_REPLICATED) or IsFlagSet(flags, FCVAR_NOTIFY)) then
+            if CLIENT and (IsFlagSet(flags, FCVAR_GAMEDLL)) then
                 Package:Error("Only the Server can modify '".. cvar .. "'")
                 return
             end
 
-            if SERVER and IsFlagSet(flags, FCVAR_USERINFO) then
+            if SERVER and IsFlagSet(flags, FCVAR_CLIENTDLL) then
                 Package:Error("Only the Client can modify '".. cvar .. "'")
                 return
             end
