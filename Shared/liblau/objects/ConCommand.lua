@@ -1,20 +1,21 @@
-ConCommand = {
-    -- Command list
-    -- { [string command] = function callback, ... }
-    list = {}
-}
+ConCommand = {}
+
+-- Command list
+-- { [string command] = { function func = Function callback, bool is_shared = It needs to run shared }, ... }
+local ccon_list = {}
 
 --[[
     Add console commands
 
     Arguments:
-        string   command = Console command
-        function func    = Function callback name or address
+        string   command   = Console command
+        function func      = Function callback name or address
+        bool     is_shared = It needs to run shared (Only the server can run this command)
 
     Return:
         nil
 ]]
-function ConCommand:Add(command, func)
+function ConCommand:Add(command, func, is_shared)
     if not command then return end
 
     if not IsFunction(func) then
@@ -24,7 +25,10 @@ function ConCommand:Add(command, func)
     end
 
     if not ConCommand:Exists(command) then
-        self.list[string.upper(command)] = func
+        ccon_list[string.upper(command)] = {
+            func = func,
+            is_shared = is_shared
+        }
     else
         Package:Error("Console command '" .. command .. "' already exists")
         Package:Error(debug.traceback())
@@ -41,7 +45,7 @@ end
         bool
 ]]
 function ConCommand:Exists(command)
-    return self.list[string.upper(command or "")] and true or false
+    return ccon_list[string.upper(command or "")] and true or false
 end
 
 --[[
@@ -55,7 +59,13 @@ end
         nil
 ]]
 function ConCommand:Get(command)
-    return ConCommand:Exists(command) and self.list[string.upper(command)] or nil
+    local res = ConCommand:Exists(command) and ccon_list[string.upper(command)]
+
+    if CLIENT and res.is_shared then
+        res.func = "PROTECTED"
+    end
+
+    return res
 end
 
 --[[
@@ -68,7 +78,17 @@ end
         table commands = ConCommand table
 ]]
 function ConCommand:GetAll()
-    return table.Copy(self.list)
+    local copy = table.Copy(ccon_list)
+
+    if CLIENT then
+        for k, v in pairs(copy) do
+            if v.is_shared then
+                v.func = "PROTECTED"
+            end
+        end
+    end
+
+    return copy
 end
 
 --[[
@@ -84,8 +104,18 @@ end
         nil
 ]]
 function ConCommand:Run(command, ...)
-    if ConCommand:Exists(command) then
-        ConCommand:Get(command)(CLIENT and NanosWorld:GetLocalPlayer(), command, { ... })
+    local cmd_tab = ConCommand:Get(command)
+
+    if cmd_tab then
+        if CLIENT and cmd_tab.is_shared then
+            Package:Error("Only the Server can run the command '" .. command .. "'")
+        else
+            cmd_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), command, { ... })
+
+            if cmd_tab.is_shared then
+                Events:BroadcastRemote("LL_ConCommand_RunShared", { command, ... })
+            end
+        end
     else
         Package:Error(command .. "not found")
     end
@@ -93,7 +123,7 @@ end
 
 -- ------------------------------------------------------------------------
 
--- Call stored console commands
+-- Run console commands
 Subscribe(Client or Server, "Console", "LL_CommandsConsole", function(text)
     local parts = string.Explode(text, " ")
 
@@ -101,3 +131,14 @@ Subscribe(Client or Server, "Console", "LL_CommandsConsole", function(text)
         ConCommand:Run(table.unpack(parts))
     end
 end)
+
+-- Finish running shared commands
+if CLIENT then
+    Events:Subscribe("LL_ConCommand_RunShared", function(command, ...)
+        local cmd_tab = ConCommand:Exists(command) and ccon_list[string.upper(command)]
+
+        if cmd_tab and cmd_tab.is_shared then
+            cmd_tab.func(NanosWorld:GetLocalPlayer(), command, { ... })
+        end
+    end)
+end
