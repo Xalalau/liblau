@@ -65,12 +65,15 @@ function CVar:Add(cvar, description, default, value, flags, func, player)
         local msg = "Error creating CVar '" .. cvar .. "'."
         if flags[FCVAR_GAMEDLL] and flags[FCVAR_CLIENTDLL] then
             Package:Error(msg .. " You can't set both flags FCVAR_GAMEDLL and FCVAR_CLIENTDLL at the same time")
+            Package:Error(debug.traceback())
             return
         elseif flags[FCVAR_USERINFO] and not flags[FCVAR_CLIENTDLL] then
             Package:Error(msg .. " Please, set the flag FCVAR_CLIENTDLL to use FCVAR_USERINFO")
+            Package:Error(debug.traceback())
             return
         elseif (flags[FCVAR_PROTECTED] or flags[FCVAR_REPLICATED] or flags[FCVAR_NOTIFY]) and not flags[FCVAR_GAMEDLL] then
             Package:Error(msg .. " Please, set the flag FCVAR_GAMEDLL to use FCVAR_PROTECTED, FCVAR_REPLICATED or FCVAR_NOTIFY")
+            Package:Error(debug.traceback())
             return
         end
     end
