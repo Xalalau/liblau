@@ -259,7 +259,6 @@ function CVar:SetValue(cvar, value, player)
             end
 
             -- Archive
-            -- TO-DO: Implement
             if IsFlagSet(flags, FCVAR_ARCHIVE) then
                 SetPersistentData("LL_cvar_" .. (player or "Scope") .. "_" .. cvar, CVar:Get(cvar, player))
             end
@@ -269,7 +268,7 @@ end
 
 -- ------------------------------------------------------------------------
 
--- Interact with cvars in the console
+-- Run cvars in the console
 Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
     local parts = string.Explode(text, " ")
     local cvar_tab = CVar:Get(parts[1]) or CLIENT and CVar:Get(parts[1], NanosWorld:GetLocalPlayer())
@@ -289,18 +288,7 @@ Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
     end
 end)
 
- -- Server receive userinfo from a player
-if SERVER then
-    Events:Subscribe("LL_CVar_SetUserInfo", function(player, cvar, description, default, value, flags, func)
-        if not CVar:Exists(cvar, player) then
-            CVar:Add(cvar, description, default, value, flags, func, player)
-        else
-            CVar.list[player][string.upper(cvar)].value = tostring(value)
-        end
-    end)
-end
-
--- Client receive replicated vars from server
+-- Receive FCVAR_REPLICATED vars from server
 if CLIENT then
     Events:Subscribe("LL_CVar_Replicate", function(cvar, description, default, value, flags, func)
         if not CVar:Exists(cvar) then
@@ -311,10 +299,9 @@ if CLIENT then
     end)
 end
 
--- Initialize CVar.list[player] for FCVAR_USERINFO and send FCVAR_REPLICATED vars
-
-local function InitReplicated(player)
-    if SERVER then
+-- Send FCVAR_REPLICATED vars to clients
+if SERVER then
+    local function InitReplicated(player)
         for cvar, cvar_tab in pairs(CVar:GetAll()) do
             if IsFlagSet(cvar_tab.flags, FCVAR_REPLICATED) then
                 Events:CallRemote("LL_CVar_Replicate", player, {
@@ -328,12 +315,23 @@ local function InitReplicated(player)
             end
         end
     end
+
+    Package:Subscribe("Load", function()
+        for _, player in ipairs(NanosWorld:GetPlayers()) do
+            InitReplicated(player)
+        end
+    end)
+
+    Player:Subscribe("Spawn", function (player)
+        InitReplicated(player)
+    end)
 end
+
+-- Initialize CVar.list[player] for FCVAR_USERINFO
 
 Package:Subscribe("Load", function()
     if SERVER then
         for _, player in ipairs(NanosWorld:GetPlayers()) do
-            InitReplicated(player)
             CVar.list[player] = {}
         end
     elseif NanosWorld:GetLocalPlayer() then
@@ -343,10 +341,15 @@ end)
 
 Player:Subscribe("Spawn", function (player)
     CVar.list[player] = {}
-
-    if SERVER then
-        _Timer:Simple(1, function()
-            InitReplicated(player)
-        end)
-    end
 end)
+
+-- Receive FCVAR_USERINFO vars from client
+if SERVER then
+    Events:Subscribe("LL_CVar_SetUserInfo", function(player, cvar, description, default, value, flags, func)
+        if not CVar:Exists(cvar, player) then
+            CVar:Add(cvar, description, default, value, flags, func, player)
+        else
+            CVar.list[player][string.upper(cvar)].value = tostring(value)
+        end
+    end)
+end
