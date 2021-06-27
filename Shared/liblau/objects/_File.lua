@@ -99,6 +99,7 @@ end
     Return:
         bool
 ]]
+-- TO-DO: Support wildcarts /*/*/*
 function _File:Find(name, path, sorting)
     local filename = not name and "*" or string.StripExtension(name)
     local extension = string.GetExtension(name)
@@ -132,14 +133,15 @@ function _File:Find(name, path, sorting)
     local dir_tree = {}
 
     for _,path in ipairs(package_files) do
+        local path_parts = string.Explode(path, "/")
         local last_folder = dir_tree
 
-        for subStr in path:gmatch("([^/]+)") do
-            if not string.GetExtension(subStr) then
-                last_folder[subStr] = last_folder[subStr] or {}
-                last_folder = last_folder[subStr]
+        for k, sub_str in ipairs(path_parts) do
+            if next(path_parts, k) then
+                last_folder[sub_str] = last_folder[sub_str] or {}
+                last_folder = last_folder[sub_str]
             else
-                table.insert(last_folder, subStr)
+                table.insert(last_folder, sub_str)
             end
         end
     end
