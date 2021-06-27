@@ -110,7 +110,7 @@ function ConCommand:Run(command, ...)
         if CLIENT and cmd_tab.is_shared then
             Package:Error("Only the Server can run the command '" .. command .. "'")
         else
-            cmd_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), command, { ... })
+            cmd_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), command, { string.FormatVarargs(...) })
 
             if cmd_tab.is_shared then
                 Events:BroadcastRemote("LL_ConCommand_RunShared", { command, ... })
@@ -138,7 +138,7 @@ if CLIENT then
         local cmd_tab = ConCommand:Exists(command) and ccon_list[string.upper(command)]
 
         if cmd_tab and cmd_tab.is_shared then
-            cmd_tab.func(NanosWorld:GetLocalPlayer(), command, { ... })
+            cmd_tab.func(NanosWorld:GetLocalPlayer(), command, { string.FormatVarargs(...) })
         end
     end)
 end
