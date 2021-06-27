@@ -26,6 +26,40 @@ function IsVector2D(var) return getmetatable(var) == Vector2D end
 function IsUserdata(var) return type(var) == "userdata" end
 
 --[[
+    Iterate a table with all keys sorted alphabetically
+
+    Arguments:
+        table tab        = The variable to be iterated
+        bool  descending = Sort the order reversed
+    
+    Return:
+        function iterator
+]]
+function SortedPairs(tab, descending)
+    local keys, len = {}, 0
+
+    for k, v in pairs(tab) do
+        len = len + 1
+        keys[len] = IsNumber(k) and v or k
+    end
+
+    table.sort(keys, function(a,b)
+        return (descending and a or b):lower() > (descending and b or a):lower()
+    end)
+
+    local k = 0
+    return function()
+        k = k + 1
+        if IsBasicTable(tab[keys[k]]) then
+            return keys[k], tab[keys[k]]
+        elseif tab[k] then
+            print(k, keys[k])
+            return k, keys[k]
+        end
+    end
+end
+
+--[[
     Change variable type to boolean
 
     Arguments:
