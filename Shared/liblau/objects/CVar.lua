@@ -37,7 +37,7 @@ CVar = {
 local function SetFlags(flags)
     local bit_flags = FCVAR_NONE
 
-    for _, flag in ipairs(flags) do
+    for _, flag in ipairs(flags or {}) do
         bit_flags = bit_flags | flag
     end
 
