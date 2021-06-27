@@ -135,13 +135,10 @@ function CVar:GetValue(cvar, change_type, player)
     local cvar_tab = CVar:Get(cvar, player)
 
     if cvar_tab then
-        local value = cvar_tab and cvar_tab.value
         local changeType = change_type == "number" and tonumber or change_type == "bool" and toBool or function(val) return val end
 
-        return changeType(value)
+        return changeType(cvar_tab.value)
     end
-
-    return 
 end
 
 --[[
@@ -251,36 +248,21 @@ end
 -- Interact with cvars in the console
 Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
     local parts = string.Explode(text, " ")
+    local cvar_tab = CVar:Get(parts[1]) or CLIENT and CVar:Get(parts[1], NanosWorld:GetLocalPlayer())
 
-    local function checkConsoleCommands(parts, player)
-        if CVar:Exists(parts[1], player) then
-            if not parts[2] then
-                local cvar_tab = CVar:Get(parts[1], player)
-                local value = cvar_tab.value
-                local default = cvar_tab.default
-                local description = cvar_tab.description
+    if cvar_tab then
+        if not parts[2] then
+            local value = cvar_tab.value
+            local default = cvar_tab.default
+            local description = cvar_tab.description
 
-                default = default ~= value and "( def. \"" .. default .. "\" )" or ""
+            default = default ~= value and "( def. \"" .. default .. "\" )" or ""
 
-                print("\n\n\t\"" .. parts[1] .. "\" = \"" .. value .. "\" " .. default .. "\n\n\t" .. description .. "\n")
-            else
-                CVar:SetValue(parts[1], table.Concat(parts, " ", 2), player)
-            end
+            print("\n\n\t\"" .. parts[1] .. "\" = \"" .. value .. "\" " .. default .. "\n" .. (description ~= "" and "\n\t" .. description .. "\n" or ""))
+        else
+            CVar:SetValue(parts[1], table.Concat(parts, " ", 2), player)
         end
     end
-
-    checkConsoleCommands(parts)
-    if CLIENT then
-        checkConsoleCommands(parts, NanosWorld:GetLocalPlayer())
-    end
-end)
-
--- Initialize self.list[player] here, so it doesn't break after a package reload
-Character:Subscribe("Spawn", function(char)
-    _Timer:Simple(0.2, function()
-        local player = char:GetPlayer()
-
-    end)
 end)
 
 -- Create CVar.list[player] for FCVAR_USERINFO
@@ -289,8 +271,8 @@ Package:Subscribe("Load", function()
         for _, player in ipairs(NanosWorld:GetPlayers()) do
             CVar.list[player] = {}
         end
-    elseif NanosWorld:GetLocalPlayer() then
-        CVar.list[NanosWorld:GetLocalPlayer()] = {}
+    else
+        CVar.list[NanosWorld:GetLocalPlayer() or ""] = {}
     end
 end)
 
