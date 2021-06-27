@@ -36,13 +36,13 @@ CVar = {
     Add a cvar
 
     Arguments:
-        string cvar        = Console variable
-        string description = Cvar description
-        string default     = Cvar default value
-        string value       = Cvar value
-        table  flags       = { int flag, ... }
-        string func        = Function callback name (Optional)
-        Player player      = A player. Only used with FCVAR_USERINFO
+        string   cvar        = Console variable
+        string   description = Cvar description
+        string   default     = Cvar default value
+        string   value       = Cvar value
+        table    flags       = { int flag, ... }
+        function func        = Function callback (Optional)
+        Player   player      = A player. Only used with FCVAR_USERINFO
 
     Return:
         nil
@@ -156,8 +156,9 @@ function CVar:GetAll(player)
 end
 
 --[[
-    Set a cvar
-
+    Set a cvar and run the associated callback passing
+    (Player player, string command, string value)
+ 
     Arguments:
         string cvar  = Console variable
         string value = New cvar value
@@ -238,9 +239,8 @@ function CVar:SetValue(cvar, value, player)
         end
 
         -- Callback
-        local func = _G[cvar_tab.func or ""]
-        if func then
-            func(value)
+        if cvar_tab.func then
+            cvar_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), cvar, value)
         end
     end
 end
