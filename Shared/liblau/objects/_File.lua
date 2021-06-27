@@ -31,9 +31,9 @@ if SERVER then
     Init()
 end
 
--- Sort files list
+-- Sort file list according to the documentation of _File:Find
 -- Less points = the file has precedence
-local function Sort(list)
+local function SortFileList(list)
     table.sort(list, function(a, b)
         local points_a = 0
         local points_b = 0
@@ -99,7 +99,6 @@ end
     Return:
         bool
 ]]
--- TO-DO: Support wildcarts /*/*/*
 function _File:Find(name, path, sorting)
     local filename = not name and "*" or string.StripExtension(name)
     local extension = string.GetExtension(name)
@@ -126,8 +125,8 @@ function _File:Find(name, path, sorting)
         end
     end
 
-    -- Sort files list
-    Sort(package_files)
+    -- Sort list
+    SortFileList(package_files)
 
     -- Build dir structure
     local dir_tree = {}
