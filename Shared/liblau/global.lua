@@ -29,13 +29,13 @@ function IsUserdata(var) return type(var) == "userdata" end
     Iterate a table with all keys sorted alphabetically
 
     Arguments:
-        table tab        = The variable to be iterated
-        bool  descending = Sort the order reversed
+        table tab  = The variable to be iterated
+        bool  desc = Sort the order reversed (descending)
     
     Return:
         function iterator
 ]]
-function SortedPairs(tab, descending)
+function SortedPairs(tab, desc)
     local keys, len = {}, 0
 
     for k, v in pairs(tab) do
@@ -44,7 +44,7 @@ function SortedPairs(tab, descending)
     end
 
     table.sort(keys, function(a,b)
-        return (descending and a or b):lower() > (descending and b or a):lower()
+        return (desc and a or b):lower() > (desc and b or a):lower()
     end)
 
     local k = 0
