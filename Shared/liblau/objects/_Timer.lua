@@ -57,6 +57,8 @@ function _Timer:Change(identifier, delay, repetitions, func, args)
     -- Do a delay compensation and start the changed timer
     local time_to_next = _Timer:TimeLeft(identifier)
     _Timer:Simple(time_to_next < 0 and 0 or time_to_next, function()
+        timer.start = os.clock()
+
         timer.func(table.unpack(timer.args))
 
         timer.current_repetition = timer.current_repetition + 1
