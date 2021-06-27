@@ -22,6 +22,54 @@ function string.Explode(str, sep)
 end
 
 --[[
+    Correctly separate arguments in quotes in varargs
+
+    Arguments:
+        string varargs = The function arguments
+
+    Return:
+        string varargs = The processed function arguments
+]]
+function string.FormatVarargs(...)
+    local vargs = { ... }
+    local vargs_str = table.Concat(vargs or {""}, " ")
+    local new_vargs
+
+    if string.find(vargs_str, "\"") then
+        local in_quotes = false
+        local part = ""
+        new_vargs = {}
+
+        local function addVArg()
+            if part ~= "" then
+                table.insert(new_vargs, part)
+                part = ""
+            end
+        end
+
+        for i = 1, #vargs_str do
+            local c = vargs_str:sub(i,i)
+
+            if c == "\"" then
+                addVArg()
+            end
+
+            if not in_quotes and c == " " then
+                addVArg()
+            end
+
+            if c ~= "\"" and c ~= " " then
+                part = part .. c
+            end
+        end
+
+        addVArg()
+    end
+
+    return table.unpack(new_vargs or vargs)
+end
+
+--[[
     Get the file extension
 
     Arguments:
