@@ -155,18 +155,18 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | Timer
+:white_medium_small_square: | _Timer
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Change](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Create](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:RepsLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Restart](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Simple](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:TimeLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:Toggle](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
-![img](https://i.imgur.com/jsK5p2b.png) | [Timer:UnPause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Change](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Create](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Exists](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Get](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:GetAll](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Pause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Remove](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:RepsLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Restart](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Simple](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:TimeLeft](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:Toggle](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [_Timer:UnPause](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
