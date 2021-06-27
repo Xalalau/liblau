@@ -16,6 +16,7 @@ function IsBool(var) return type(var) == "boolean" end
 function IsBool(var) return type(var) == "boolean" end
 function IsColor(var) return getmetatable(var) == Color end
 function IsFunction(var) return type(var) == "function" end
+function IsNil(var) return var == nil end
 function IsNumber(var) return type(var) == "number" end
 function IsQuat(var) return getmetatable(var) == Quat end -- Quaternion
 function IsRotator(var) return getmetatable(var) == Rotator end

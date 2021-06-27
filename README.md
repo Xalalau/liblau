@@ -103,6 +103,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsBool](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsColor](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsFunction](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+![img](https://i.imgur.com/jsK5p2b.png) | [IsNil](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsNumber](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsQuat](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 ![img](https://i.imgur.com/jsK5p2b.png) | [IsRotator](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
