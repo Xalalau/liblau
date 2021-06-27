@@ -53,7 +53,6 @@ function SortedPairs(tab, descending)
         if IsBasicTable(tab[keys[k]]) then
             return keys[k], tab[keys[k]]
         elseif tab[k] then
-            print(k, keys[k])
             return k, keys[k]
         end
     end
