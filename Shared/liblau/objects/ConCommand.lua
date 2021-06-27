@@ -8,19 +8,26 @@ ConCommand = {
     Add console commands
 
     Arguments:
-        string command = Console command
-        function func  = Function callback
+        string   command = Console command
+        function func    = Function callback name or address
 
     Return:
         nil
 ]]
 function ConCommand:Add(command, func)
-    if not command or not func then return end
+    if not command then return end
+
+    if not IsFunction(func) then
+        Package:Error("Console command '" .. command .. "' couldn't be created because the selected callback doesn't exist")
+        Package:Error(debug.traceback())
+        return
+    end
 
     if not ConCommand:Exists(command) then
         self.list[string.upper(command)] = func
     else
         Package:Error("Console command '" .. command .. "' already exists")
+        Package:Error(debug.traceback())
     end
 end
 
