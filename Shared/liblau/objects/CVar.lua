@@ -295,8 +295,8 @@ Package:Subscribe("Load", function()
         for _, player in ipairs(NanosWorld:GetPlayers()) do
             CVar.list[player] = {}
         end
-    else
-        CVar.list[NanosWorld:GetLocalPlayer() or ""] = {}
+    elseif NanosWorld:GetLocalPlayer() then
+        CVar.list[NanosWorld:GetLocalPlayer()] = {}
     end
 end)
 
