@@ -36,6 +36,7 @@ CVar = {
     },
 }
 
+-- Set the console variable flags number
 local function SetFlags(flags)
     local bit_flags = FCVAR_NONE
 
@@ -46,6 +47,7 @@ local function SetFlags(flags)
     return bit_flags
 end
 
+-- Check if a flag bit is up
 local function IsFlagSet(flags, flag)
     return flags & flag ~= FCVAR_NONE and true or false
 end
