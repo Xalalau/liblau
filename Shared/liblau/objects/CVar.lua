@@ -1,16 +1,20 @@
 
 -- Shared macros
-FCVAR_ARCHIVE    = 128   -- Save CVar value -- TO-DO: Not implemented
-FCVAR_CHEAT	     = 16384 -- Requires sv_cheats to change or run the CVar
-FCVAR_SPONLY     = 64    -- Requires singleplayer to change or run the CVar -- TO-DO: We can't detect "singleplayer" in Nano's World yet
+FCVAR_NONE       = 0       -- No flags
+FCVAR_ARCHIVE    = 1 << 7  -- Save CVar value -- TO-DO: Not implemented
+FCVAR_CHEAT	     = 1 << 14 -- Requires sv_cheats to change or run the CVar
+FCVAR_SPONLY     = 1 << 6  -- Requires singleplayer to change or run the CVar -- TO-DO: We can't detect "singleplayer" in Nano's World yet
 -- Server macros
-FCVAR_GAMEDLL    = 4     -- Server command
-FCVAR_PROTECTED	 = 32    -- Don't show the CVar during autocompletion -- TO-DO: Nano's World doesn't support autocompletion yet
-FCVAR_REPLICATED = 8192  -- Send the CVar value to all clients
-FCVAR_NOTIFY     = 256   -- Notifies all players when the CVar value gets changed
+FCVAR_GAMEDLL    = 1 << 2  -- Server command
+FCVAR_PROTECTED	 = 1 << 5  -- Don't show the CVar during autocompletion -- TO-DO: Nano's World doesn't support autocompletion yet
+FCVAR_REPLICATED = 1 << 13 -- Send the CVar value to all clients
+FCVAR_NOTIFY     = 1 << 8  -- Notifies all players when the CVar value gets changed
 -- Client macros
-FCVAR_CLIENTDLL	 = 8     -- Client command
-FCVAR_USERINFO   = 512   -- Sends the CVar value to the server
+FCVAR_CLIENTDLL	 = 1 << 3  -- Client command
+FCVAR_USERINFO   = 1 << 9  -- Sends the CVar value to the server
+
+-- TO-DO: use bitwise operations
+-- TO-DO: it doesn't work: "a b c" (one arg)
 
 CVar = {
     --[[
@@ -21,7 +25,7 @@ CVar = {
                 default = string default value or "",
                 value = string current value or default value,
                 description = string description or "",
-                flags = { [int flag] = true, ... }
+                flags = number flags
             },
         },
         ...
@@ -31,6 +35,22 @@ CVar = {
         ["Scope"] = {}
     },
 }
+
+local function SetFlags(flags)
+    local bit_flags = FCVAR_NONE
+
+    for _, flag in ipairs(flags) do
+        bit_flags = bit_flags | flag
+    end
+
+    return bit_flags
+end
+
+local function IsFlagSet(flags, flag)
+    return flags & flag ~= FCVAR_NONE and true or false
+end
+
+-- ------------------------------------------------------------------------
 
 --[[
     Add a cvar
@@ -50,28 +70,24 @@ CVar = {
 function CVar:Add(cvar, description, default, value, flags, func, player)
     if not cvar then return end
 
-    flags = (not flags or not IsBasicTable(flags)) and {} or flags
+    flags = SetFlags(flags)
 
-    if #flags > 0 then
-        local easy_flags = {}
-        for k,v in pairs(flags) do easy_flags[v] = true end
-        flags = easy_flags
-
-        if player and not flags[FCVAR_USERINFO] then
+    if flags ~= FCVAR_NONE then
+        if player and not IsFlagSet(flags, FCVAR_USERINFO) then
             Package:Warn("Warning! You need FCVAR_USERINFO to set up a player in the CVar '" .. cvar .. "'. Ignoring field and creating normal CVar...")
             player = nil
         end
 
         local msg = "Error creating CVar '" .. cvar .. "'."
-        if flags[FCVAR_GAMEDLL] and flags[FCVAR_CLIENTDLL] then
+        if IsFlagSet(flags, FCVAR_GAMEDLL) and IsFlagSet(flags, FCVAR_CLIENTDLL) then
             Package:Error(msg .. " You can't set both flags FCVAR_GAMEDLL and FCVAR_CLIENTDLL at the same time")
             Package:Error(debug.traceback())
             return
-        elseif flags[FCVAR_USERINFO] and not flags[FCVAR_CLIENTDLL] then
+        elseif IsFlagSet(flags, FCVAR_USERINFO) and not IsFlagSet(flags, FCVAR_CLIENTDLL) then
             Package:Error(msg .. " Please, set the flag FCVAR_CLIENTDLL to use FCVAR_USERINFO")
             Package:Error(debug.traceback())
             return
-        elseif (flags[FCVAR_PROTECTED] or flags[FCVAR_REPLICATED] or flags[FCVAR_NOTIFY]) and not flags[FCVAR_GAMEDLL] then
+        elseif (IsFlagSet(flags, FCVAR_PROTECTED) or IsFlagSet(flags, FCVAR_REPLICATED) or IsFlagSet(flags, FCVAR_NOTIFY)) and not IsFlagSet(flags, FCVAR_GAMEDLL) then
             Package:Error(msg .. " Please, set the flag FCVAR_GAMEDLL to use FCVAR_PROTECTED, FCVAR_REPLICATED or FCVAR_NOTIFY")
             Package:Error(debug.traceback())
             return
@@ -178,72 +194,74 @@ function CVar:SetValue(cvar, value, player)
     if cvar_tab then
         local flags = cvar_tab.flags
 
-        --[[
-        -- TO-DO: Implement
-        if flags[FCVAR_SPONLY] and "max players == 1" then
-            Package:Error("You can't set '".. cvar .. "' in singleplayer")
-            return
-        end
-        ]]
-
-        -- Checks
-        if flags[FCVAR_CHEAT] and not CVar:GetValue("sv_cheats", "bool") then
-            Package:Error("Enable sv_cheats to use '".. cvar .. "'")
-            return
-        end
-
-        if CLIENT and (flags[FCVAR_REPLICATED] or flags[FCVAR_NOTIFY]) then
-            Package:Error("Only the Server can modify '".. cvar .. "'")
-            return
-        end
-
-        if SERVER and flags[FCVAR_USERINFO] then
-            Package:Error("Only the Client can modify '".. cvar .. "'")
-            return
-        end
-
-        -- Set user info
-        if CLIENT and flags[FCVAR_USERINFO] then
-            Events:CallRemote("LL_CVar_SetUserInfo", {
-                cvar,
-                cvar_tab.description,
-                cvar_tab.default,
-                value,
-                cvar_tab.flags,
-                cvar_tab.func
-            }) 
-        end
-         
-        -- Notify
-        if SERVER and flags[FCVAR_NOTIFY] then
-            Server:BroadcastChatMessage("<blue>" .. cvar .. "</> has been changed to <blue>" .. value .. "</>")
-        end
-
-        -- Replicate
-        if SERVER and flags[FCVAR_REPLICATED] then
-            Events:BroadcastRemote("LL_CVar_Replicate", {
-                cvar,
-                cvar_tab.description,
-                cvar_tab.default,
-                value,
-                cvar_tab.flags,
-                cvar_tab.func,
-            }) 
-        end
-
         -- Set value
         value = string.gsub(tostring(value), "\"", "")
         self.list[player or "Scope"][string.upper(cvar)].value = value
 
-        -- Archive
-        -- TO-DO: Implement
-        if flags[FCVAR_ARCHIVE] then
-            SetPersistentData("LL_cvar_" .. (player and player or "Scope") .. "_" .. cvar, CVar:Get(cvar, player))
-        end
-
         -- Callback
         if cvar_tab.func then
             cvar_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), cvar, value)
+        end
+
+        -- Flags operations
+        if flags ~= FCVAR_NONE then
+            -- Checks
+
+            --[[ TO-DO: Implement
+            if IsFlagSet(flags, FCVAR_SPONLY) and "max players == 1" then
+                Package:Error("You can't set '".. cvar .. "' in singleplayer")
+                return
+            end ]]
+
+            if IsFlagSet(flags, FCVAR_CHEAT) and not CVar:GetValue("sv_cheats", "bool") then
+                Package:Error("Enable sv_cheats to use '".. cvar .. "'")
+                return
+            end
+
+            if CLIENT and (IsFlagSet(flags, FCVAR_REPLICATED) or IsFlagSet(flags, FCVAR_NOTIFY)) then
+                Package:Error("Only the Server can modify '".. cvar .. "'")
+                return
+            end
+
+            if SERVER and IsFlagSet(flags, FCVAR_USERINFO) then
+                Package:Error("Only the Client can modify '".. cvar .. "'")
+                return
+            end
+
+            -- Set user info
+            if CLIENT and IsFlagSet(flags, FCVAR_USERINFO) then
+                Events:CallRemote("LL_CVar_SetUserInfo", {
+                    cvar,
+                    cvar_tab.description,
+                    cvar_tab.default,
+                    value,
+                    cvar_tab.flags,
+                    cvar_tab.func
+                }) 
+            end
+            
+            -- Notify
+            if SERVER and IsFlagSet(flags, FCVAR_NOTIFY) then
+                Server:BroadcastChatMessage("<blue>" .. cvar .. "</> has been changed to <blue>" .. value .. "</>")
+            end
+
+            -- Replicate
+            if SERVER and IsFlagSet(flags, FCVAR_REPLICATED) then
+                Events:BroadcastRemote("LL_CVar_Replicate", {
+                    cvar,
+                    cvar_tab.description,
+                    cvar_tab.default,
+                    value,
+                    cvar_tab.flags,
+                    cvar_tab.func,
+                }) 
+            end
+
+            -- Archive
+            -- TO-DO: Implement
+            if IsFlagSet(flags, FCVAR_ARCHIVE) then
+                SetPersistentData("LL_cvar_" .. (player and player or "Scope") .. "_" .. cvar, CVar:Get(cvar, player))
+            end
         end
     end
 end
@@ -288,7 +306,7 @@ Player:Subscribe("Spawn", function (player)
     if SERVER then
         _Timer:Simple(1, function()
             for cvar, cvar_tab in pairs(CVar:GetAll()) do
-                if cvar_tab.flags[FCVAR_REPLICATED] then
+                if IsFlagSet(cvar_tab.flags, FCVAR_REPLICATED) then
                     Events:CallRemote("LL_CVar_Replicate", player, {
                         cvar,
                         cvar_tab.description,
