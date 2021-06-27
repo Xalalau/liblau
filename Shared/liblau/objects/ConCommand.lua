@@ -65,7 +65,8 @@ function ConCommand:GetAll()
 end
 
 --[[
-    Run a registered console command
+    Run a registered console command passing
+    (Player player, string command, table arguments)
 
     Arguments:
         string command = Console command
@@ -77,7 +78,7 @@ end
 ]]
 function ConCommand:Run(command, ...)
     if ConCommand:Exists(command) then
-        ConCommand:Get(command)(...)
+        ConCommand:Get(command)(CLIENT and NanosWorld:GetLocalPlayer(), command, { ... })
     else
         Package:Error(command .. "not found")
     end
