@@ -40,21 +40,27 @@ function SortedPairs(tab, desc)
 
     for k, v in pairs(tab) do
         len = len + 1
-        keys[len] = IsNumber(k) and v or k
+        keys[len] = { k = k, v = v }
     end
 
     table.sort(keys, function(a,b)
-        return (desc and a or b):lower() > (desc and b or a):lower()
+        local sort1 = desc and b.k or a.k
+        local sort2 = desc and a.k or b.k
+
+        if IsNumber(sort1) and not IsNumber(sort2) then
+            return true
+        elseif IsNumber(sort1) and IsNumber(sort2) then
+            return sort1 < sort2
+        elseif IsString(sort1) and IsString(sort2) then
+            return sort1:lower() < sort2:lower()
+        end
     end)
 
     local k = 0
     return function()
         k = k + 1
-        if IsBasicTable(tab[keys[k]]) then
-            return keys[k], tab[keys[k]]
-        elseif tab[k] then
-            return k, keys[k]
-        end
+        if not keys[k] then return end
+        return keys[k].k, keys[k].v
     end
 end
 
