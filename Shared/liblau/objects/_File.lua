@@ -31,6 +31,57 @@ if SERVER then
     Init()
 end
 
+-- Sort files list
+-- Less points = the file has precedence
+local function Sort(list)
+    table.sort(list, function(a, b)
+        local points_a = 0
+        local points_b = 0
+
+        -- Precedence: Folder on Top > Bottom
+        local function checkFoldersPrecedence(str)
+            local folders_precedence = {
+                "Shared",
+                "Server",
+                "Client"
+            }
+
+            for k,v in ipairs(folders_precedence) do
+                if str:find(v) then
+                    return 50000 * k
+                end
+            end
+
+            return 0
+        end
+
+        points_a = points_a + checkFoldersPrecedence(a)
+        points_b = points_b + checkFoldersPrecedence(b)
+
+        -- Precedence: Less bars > More bars
+        a:gsub("([^/]+)", function()
+            points_a = points_a + 1
+        end)
+
+        b:gsub("([^/]+)", function()
+            points_b = points_b + 1
+        end)
+
+        -- Precedence: selected sorting
+        if sorting == "nameasc" and a:lower() < b:lower() or 
+           sorting == "namedesc" and a:lower() > b:lower() or 
+           sorting == "dateasc" and _File.list_easy_check[a] < _File.list_easy_check[b] or
+           sorting == "datedesc" and _File.list_easy_check[a] > _File.list_easy_check[b]
+            then
+            points_b = points_b + 0.00001
+        else
+            points_a = points_a + 0.00001
+        end
+
+        return points_a < points_b
+    end)
+end
+
 -- ------------------------------------------------------------------------
 
 --[[
@@ -74,43 +125,8 @@ function _File:Find(name, path, sorting)
         end
     end
 
-    -- Sort module files
-    -- Less points = the file has precedence
-    table.sort(package_files, function(a, b)
-        local points_a = 0
-        local points_b = 0
-        -- Precedence: Shared > Server > Client
-        if string.find(a, "Server") then
-            points_a = points_a + 50
-        end
-        if string.find(b, "Server") then
-            points_b = points_b + 50
-        end
-        if string.find(a, "Client") then
-            points_a = points_a + 100
-        end
-        if string.find(b, "Client") then
-            points_b = points_b + 100
-        end
-        -- Precedence: Less bars > More bars
-        a:gsub("([^/]+)", function()
-            points_a = points_a + 1
-        end)
-        b:gsub("([^/]+)", function()
-            points_b = points_b + 1
-        end)
-        -- Precedence: selected sorting
-        if sorting == "nameasc" and a:lower() < b:lower() or 
-           sorting == "namedesc" and a:lower() > b:lower() or 
-           sorting == "dateasc" and self.list_easy_check[a] < self.list_easy_check[b] or
-           sorting == "datedesc" and self.list_easy_check[a] > self.list_easy_check[b]
-            then
-            points_b = points_b + 0.0001
-        else
-            points_a = points_a + 0.0001
-        end
-        return points_a < points_b
-    end)
+    -- Sort files list
+    Sort(package_files)
 
     -- Build dir structure
     local dir_tree = {}
