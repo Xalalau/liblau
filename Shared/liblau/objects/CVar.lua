@@ -13,24 +13,23 @@ FCVAR_NOTIFY     = 1 << 8  -- Notifies all players when the CVar value gets chan
 FCVAR_CLIENTDLL	 = 1 << 3  -- Client console variable
 FCVAR_USERINFO   = 1 << 9  -- Sends the CVar value to the server
 
-CVar = {
+CVar = {}
+
+local cvar_list = {
     --[[
-    Cvar.list = {
-        [string owner] = { -- "Scope" or some player
-            [string cvar name] = {
-                func = function callback or nil,
-                default = string default value or "",
-                value = string current value or default value,
-                description = string description or "",
-                flags = number flags
-            },
+    [string owner] = { -- "Scope" or some player
+        [string cvar name] = {
+            func = function callback or nil,
+            default = string default value or "",
+            value = string current value or default value,
+            description = string description or "",
+            flags = number flags
         },
-        ...
+    },
+    ...
     }
     ]]
-    list = {
-        ["Scope"] = {}
-    },
+    ["Scope"] = {}
 }
 
 -- Set the console variable flags number
@@ -108,7 +107,7 @@ function CVar:Add(cvar, description, default, value, flags, func, player)
         bla = "1"
     }
 
-    self.list[player or "Scope"][string.upper(cvar)] = cvar_tab
+    cvar_list[player or "Scope"][string.upper(cvar)] = cvar_tab
 end
 
 --[[
@@ -122,7 +121,7 @@ end
         bool
 ]]
 function CVar:Exists(cvar, player)
-    return self.list[player or "Scope"][string.upper(cvar or "")] and true or false
+    return cvar_list[player or "Scope"][string.upper(cvar or "")] and true or false
 end
 
 --[[
@@ -137,7 +136,13 @@ end
         nil
 ]]
 function CVar:Get(cvar, player)
-    return table.Copy(self.list[player or "Scope"][string.upper(cvar)])
+    local res = table.Copy(cvar_list[player or "Scope"][string.upper(cvar)])
+
+    if CLIENT and res and IsFlagSet(res.flags, FCVAR_GAMEDLL) then
+        res.func = "PROTECTED"
+    end
+
+    return res
 end
 
 --[[
@@ -172,7 +177,17 @@ end
         table cvars = Cvar list
 ]]
 function CVar:GetAll(player)
-    return table.Copy(self.list[player or "Scope"])
+    local copy = table.Copy(cvar_list[player or "Scope"])
+
+    if CLIENT then
+        for k, v in pairs(copy) do
+            if IsFlagSet(v.flags, FCVAR_GAMEDLL) then
+                v.func = "PROTECTED"
+            end
+        end
+    end
+
+    return copy
 end
 
 --[[
@@ -194,15 +209,6 @@ function CVar:SetValue(cvar, value, player)
 
     if cvar_tab then
         local flags = cvar_tab.flags
-
-        -- Set value
-        value = string.gsub(tostring(value), "\"", "")
-        self.list[player or "Scope"][string.upper(cvar)].value = value
-
-        -- Callback
-        if cvar_tab.func then
-            cvar_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), cvar, value)
-        end
 
         -- Flags operations
         if flags ~= FCVAR_NONE then
@@ -263,6 +269,15 @@ function CVar:SetValue(cvar, value, player)
                 Package:SetPersistentData("LL_CVar_" .. (player or "Scope") .. "_" .. cvar, value)
             end
         end
+
+        -- Set value
+        value = string.gsub(tostring(value), "\"", "")
+        cvar_list[player or "Scope"][string.upper(cvar)].value = value
+
+        -- Callback
+        if cvar_tab.func then
+            cvar_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), cvar, value)
+        end
     end
 end
 
@@ -294,7 +309,7 @@ if CLIENT then
         if not CVar:Exists(cvar) then
             CVar:Add(cvar, description, default, value, flags, func)
         else
-            CVar.list["Scope"][string.upper(cvar)].value = tostring(value)
+            cvar_list["Scope"][string.upper(cvar)].value = tostring(value)
         end
     end)
 end
@@ -327,19 +342,19 @@ if SERVER then
     end)
 end
 
--- Initialize CVar.list[player] for FCVAR_USERINFO
+-- Initialize cvar_list[player] for FCVAR_USERINFO
 Package:Subscribe("Load", function()
     if SERVER then
         for _, player in ipairs(NanosWorld:GetPlayers()) do
-            CVar.list[player] = {}
+            cvar_list[player] = {}
         end
     elseif NanosWorld:GetLocalPlayer() then
-        CVar.list[NanosWorld:GetLocalPlayer()] = {}
+        cvar_list[NanosWorld:GetLocalPlayer()] = {}
     end
 end)
 
 Player:Subscribe("Spawn", function (player)
-    CVar.list[player] = {}
+    cvar_list[player] = {}
 end)
 
 -- Receive FCVAR_USERINFO vars from client
@@ -348,7 +363,7 @@ if SERVER then
         if not CVar:Exists(cvar, player) then
             CVar:Add(cvar, description, default, value, flags, func, player)
         else
-            CVar.list[player][string.upper(cvar)].value = tostring(value)
+            cvar_list[player][string.upper(cvar)].value = tostring(value)
         end
     end)
 end
@@ -367,7 +382,7 @@ local function LoadPersistentData()
                 if cvar_tab and IsFlagSet(cvar_tab.flags, FCVAR_ARCHIVE) and
                    not (CLIENT and IsFlagSet(cvar_tab.flags, FCVAR_GAMEDLL)) and
                    not (SERVER and IsFlagSet(cvar_tab.flags, FCVAR_CLIENTDLL)) then
-                    CVar.list[owner][string.upper(cvar)].value = v
+                    cvar_list[owner][string.upper(cvar)].value = v
                 end
             end
         end
