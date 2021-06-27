@@ -117,11 +117,37 @@ function _File:Find(name, path, sorting)
 
     -- Get module files 
     local package_files = {}
-    for k,v in ipairs(self.list) do
-        if (not extension or string.find(v, extension)) and
-           (string.find(v, path) == 1) and
-           (filename == "*" or string.find(v, name)) then
-            table.insert(package_files, v)
+    for k,cur_filename in ipairs(self.list) do
+        if (not extension or string.find(cur_filename, extension)) and -- Extension
+           (filename == "*" or string.find(cur_filename, name)) then -- Filename
+            -- Relative path check (wildcart support)
+            local cur_filename_parts = string.Explode(cur_filename, "/")
+            local path_parts = string.Explode(path, "/")
+            local path_reconstruction = ""
+
+            if #path_parts == 0 then
+                path_parts[1] = "*"
+            end
+
+            for k, sub_str in ipairs(path_parts) do
+                if sub_str == "*" then
+                    sub_str = cur_filename_parts[k]
+
+                    if not sub_str or string.GetExtension(sub_str) then
+                        goto continue
+                    end
+                end
+
+                path_reconstruction = path_reconstruction .. "/" .. sub_str
+            end
+
+            path_reconstruction = string.sub(path_reconstruction, 2, #path_reconstruction)
+
+            if string.find(cur_filename, path_reconstruction) then
+                table.insert(package_files, cur_filename)
+            end
+
+            ::continue::
         end
     end
 
