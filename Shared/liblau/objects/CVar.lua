@@ -76,15 +76,16 @@ function CVar:Add(cvar, description, default, value, flags, func, player)
     end
 
     if not CVar:Exists(cvar, player) then
-        local cvar_tag = {
+        local cvar_tab = {
             func = func,
             value = tostring(value == nil and default or value),
             description = description or "",
             default = tostring(default == nil and "" or default),
-            flags = flags
+            flags = flags,
+            bla = "1"
         }
 
-        self.list[player or "Scope"][string.upper(cvar)] = cvar_tag
+        self.list[player or "Scope"][string.upper(cvar)] = cvar_tab
     else
         Package:Error("Console variable '" .. cvar .. "' already exists")
     end
@@ -227,6 +228,7 @@ function CVar:SetValue(cvar, value, player)
         end
 
         -- Set value
+        value = string.gsub(tostring(value), "\"", "")
         self.list[player or "Scope"][string.upper(cvar)].value = value
 
         -- Archive
