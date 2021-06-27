@@ -14,11 +14,53 @@ function string.Explode(str, sep)
 
     local list = {}
 
-    for subStr in str:PatternFormat():gmatch("([^" .. sep .. "]+)") do
-        table.insert(list, subStr:PatternFormat(true))
+    for subStr in str:FormatPattern():gmatch("([^" .. sep .. "]+)") do
+        table.insert(list, subStr:FormatPattern(true))
     end
 
     return list
+end
+
+--[[
+    Escape some string characters to use it with Lua pattern
+
+    Arguments:
+        string str       = The string to be formatted
+        bool   setUnsafe = Restore scaped characters
+
+    Return:
+        string str = The formatted string
+]]
+function string.FormatPattern(str, setUnsafe)
+    local replace = {
+        ["["] = "%[",
+        ["]"] = "%]",
+        ["("] = "%(",
+        [")"] = "%)",
+        ["+"] = "%+",
+        ["-"] = "%-",
+        ["."] = "%.",
+        ["^"] = "%^",
+        ["\0"] = "%z",
+        ["$"] = "%$",
+        ["%"] = "%%",
+        ["*"] = "%*",
+        ["?"] = "%?"
+    }
+
+    if setUnsafe then
+        for k,v in pairs(replace) do
+            replace[k] = nil
+        end
+    end
+
+    str = str:gsub(".", replace)
+
+    if setUnsafe then
+        str = str:gsub(".", { ["%"] = "" })
+    end
+
+    return str
 end
 
 --[[
@@ -102,48 +144,6 @@ end
 ]]
 function string.GetLines(str)
     return string.Explode(str, "\r\n")
-end
-
---[[
-    Escape some string characters to use it with Lua pattern
-
-    Arguments:
-        string str       = The string to be formatted
-        bool   setUnsafe = Restore scaped characters
-
-    Return:
-        string str = The formatted string
-]]
-function string.PatternFormat(str, setUnsafe)
-    local replace = {
-        ["["] = "%[",
-        ["]"] = "%]",
-        ["("] = "%(",
-        [")"] = "%)",
-        ["+"] = "%+",
-        ["-"] = "%-",
-        ["."] = "%.",
-        ["^"] = "%^",
-        ["\0"] = "%z",
-        ["$"] = "%$",
-        ["%"] = "%%",
-        ["*"] = "%*",
-        ["?"] = "%?"
-    }
-
-    if setUnsafe then
-        for k,v in pairs(replace) do
-            replace[k] = nil
-        end
-    end
-
-    str = str:gsub(".", replace)
-
-    if setUnsafe then
-        str = str:gsub(".", { ["%"] = "" })
-    end
-
-    return str
 end
 
 --[[
