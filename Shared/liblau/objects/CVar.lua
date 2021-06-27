@@ -13,9 +13,6 @@ FCVAR_NOTIFY     = 1 << 8  -- Notifies all players when the CVar value gets chan
 FCVAR_CLIENTDLL	 = 1 << 3  -- Client command
 FCVAR_USERINFO   = 1 << 9  -- Sends the CVar value to the server
 
--- TO-DO: use bitwise operations
--- TO-DO: it doesn't work: "a b c" (one arg)
-
 CVar = {
     --[[
     Cvar.list = {
@@ -72,14 +69,20 @@ end
 function CVar:Add(cvar, description, default, value, flags, func, player)
     if not cvar then return end
 
+    if CVar:Exists(cvar) or (player and CVar:Exists(cvar, player)) then
+        Package:Error("Console variable '" .. cvar .. "' already exists")
+        Package:Error(debug.traceback())
+        return
+    end
+
     flags = SetFlags(flags)
 
-    if flags ~= FCVAR_NONE then
-        if player and not IsFlagSet(flags, FCVAR_USERINFO) then
-            Package:Warn("Warning! You need FCVAR_USERINFO to set up a player in the CVar '" .. cvar .. "'. Ignoring field and creating normal CVar...")
-            player = nil
-        end
+    if player and not IsFlagSet(flags, FCVAR_USERINFO) then
+        Package:Warn("Warning! You need FCVAR_USERINFO to set up a player in the CVar '" .. cvar .. "'. Ignoring field and creating normal CVar...")
+        player = nil
+    end
 
+    if flags ~= FCVAR_NONE then
         local msg = "Error creating CVar '" .. cvar .. "'."
         if IsFlagSet(flags, FCVAR_GAMEDLL) and IsFlagSet(flags, FCVAR_CLIENTDLL) then
             Package:Error(msg .. " You can't set both flags FCVAR_GAMEDLL and FCVAR_CLIENTDLL at the same time")
@@ -96,20 +99,16 @@ function CVar:Add(cvar, description, default, value, flags, func, player)
         end
     end
 
-    if not CVar:Exists(cvar, player) then
-        local cvar_tab = {
-            func = func,
-            value = tostring(value == nil and default or value),
-            description = description or "",
-            default = tostring(default == nil and "" or default),
-            flags = flags,
-            bla = "1"
-        }
+    local cvar_tab = {
+        func = func,
+        value = tostring(value == nil and default or value),
+        description = description or "",
+        default = tostring(default == nil and "" or default),
+        flags = flags,
+        bla = "1"
+    }
 
-        self.list[player or "Scope"][string.upper(cvar)] = cvar_tab
-    else
-        Package:Error("Console variable '" .. cvar .. "' already exists")
-    end
+    self.list[player or "Scope"][string.upper(cvar)] = cvar_tab
 end
 
 --[[
@@ -138,7 +137,7 @@ end
         nil
 ]]
 function CVar:Get(cvar, player)
-    return table.Copy(self.list[player or "Scope"][string.upper(cvar)]) or nil
+    return table.Copy(self.list[player or "Scope"][string.upper(cvar)])
 end
 
 --[[
@@ -262,7 +261,7 @@ function CVar:SetValue(cvar, value, player)
             -- Archive
             -- TO-DO: Implement
             if IsFlagSet(flags, FCVAR_ARCHIVE) then
-                SetPersistentData("LL_cvar_" .. (player and player or "Scope") .. "_" .. cvar, CVar:Get(cvar, player))
+                SetPersistentData("LL_cvar_" .. (player or "Scope") .. "_" .. cvar, CVar:Get(cvar, player))
             end
         end
     end
