@@ -21,15 +21,15 @@ local function Init()
         -- Ignore git files
         if not string.find(v, ".git") then
             table.insert(_File.list, v)
-            local lua_file = File("Packages/" .. package_name .. "/" .. v)
-            _File.list_easy_check[v] = lua_file:Time()
-            lua_file:Close()
+            if SERVER then
+                local lua_file = File("Packages/" .. package_name .. "/" .. v)
+                _File.list_easy_check[v] = lua_file:Time()
+                lua_file:Close()
+            end
         end
     end
 end
-if SERVER then
-    Init()
-end
+Init()
 
 -- Sort file list according to the documentation of _File:Find
 -- Less points = the file has precedence
