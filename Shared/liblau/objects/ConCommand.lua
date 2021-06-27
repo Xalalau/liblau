@@ -61,7 +61,7 @@ end
 function ConCommand:Get(command)
     local res = ConCommand:Exists(command) and ccon_list[string.upper(command)]
 
-    if CLIENT and res.is_shared then
+    if CLIENT and res and res.is_shared then
         res.func = "PROTECTED"
     end
 
