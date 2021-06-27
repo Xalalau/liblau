@@ -88,8 +88,8 @@ end
     Search for files and folders
 
     Arguments:
-        string name    ("*")       = File name
-        string path    ("")        = Relative file path
+        string name    ("*")       = File name. You can search by extension with *.ext (e.g. *.lua)
+        string path    ("")        = Relative file path. It supports wildcarts (e.g. folder/*/otherfolder)
         string sorting ("nameasc") =
             "nameasc"  = sort the files ascending by name
             "namedesc" = sort the files descending by name
