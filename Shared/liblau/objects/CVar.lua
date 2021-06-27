@@ -1,7 +1,7 @@
 
 -- Shared macros
 FCVAR_NONE       = 0       -- No flags
-FCVAR_ARCHIVE    = 1 << 7  -- Save CVar value -- TO-DO: Not implemented
+FCVAR_ARCHIVE    = 1 << 7  -- Save CVar value
 FCVAR_CHEAT	     = 1 << 14 -- Requires sv_cheats to change or run the CVar
 FCVAR_SPONLY     = 1 << 6  -- Requires singleplayer to change or run the CVar -- TO-DO: We can't detect "singleplayer" in Nano's World yet
 -- Server macros
@@ -260,7 +260,7 @@ function CVar:SetValue(cvar, value, player)
 
             -- Archive
             if IsFlagSet(flags, FCVAR_ARCHIVE) then
-                SetPersistentData("LL_cvar_" .. (player or "Scope") .. "_" .. cvar, CVar:Get(cvar, player))
+                Package:SetPersistentData("LL_CVar_" .. (player or "Scope") .. "_" .. cvar, value)
             end
         end
     end
@@ -328,7 +328,6 @@ if SERVER then
 end
 
 -- Initialize CVar.list[player] for FCVAR_USERINFO
-
 Package:Subscribe("Load", function()
     if SERVER then
         for _, player in ipairs(NanosWorld:GetPlayers()) do
@@ -353,3 +352,32 @@ if SERVER then
         end
     end)
 end
+
+-- Update FCVAR_ARCHIVE cvars
+local function LoadPersistentData()
+    _Timer:Simple(0.1, function()
+        for k,v in pairs(Package:GetPersistentData()) do
+            if string.find(k, "LL_CVar") == 1 then
+                k = k:sub(9, #k)
+                local id = string.Explode(k, "_")
+                local owner = id[1]
+                local cvar = table.Concat(id, "_", 2)
+                local cvar_tab = CVar:Get(cvar, owner)
+
+                if cvar_tab and IsFlagSet(cvar_tab.flags, FCVAR_ARCHIVE) and
+                   not (CLIENT and IsFlagSet(cvar_tab.flags, FCVAR_GAMEDLL)) and
+                   not (SERVER and IsFlagSet(cvar_tab.flags, FCVAR_CLIENTDLL)) then
+                    CVar.list[owner][string.upper(cvar)].value = v
+                end
+            end
+        end
+    end)
+end
+
+Package:Subscribe("Load", function()
+    LoadPersistentData()
+end)
+
+Player:Subscribe("Spawn", function (player)
+    LoadPersistentData()
+end)
