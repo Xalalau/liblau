@@ -64,7 +64,7 @@ function string.FormatPattern(str, setUnsafe)
 end
 
 --[[
-    Correctly separate arguments in quotes in varargs
+    Correctly separate arguments in between quotes in varargs
 
     Arguments:
         string varargs = The function arguments
