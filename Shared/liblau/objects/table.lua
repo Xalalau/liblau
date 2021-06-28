@@ -175,7 +175,7 @@ function table.ToString(tab, tab_name)
 
     local str = (tab_name or "Table") .. " = {\n"
 
-    local function stringify(tab, str, indent)
+    local function stringify(tab, str, indent, done)
         indent = "\t" .. indent
 
         for k,v in SortedPairs(tab) do
@@ -184,9 +184,11 @@ function table.ToString(tab, tab_name)
  
             str = str .. indent .. "[" .. k_quotation .. tostring(k) .. k_quotation .. "]"
 
-            if IsBasicTable(v) then
+            if IsBasicTable(v) and not done[v] then
                 str = str .. " = {\n"
-                str = stringify(v, str, indent)
+                done[v] = true
+                str = stringify(v, str, indent, done)
+                done[v] = nil
                 str = str .. indent .. "},\n"
             else
                 str = str .. " = " .. v_quotation .. tostring(v) .. v_quotation .. ",\n"
@@ -196,7 +198,7 @@ function table.ToString(tab, tab_name)
         return str
     end
 
-    str = stringify(tab, str, "") .. "}\n"
+    str = stringify(tab, str, "", {}) .. "}\n"
 
     return str
 end
