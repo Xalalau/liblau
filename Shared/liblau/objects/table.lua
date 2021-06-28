@@ -173,8 +173,6 @@ end
 function table.ToString(tab, tab_name)
     if not IsTable(tab) then return end
 
-    local str = (tab_name or "Table") .. " = {\n"
-
     local function stringify(tab, str, indent, done)
         indent = "\t" .. indent
 
@@ -198,7 +196,9 @@ function table.ToString(tab, tab_name)
         return str
     end
 
-    str = stringify(tab, str, "", {}) .. "}\n"
+    local str = (tab_name or "Table") .. " = {\n"
+    str = stringify(tab, str, "", {})
+    str = str .. "}\n"
 
     return str
 end
