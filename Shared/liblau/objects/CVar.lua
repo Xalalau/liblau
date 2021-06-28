@@ -2,7 +2,7 @@
 -- Shared macros
 FCVAR_NONE       = 0       -- No flags
 FCVAR_ARCHIVE    = 1 << 7  -- Save CVar value
-FCVAR_CHEAT	     = 1 << 14 -- Requires sv_cheats to change or run the CVar
+FCVAR_CHEAT      = 1 << 14 -- Requires sv_cheats to change or run the CVar
 FCVAR_SPONLY     = 1 << 6  -- Requires singleplayer to change or run the CVar -- TO-DO: We can't detect "singleplayer" in Nano's World yet
 -- Server macros
 FCVAR_GAMEDLL    = 1 << 2  -- Server console variable
