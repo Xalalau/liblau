@@ -36,32 +36,34 @@ function IsUserdata(var) return type(var) == "userdata" end
     Return:
         function iterator
 ]]
+
 function SortedPairs(tab, desc)
-    local keys, len = {}, 0
+    local s_keys, s_keys_start, len = {}, 1, 0
 
     for k, v in pairs(tab) do
-        len = len + 1
-        keys[len] = { k = k, v = v }
+        if IsString(k) then
+            len = len + 1
+            s_keys[len] = k
+        else
+            s_keys_start = s_keys_start + 1
+        end
     end
 
-    table.sort(keys, function(a,b)
-        local sort1 = desc and b.k or a.k
-        local sort2 = desc and a.k or b.k
-
-        if IsNumber(sort1) and not IsNumber(sort2) then
-            return true
-        elseif IsNumber(sort1) and IsNumber(sort2) then
-            return sort1 < sort2
-        elseif IsString(sort1) and IsString(sort2) then
-            return sort1:lower() < sort2:lower()
-        end
+    table.sort(s_keys, function(a,b)
+        return (desc and a or b):lower() > (desc and b or a):lower()
     end)
 
     local k = 0
+    local total = len + s_keys_start
     return function()
         k = k + 1
-        if not keys[k] then return end
-        return keys[k].k, keys[k].v
+        if k > total then return end
+        if k < s_keys_start then
+            return k, tab[k]
+        else
+            local s_k = k - s_keys_start + 1
+            return s_keys[s_k], tab[s_keys[s_k]]
+        end 
     end
 end
 
