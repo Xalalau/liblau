@@ -27,6 +27,7 @@ local function BindAdd(key_name, target, ...)
         local func = console and console.func or _G[target]
 
         if func then
+            print("Adding bind for '" .. key_name .. "' key")
             bind_list[string.upper(key_name)] = { func = func, args = { ... } }
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
@@ -49,7 +50,10 @@ local function BindRemove(...)
     local binds = table.pack(...)
 
     for _,key_name in ipairs(binds) do
-        bind_list[string.upper(key_name)] = nil
+        if Bind:Exists(key_name) then
+            print("Removing '".. key_name .."' bind...")
+            bind_list[string.upper(key_name)] = nil
+        end
     end
 end
 
@@ -106,7 +110,7 @@ ConCommand:Add("bind_list", function()
     local list = Bind:GetAll()
 
     if #list == 0 then
-        print("No binds loaded")
+        print("There are no binds loaded")
     else
         for k, v in SortedPairs(Bind:GetAll()) do
             print(string.format("%-10s %s", k, tostring(v.func)))
