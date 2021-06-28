@@ -152,11 +152,19 @@ function _File:Find(name, path, sorting)
         local FindPath = is_wildcarts_on and FindWildcart or string.find
 
         if FindPath(cur_path, path) == 1 then -- Relative path
+            if not is_wildcarts_on and not in_folder then 
+                in_folder = true
+            end
+
             if (not extension or string.find(cur_path, extension)) and -- Extension
                (filename == "*" or string.find(cur_path, name)) -- Filename
                 then
 
                 table.insert(package_files, cur_path)
+            end
+        else
+            if not is_wildcarts_on and in_folder then 
+                break
             end
         end
     end
