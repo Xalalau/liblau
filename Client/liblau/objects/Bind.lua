@@ -130,9 +130,9 @@ ConCommand:Add("unbind_all", function(player, command, args)
     end
  
     if table.IsEmpty(list) then
-        BindRemove(table.unpack(list))
-    else
         print("No binds to remove")
+    else
+        BindRemove(table.unpack(list)) 
     end
 end)
 
