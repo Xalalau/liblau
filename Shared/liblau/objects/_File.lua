@@ -151,7 +151,7 @@ function _File:Find(name, path, sorting)
     for _, cur_path in ipairs(self.list) do
         local FindPath = is_wildcarts_on and FindWildcart or string.find
 
-        if FindPath(cur_path, path) then -- Relative path
+        if FindPath(cur_path, path) == 1 then -- Relative path
             if (not extension or string.find(cur_path, extension)) and -- Extension
                (filename == "*" or string.find(cur_path, name)) -- Filename
                 then
