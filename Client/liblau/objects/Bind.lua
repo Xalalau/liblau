@@ -107,6 +107,12 @@ Client:Subscribe("Console", function(text)
         return
     end
 
+    if parts[1] == "bind_list" then
+        for k, v in SortedPairs(Bind:GetAll()) do
+            print(string.format("%-10s %s", k, tostring(v.func)))
+        end
+    end
+
     if parts[1] == "unbind" then
         BindRemove(table.unpack(parts))
 

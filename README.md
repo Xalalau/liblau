@@ -72,6 +72,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:Get](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
 ![img](https://i.imgur.com/NTaK5Vd.png) | [Bind:GetAll](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
 ![img](https://i.imgur.com/DEGvkBi.png) | bind
+![img](https://i.imgur.com/DEGvkBi.png) | bind_list
 ![img](https://i.imgur.com/DEGvkBi.png) | unbind
 
 <br/>
