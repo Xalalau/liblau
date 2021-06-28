@@ -109,7 +109,7 @@ end)
 ConCommand:Add("bind_list", function()
     local list = Bind:GetAll()
 
-    if #list == 0 then
+    if table.IsEmpty(list) then
         print("There are no binds loaded")
     else
         for k, v in SortedPairs(Bind:GetAll()) do
