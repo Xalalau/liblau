@@ -75,40 +75,37 @@ end
 function string.FormatVarargs(...)
     local vargs = { ... }
     local vargs_str = table.Concat(vargs or {""}, " ")
-    local new_vargs
+    local new_vargs = {}
+    local in_quotes = false
+    local part = ""
 
-    if string.find(vargs_str, "\"") then
-        local in_quotes = false
-        local part = ""
-        new_vargs = {}
-
-        local function addVArg()
-            if part ~= "" then
-                table.insert(new_vargs, part)
-                part = ""
-            end
+    local function addVArg()
+        if part ~= "" then
+            table.insert(new_vargs, part)
+            part = ""
         end
-
-        for i = 1, #vargs_str do
-            local c = vargs_str:sub(i,i)
-
-            if c == "\"" then
-                addVArg()
-            end
-
-            if not in_quotes and c == " " then
-                addVArg()
-            end
-
-            if c ~= "\"" and c ~= " " then
-                part = part .. c
-            end
-        end
-
-        addVArg()
     end
 
-    return table.unpack(new_vargs or vargs)
+    for i = 1, string.len(vargs_str) do
+        local c = vargs_str:sub(i,i)
+
+        if c == "\"" then
+            addVArg()
+            in_quotes = not in_quotes
+        end
+
+        if not in_quotes and c == " " then
+            addVArg()
+        end
+
+        if (in_quotes or c ~= " ") and c ~= "\"" then
+            part = part .. c
+        end
+    end
+
+    addVArg()
+
+    return table.unpack(new_vargs)
 end
 
 --[[
