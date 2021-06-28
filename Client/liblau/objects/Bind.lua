@@ -29,10 +29,12 @@ local function BindAdd(key_name, target, ...)
 
         if func then
             local bind_exists = Bind:Exists(key_name)
-            args = args[1] ~= "" and args
-            print((bind_exists and "Rebinding" or "Binding") .. " '" .. string.upper(key_name) .. "' key to '" .. target .. "'", args and " -> Args: " or "", args and args[1] or "" )
-            bind_list[string.upper(key_name)] = { func = target, args = { ... } }
-            Package:SetPersistentData("LL_Bind_" .. string.upper(key_name) .. "_" .. target, { ... })
+            local print_args = args[1] and "(\"" .. table.Concat(args, "\", \"") .. "\")" or ""
+
+            print((bind_exists and "Rebinding" or "Binding") .. " '" .. string.upper(key_name) .. "' key to '" .. target .. print_args .. "'")
+            bind_list[string.upper(key_name)] = { func = target, args = args }
+
+            Package:SetPersistentData("LL_Bind_" .. string.upper(key_name) .. "_" .. target, args)
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
         end
