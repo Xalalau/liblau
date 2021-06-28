@@ -23,17 +23,21 @@ local bind_list = {
 ]]
 local function BindAdd(key_name, target, ...)
     if key_name and target then
+        local args = { ... }
         local console = CVar:Get(target) or ConCommand:Get(target)
         local func = console and console.func or _G[target]
 
         if func then
-            print("Adding bind for '" .. string.upper(key_name) .. "' key")
-            bind_list[string.upper(key_name)] = { func = func, args = { ... } }
+            local bind_exists = Bind:Exists(key_name)
+            args = args[1] ~= "" and args
+            print((bind_exists and "Rebinding" or "Binding") .. " '" .. string.upper(key_name) .. "' key to '" .. target .. "'", args and " -> Args: " or "", args and args[1] or "" )
+            bind_list[string.upper(key_name)] = { func = target, args = { ... } }
+            Package:SetPersistentData("LL_Bind_" .. string.upper(key_name) .. "_" .. target, { ... })
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
         end
     else
-        Package:Error("Usage: bind <keyname> <command or function>")
+        Package:Error("Usage: bind <keyname> <command or function name>")
     end
 end
 
@@ -139,6 +143,37 @@ end)
 -- Call binds
 Client:Subscribe("KeyPress", function(key_name)
     if bind_list[string.upper(key_name)] then
-        return bind_list[string.upper(key_name)].func(table.unpack(bind_list[string.upper(key_name)].args))
+        local target = bind_list[string.upper(key_name)].func
+        local console = CVar:Get(target) or ConCommand:Get(target)
+        local func = console and console.func or _G[target]
+
+        return func(table.unpack(bind_list[string.upper(key_name)].args))
     end
+end)
+
+-- Restore old binds
+local function LoadPersistentData()
+    _Timer:Simple(0.1, function()
+        local applyied = {}
+
+        for k,v in pairs(Package:GetPersistentData()) do
+            if string.find(k, "LL_Bind") == 1 then
+                local id = string.Explode(k:sub(9, #k), "_")
+                local key_name = id[1]
+                local target = id[2]
+                local args = v
+
+                if applyied[key_name] then
+                    Package:SetPersistentData(applyied[key_name], nil)
+                end
+                applyied[key_name] = k
+
+                BindAdd(key_name, target, table.unpack(args))
+            end
+        end
+    end)
+end
+
+Package:Subscribe("Load", function()
+    LoadPersistentData()
 end)
