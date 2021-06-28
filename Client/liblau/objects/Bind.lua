@@ -1,6 +1,15 @@
 Bind = {
-    -- Bind list
-    -- { [string key name] = { func = function callback, value = string value }, ... }
+    --[[
+    Bind
+
+    list = {
+        [string key name] = {
+            function func = Function callback,
+            table    args = { any arg, ... }
+        },
+        ...
+    }
+    ]]
     list = {}
 }
 
@@ -10,7 +19,7 @@ Bind = {
     Arguments:
         string key_name = Keyboard key
         string target   = Cvar or command or function
-        string value    = Bind value
+        any    ...      = Arguments
 
     Return:
         nil
@@ -33,8 +42,7 @@ end
     Remove key binds
 
     Arguments:
-        string = Bind name
-        ...
+        string ... = Bind names
 
     Return:
         nil

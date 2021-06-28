@@ -19,11 +19,11 @@ local cvar_list = {
     --[[
     [string owner] = { -- "Scope" or some player
         [string cvar name] = {
-            func = function callback or nil,
-            default = string default value or "",
-            value = string current value or default value,
-            description = string description or "",
-            flags = number flags
+            function func        =  Callback or nil,
+            string   default     =  Default value or "",
+            string   value       =  Current value or default value,
+            string   description =  A description of what the cvar does or "",
+            int      flags       =  CVar flags (bitwise)
         },
     },
     ...
