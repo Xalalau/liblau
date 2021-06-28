@@ -1,16 +1,13 @@
-Bind = {
-    --[[
-    Bind
+Bind = {}
 
-    list = {
+local bind_list = {
+    --[[
         [string key name] = {
             function func = Function callback,
             table    args = { any arg, ... }
         },
         ...
-    }
     ]]
-    list = {}
 }
 
 --[[
@@ -18,7 +15,7 @@ Bind = {
 
     Arguments:
         string key_name = Keyboard key
-        string target   = Cvar or command or function
+        string target   = Cvar or command or function name
         any    ...      = Arguments
 
     Return:
@@ -51,7 +48,7 @@ local function BindRemove(...)
     local binds = table.pack(...)
 
     for _,key_name in ipairs(binds) do
-        Bind.list[string.upper(key_name)] = nil
+        bind_list[string.upper(key_name)] = nil
     end
 end
 
@@ -67,7 +64,7 @@ end
         bool
 ]]
 function Bind:Exists(key_name)
-    return self.list[string.upper(key_name or "")] and true or false
+    return bind_list[string.upper(key_name or "")] and true or false
 end
 
 --[[
@@ -81,7 +78,7 @@ end
         nil
 ]]
 function Bind:Get(key_name)
-    return Bind:Exists(key_name) and table.Copy(self.list[string.upper(key_name)])
+    return Bind:Exists(key_name) and table.Copy(bind_list[string.upper(key_name)])
 end
 
 --[[
@@ -94,7 +91,7 @@ end
         table binds = Bind list
 ]]
 function Bind:GetAll()
-    return table.Copy(self.list)
+    return table.Copy(bind_list)
 end
 
 -- ------------------------------------------------------------------------
@@ -118,7 +115,7 @@ end)
 
 -- Call binds
 Client:Subscribe("KeyPress", function(key_name)
-    if Bind.list[string.upper(key_name)] then
-        return Bind.list[string.upper(key_name)].func(table.unpack(Bind.list[string.upper(key_name)].args))
+    if bind_list[string.upper(key_name)] then
+        return bind_list[string.upper(key_name)].func(table.unpack(bind_list[string.upper(key_name)].args))
     end
 end)
