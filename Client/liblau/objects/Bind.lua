@@ -152,7 +152,7 @@ Client:Subscribe("KeyPress", function(key_name)
 end)
 
 -- Restore old binds
-local function LoadPersistentData()
+Package:Subscribe("Load", function()
     _Timer:Simple(0.1, function()
         local applyied = {}
 
@@ -172,8 +172,4 @@ local function LoadPersistentData()
             end
         end
     end)
-end
-
-Package:Subscribe("Load", function()
-    LoadPersistentData()
 end)
