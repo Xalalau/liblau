@@ -74,6 +74,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/DEGvkBi.png) | bind
 ![img](https://i.imgur.com/DEGvkBi.png) | bind_list
 ![img](https://i.imgur.com/DEGvkBi.png) | unbind
+![img](https://i.imgur.com/DEGvkBi.png) | unbind_all
 
 <br/>
 

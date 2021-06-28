@@ -122,6 +122,20 @@ ConCommand:Add("unbind", function(player, command, args)
     BindRemove(table.unpack(args))
 end)
 
+ConCommand:Add("unbind_all", function(player, command, args)
+    local list = {}
+
+    for k, v in SortedPairs(Bind:GetAll()) do
+        table.insert(list, k)
+    end
+ 
+    if table.IsEmpty(list) then
+        BindRemove(table.unpack(list))
+    else
+        print("No binds to remove")
+    end
+end)
+
 -- Call binds
 Client:Subscribe("KeyPress", function(key_name)
     if bind_list[string.upper(key_name)] then
