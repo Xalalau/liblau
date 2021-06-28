@@ -97,27 +97,25 @@ end
 
 -- ------------------------------------------------------------------------
 
--- Set bind and unbind commands
-Client:Subscribe("Console", function(text)
-    local parts = string.Explode(text, " ")
+-- Set commands
+ConCommand:Add("bind", function(player, command, args)
+    BindAdd(args[1], args[2], table.Concat(args, " ", 3))
+end)
 
-    if parts[1] == "bind" then
-        BindAdd(parts[2], parts[3], table.Concat(parts, " ", 4))
+ConCommand:Add("bind_list", function()
+    local list = Bind:GetAll()
 
-        return
-    end
-
-    if parts[1] == "bind_list" then
+    if #list == 0 then
+        print("No binds loaded")
+    else
         for k, v in SortedPairs(Bind:GetAll()) do
             print(string.format("%-10s %s", k, tostring(v.func)))
         end
     end
+end)
 
-    if parts[1] == "unbind" then
-        BindRemove(table.unpack(parts))
-
-        return
-    end
+ConCommand:Add("unbind", function(player, command, args)
+    BindRemove(table.unpack(args))
 end)
 
 -- Call binds
