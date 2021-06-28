@@ -107,7 +107,11 @@ end
 
 -- Set commands
 ConCommand:Add("bind", function(player, command, args)
-    BindAdd(args[1], args[2], table.Concat(args, " ", 3))
+    local key_name = args[1]
+    local target = args[2]
+    table.remove(args, 1)
+    table.remove(args, 1)
+    BindAdd(key_name, target, table.unpack(args))
 end)
 
 ConCommand:Add("bind_list", function()
