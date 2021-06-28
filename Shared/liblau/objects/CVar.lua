@@ -121,7 +121,8 @@ end
         bool
 ]]
 function CVar:Exists(cvar, player)
-    return cvar_list[player or "Scope"][string.upper(cvar or "")] and true or false
+    local list = cvar_list[player or "Scope"]
+    return list and list[string.upper(cvar or "")] and true or false
 end
 
 --[[
@@ -136,7 +137,8 @@ end
         nil
 ]]
 function CVar:Get(cvar, player)
-    local res = table.Copy(cvar_list[player or "Scope"][string.upper(cvar)])
+    local list = cvar_list[player or "Scope"]
+    local res = list and table.Copy(list[string.upper(cvar)])
 
     if CLIENT and res and IsFlagSet(res.flags, FCVAR_GAMEDLL) then
         res.func = "PROTECTED"
@@ -179,7 +181,7 @@ end
 function CVar:GetAll(player)
     local copy = table.Copy(cvar_list[player or "Scope"])
 
-    if CLIENT then
+    if CLIENT and copy then
         for k, v in pairs(copy) do
             if IsFlagSet(v.flags, FCVAR_GAMEDLL) then
                 v.func = "PROTECTED"
