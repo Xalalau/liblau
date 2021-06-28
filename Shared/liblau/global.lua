@@ -37,31 +37,30 @@ function IsUserdata(var) return type(var) == "userdata" end
         function iterator
 ]]
 function SortedPairs(tab, desc)
-    local s_keys, s_keys_start, len = {}, 1, 0
+    local skeys, len = {}, 0
 
     for k, v in pairs(tab) do
         if IsString(k) then
             len = len + 1
-            s_keys[len] = k
-        else
-            s_keys_start = s_keys_start + 1
+            skeys[len] = k
         end
     end
 
-    table.sort(s_keys, function(a,b)
+    table.sort(skeys, function(a,b)
         return (desc and a or b):lower() > (desc and b or a):lower()
     end)
 
     local k = 0
-    local total = len + s_keys_start
+    local sk = 0
     return function()
         k = k + 1
-        if k > total then return end
-        if k < s_keys_start then
+        if tab[k] then
             return k, tab[k]
-        else
-            local s_k = k - s_keys_start + 1
-            return s_keys[s_k], tab[s_keys[s_k]]
+        end
+
+        sk = sk + 1
+        if skeys[sk] then
+            return skeys[sk], tab[skeys[sk]]
         end 
     end
 end
