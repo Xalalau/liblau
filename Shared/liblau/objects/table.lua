@@ -75,7 +75,7 @@ function table.Concat(tab, concatenator, startPos, endPos)
         end
     end
 
-    return str:sub(concatenator:len() + 1, #str)
+    return str:sub(concatenator:len() + 1, string.len(str))
 end
 
 --[[
