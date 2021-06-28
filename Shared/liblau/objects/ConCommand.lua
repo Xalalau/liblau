@@ -24,13 +24,15 @@ function ConCommand:Add(command, func, is_shared)
         return
     end
 
-    if not ConCommand:Exists(command) then
+    local cvar = CVar:Get(command) or CLIENT and CVar:Get(command, NanosWorld:GetLocalPlayer())
+
+    if not cvar and not ConCommand:Exists(command) then
         ccon_list[string.upper(command)] = {
             func = func,
             is_shared = is_shared
         }
     else
-        Package:Error("Console command '" .. command .. "' already exists")
+        Package:Error("Console command '" .. command .. "' can't be registered. The name is already taken")
         Package:Error(debug.traceback())
     end
 end

@@ -68,8 +68,10 @@ end
 function CVar:Add(cvar, description, default, value, flags, func, player)
     if not cvar then return end
 
-    if CVar:Exists(cvar) or (player and CVar:Exists(cvar, player)) then
-        Package:Error("Console variable '" .. cvar .. "' already exists")
+    local concommand = ConCommand:Get(cvar)
+
+    if concommand or CVar:Exists(cvar) or (player and CVar:Exists(cvar, player)) then
+        Package:Error("Console variable '" .. cvar .. "' can't be registered. The name is already taken")
         Package:Error(debug.traceback())
         return
     end
