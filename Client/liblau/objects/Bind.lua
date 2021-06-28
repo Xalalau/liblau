@@ -27,7 +27,7 @@ local function BindAdd(key_name, target, ...)
         local func = console and console.func or _G[target]
 
         if func then
-            print("Adding bind for '" .. key_name .. "' key")
+            print("Adding bind for '" .. string.upper(key_name) .. "' key")
             bind_list[string.upper(key_name)] = { func = func, args = { ... } }
         else
             Package:Error("Unable to find command / function '" .. target .. "'")
