@@ -286,7 +286,7 @@ end
 -- Run cvars in the console
 Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
     local parts = string.Explode(text, " ")
-    local cvar_tab = CVar:Get(parts[1]) or CLIENT and CVar:Get(parts[1], NanosWorld:GetLocalPlayer())
+    local cvar_tab = parts[1] and (CVar:Get(parts[1]) or CLIENT and CVar:Get(parts[1], NanosWorld:GetLocalPlayer()))
 
     if cvar_tab then
         if not parts[2] then
