@@ -82,6 +82,35 @@ local function SortFileList(list, sorting)
     end)
 end
 
+-- Find a wildcart path in a path
+local function FindWildcart(cur_path, search_path)
+    local cur_path_parts = string.Explode(cur_path, "/")
+    local search_path_parts = string.Explode(search_path, "/")
+    local valid_search_path = ""
+
+    if #search_path_parts == 0 then
+        search_path_parts[1] = "*"
+    end
+
+    for k, sub_str in ipairs(search_path_parts) do
+        if sub_str == "*" then
+            sub_str = cur_path_parts[k]
+
+            if not sub_str or string.GetExtension(sub_str) then
+                goto continue
+            end
+        end
+
+        valid_search_path = valid_search_path .. "/" .. sub_str
+    end
+
+    valid_search_path = string.sub(valid_search_path, 2, #valid_search_path)
+
+    ::continue::
+
+    return string.find(cur_path, valid_search_path)
+end
+
 -- ------------------------------------------------------------------------
 
 --[[
@@ -89,7 +118,7 @@ end
 
     Arguments:
         string name    ("*")       = File name. You can search by extension with *.ext (e.g. *.lua)
-        string path    ("")        = Relative file path. It supports wildcarts (e.g. folder/*/otherfolder)
+        string path    ("")        = Search path. It supports wildcarts (e.g. Server/folder/*/otherfolder)
         string sorting ("nameasc") =
             "nameasc"  = sort the files ascending by name
             "namedesc" = sort the files descending by name
@@ -100,6 +129,7 @@ end
         bool
 ]]
 function _File:Find(name, path, sorting)
+    local is_wildcarts_on = string.find(path, "*") and true
     local filename = not name and "*" or string.StripExtension(name)
     local extension = string.GetExtension(name)
     path = path or ""
@@ -117,37 +147,17 @@ function _File:Find(name, path, sorting)
 
     -- Get module files 
     local package_files = {}
-    for k,cur_filename in ipairs(self.list) do
-        if (not extension or string.find(cur_filename, extension)) and -- Extension
-           (filename == "*" or string.find(cur_filename, name)) then -- Filename
-            -- Relative path check (wildcart support)
-            local cur_filename_parts = string.Explode(cur_filename, "/")
-            local path_parts = string.Explode(path, "/")
-            local path_reconstruction = ""
+    local in_folder
+    for _, cur_path in ipairs(self.list) do
+        local FindPath = is_wildcarts_on and FindWildcart or string.find
 
-            if #path_parts == 0 then
-                path_parts[1] = "*"
+        if FindPath(cur_path, path) then -- Relative path
+            if (not extension or string.find(cur_path, extension)) and -- Extension
+               (filename == "*" or string.find(cur_path, name)) -- Filename
+                then
+
+                table.insert(package_files, cur_path)
             end
-
-            for k, sub_str in ipairs(path_parts) do
-                if sub_str == "*" then
-                    sub_str = cur_filename_parts[k]
-
-                    if not sub_str or string.GetExtension(sub_str) then
-                        goto continue
-                    end
-                end
-
-                path_reconstruction = path_reconstruction .. "/" .. sub_str
-            end
-
-            path_reconstruction = string.sub(path_reconstruction, 2, #path_reconstruction)
-
-            if string.find(cur_filename, path_reconstruction) then
-                table.insert(package_files, cur_filename)
-            end
-
-            ::continue::
         end
     end
 
