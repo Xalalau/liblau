@@ -36,7 +36,6 @@ function IsUserdata(var) return type(var) == "userdata" end
     Return:
         function iterator
 ]]
-
 function SortedPairs(tab, desc)
     local s_keys, s_keys_start, len = {}, 1, 0
 
