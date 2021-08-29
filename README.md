@@ -20,7 +20,7 @@ Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see a
 
 1. Choose a package or create your own, like ``Packages/MyPack``
 1. Open or create ``Packages/MyPack/Shared/Index.lua``
-1. Write ``Call Package:RequirePackage("liblau")`` before anything and save
+1. Write ``Call Package.RequirePackage("liblau")`` before anything and save
 
 ### 3) (Optional) Initialize your own code using liblau
 > If you set up a folder structure like
@@ -37,14 +37,14 @@ Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see a
 
 1. Create your Lua files like ``Scope/MyAddon/mycode.lua``. e.g _Client/FlyingCars/tothemoon.lua_
 1. Open or create ``Scope/Index.lua``. e.g. _Client/Index.lua_
-1. Call ``LL:RequireFolder("MyAddon")``. e.g _LL:RequireFolder("FlyingCars")_
+1. Call ``LL.RequireFolder("MyAddon")``. e.g _LL.RequireFolder("FlyingCars")_
 
 ### 4) (Optional) Set live reloading to some folders
 > To facilitate development you can configure some folders to reload their package if any files inside them are updated. This procedure is always managed at server scope.
 
 1. Choose a folder like ``Scope/MyAddon``. e.g _Client/FlyingCars_
 1. Open or create ``Server/Index.lua``
-1. Call ``LL:SetLiveReloading("Client", "MyAddon")``. e.g _LL:SetLiveReloading("Client", "FlyingCars")_
+1. Call ``LL.SetLiveReloading("Client", "MyAddon")``. e.g _LL.SetLiveReloading("Client", "FlyingCars")_
 
 Note: The available scope options are "Shared", "Server", "Client" and "All". "All" is a shortcut to configure all the scopes at once.
 
@@ -62,15 +62,15 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | 🔗 [_File](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_File.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | _File:Find
+![img](https://i.imgur.com/jsK5p2b.png) | _File.Find
 
 <br/>
 
 :white_medium_small_square: | 🔗 [Bind](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
 ------------ | -------------
-![img](https://i.imgur.com/NTaK5Vd.png) | Bind:Exists
-![img](https://i.imgur.com/NTaK5Vd.png) | Bind:Get
-![img](https://i.imgur.com/NTaK5Vd.png) | Bind:GetAll
+![img](https://i.imgur.com/NTaK5Vd.png) | Bind.Exists
+![img](https://i.imgur.com/NTaK5Vd.png) | Bind.Get
+![img](https://i.imgur.com/NTaK5Vd.png) | Bind.GetAll
 ![img](https://i.imgur.com/DEGvkBi.png) | ```bind```
 ![img](https://i.imgur.com/DEGvkBi.png) | ```bind_list```
 ![img](https://i.imgur.com/DEGvkBi.png) | ```unbind```
@@ -80,22 +80,22 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | 🔗 [ConCommand](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | ConCommand:Add
-![img](https://i.imgur.com/jsK5p2b.png) | ConCommand:Exists
-![img](https://i.imgur.com/jsK5p2b.png) | ConCommand:Get
-![img](https://i.imgur.com/jsK5p2b.png) | ConCommand:GetAll
-![img](https://i.imgur.com/jsK5p2b.png) | ConCommand:Run
+![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.Add
+![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.Exists
+![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.Get
+![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.GetAll
+![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.Run
 
 <br/>
 
 :white_medium_small_square: | 🔗 [CVar](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | CVar:Add
-![img](https://i.imgur.com/jsK5p2b.png) | CVar:Exists
-![img](https://i.imgur.com/jsK5p2b.png) | CVar:Get
-![img](https://i.imgur.com/jsK5p2b.png) | CVar:GetValue
-![img](https://i.imgur.com/jsK5p2b.png) | CVar:GetAll
-![img](https://i.imgur.com/jsK5p2b.png) | CVar:SetValue
+![img](https://i.imgur.com/jsK5p2b.png) | CVar.Add
+![img](https://i.imgur.com/jsK5p2b.png) | CVar.Exists
+![img](https://i.imgur.com/jsK5p2b.png) | CVar.Get
+![img](https://i.imgur.com/jsK5p2b.png) | CVar.GetValue
+![img](https://i.imgur.com/jsK5p2b.png) | CVar.GetAll
+![img](https://i.imgur.com/jsK5p2b.png) | CVar.SetValue
 
 <br/>
 
@@ -128,10 +128,10 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | 🔗 LibLau [sh](https://github.com/Xalalau/liblau/blob/master/Shared/Index.lua) [sv](https://github.com/Xalalau/liblau/blob/master/Server/Index.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | LL:GetCallInfo
-![img](https://i.imgur.com/jsK5p2b.png) | LL:ReadFolder
-![img](https://i.imgur.com/jsK5p2b.png) | LL:RequireFolder
-![img](https://i.imgur.com/0QDsDU6.png) | LL:SetLiveReloading
+![img](https://i.imgur.com/jsK5p2b.png) | LL.GetCallInfo
+![img](https://i.imgur.com/jsK5p2b.png) | LL.ReadFolder
+![img](https://i.imgur.com/jsK5p2b.png) | LL.RequireFolder
+![img](https://i.imgur.com/0QDsDU6.png) | LL.SetLiveReloading
 
 <br/>
 
@@ -161,16 +161,16 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | 🔗 [_Timer](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Change
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Create
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Exists
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Get
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:GetAll
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Pause
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Remove
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:RepsLeft
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Restart
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Simple
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:TimeLeft
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:Toggle
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer:UnPause
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Change
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Create
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Exists
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Get
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.GetAll
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Pause
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Remove
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.RepsLeft
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Restart
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Simple
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.TimeLeft
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Toggle
+![img](https://i.imgur.com/jsK5p2b.png) | _Timer.UnPause

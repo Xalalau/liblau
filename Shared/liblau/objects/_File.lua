@@ -13,25 +13,25 @@ _File = {
     list_easy_check = {}  -- { [string path] = string creation date, ... }
 }
 
--- Initialize package files list
+-- Initialize package file lists
 local function Init()
-    local package_name = LL:GetCallInfo(3)
+    local package_name = LL.GetCallInfo(3)
 
-    for k,v in ipairs(Package:GetFiles()) do
+    for k,v in ipairs(Package.GetFiles()) do
         -- Ignore git files
         if not string.find(v, ".git") then
-            table.insert(_File.list, v)
+            -- Add item to the file list
+            table.insert(_File.list, v) 
             if SERVER then
-                local lua_file = File("Packages/" .. package_name .. "/" .. v)
-                _File.list_easy_check[v] = lua_file:Time()
-                lua_file:Close()
+                -- Add item to the file creation date list
+                _File.list_easy_check[v] = File.Time("Packages/" .. package_name .. "/" .. v)
             end
         end
     end
 end
 Init()
 
--- Sort file list according to the documentation of _File:Find
+-- Sort file list according to the documentation of _File.Find
 -- Less points = the file has precedence
 local function SortFileList(list, sorting)
     table.sort(list, function(a, b)
@@ -128,15 +128,15 @@ end
     Return:
         bool
 ]]
-function _File:Find(name, path, sorting)
-    local is_wildcarts_on = string.find(path, "*") and true
+function _File.Find(name, path, sorting)
+    local is_wildcarts_on = string.find(path, "*") and true or false
     local filename = not name and "*" or string.StripExtension(name)
     local extension = string.GetExtension(name)
     path = path or ""
     sorting = sorting or "nameasc"
 
     if CLIENT and sorting == "dateasc" or sorting == "datedesc" then
-        Package:Error("Error. Nano's World doesn't support reading file dates in the clientside yet")
+        Package.Error("Error. Nano's World doesn't support reading file dates in the clientside yet")
         return
     end
 
@@ -148,14 +148,14 @@ function _File:Find(name, path, sorting)
     -- Get module files 
     local package_files = {}
     local in_folder
-    for _, cur_path in ipairs(self.list) do
+    for _, cur_path in ipairs(_File.list) do
         local FindPath = is_wildcarts_on and FindWildcart or string.find
 
         if FindPath(cur_path, path) == 1 then -- Relative path
             if not is_wildcarts_on and not in_folder then 
                 in_folder = true
             end
-
+            
             if (not extension or string.find(cur_path, extension)) and -- Extension
                (filename == "*" or string.find(cur_path, name)) -- Filename
                 then

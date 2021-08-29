@@ -15,25 +15,25 @@ local ccon_list = {}
     Return:
         nil
 ]]
-function ConCommand:Add(command, func, is_shared)
+function ConCommand.Add(command, func, is_shared)
     if not command then return end
 
     if not IsFunction(func) then
-        Package:Error("Console command '" .. command .. "' couldn't be created because the selected callback doesn't exist")
-        Package:Error(debug.traceback())
+        Package.Error("Console command '" .. command .. "' couldn't be created because the selected callback doesn't exist")
+        Package.Error(debug.traceback())
         return
     end
 
-    local cvar = CVar:Get(command) or CLIENT and CVar:Get(command, NanosWorld:GetLocalPlayer())
+    local cvar = CVar.Get(command) or CLIENT and CVar.Get(command, Client.GetLocalPlayer())
 
-    if not cvar and not ConCommand:Exists(command) then
+    if not cvar and not ConCommand.Exists(command) then
         ccon_list[string.upper(command)] = {
             func = func,
             is_shared = is_shared
         }
     else
-        Package:Error("Console command '" .. command .. "' can't be registered. The name is already taken")
-        Package:Error(debug.traceback())
+        Package.Error("Console command '" .. command .. "' can't be registered. The name is already taken")
+        Package.Error(debug.traceback())
     end
 end
 
@@ -46,7 +46,7 @@ end
     Return:
         bool
 ]]
-function ConCommand:Exists(command)
+function ConCommand.Exists(command)
     return ccon_list[string.upper(command or "")] and true or false
 end
 
@@ -60,8 +60,8 @@ end
         function func = Callback
         nil
 ]]
-function ConCommand:Get(command)
-    local res = ConCommand:Exists(command) and ccon_list[string.upper(command)]
+function ConCommand.Get(command)
+    local res = ConCommand.Exists(command) and ccon_list[string.upper(command)]
 
     if CLIENT and res and res.is_shared then
         res.func = "PROTECTED"
@@ -79,7 +79,7 @@ end
     Return:
         table commands = ConCommand table
 ]]
-function ConCommand:GetAll()
+function ConCommand.GetAll()
     local copy = table.Copy(ccon_list)
 
     if CLIENT then
@@ -105,21 +105,21 @@ end
     Return:
         nil
 ]]
-function ConCommand:Run(command, ...)
-    local cmd_tab = ConCommand:Get(command)
+function ConCommand.Run(command, ...)
+    local cmd_tab = ConCommand.Get(command)
 
     if cmd_tab then
         if CLIENT and cmd_tab.is_shared then
-            Package:Error("Only the Server can run the command '" .. command .. "'")
+            Package.Error("Only the Server can run the command '" .. command .. "'")
         else
-            cmd_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), command, { string.FormatVarargs(...) })
+            cmd_tab.func(CLIENT and Client.GetLocalPlayer(), command, { string.FormatVarargs(...) })
 
             if cmd_tab.is_shared then
-                Events:BroadcastRemote("LL_ConCommand_RunShared", { command, ... })
+                Events.BroadcastRemote("LL_ConCommand_RunShared",  command, ... )
             end
         end
     else
-        Package:Error(command .. "not found")
+        Package.Error(command .. "not found")
     end
 end
 
@@ -129,18 +129,18 @@ end
 Subscribe(Client or Server, "Console", "LL_CommandsConsole", function(text)
     local parts = string.Explode(text, " ")
 
-    if ConCommand:Exists(parts[1]) then
-        ConCommand:Run(table.unpack(parts))
+    if ConCommand.Exists(parts[1]) then
+        ConCommand.Run(table.unpack(parts))
     end
 end)
 
 -- Finish running shared commands
 if CLIENT then
-    Events:Subscribe("LL_ConCommand_RunShared", function(command, ...)
-        local cmd_tab = ConCommand:Exists(command) and ccon_list[string.upper(command)]
+    Events.Subscribe("LL_ConCommand_RunShared", function(command, ...)
+        local cmd_tab = ConCommand.Exists(command) and ccon_list[string.upper(command)]
 
         if cmd_tab and cmd_tab.is_shared then
-            cmd_tab.func(NanosWorld:GetLocalPlayer(), command, { string.FormatVarargs(...) })
+            cmd_tab.func(Client.GetLocalPlayer(), command, { string.FormatVarargs(...) })
         end
     end)
 end

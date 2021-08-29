@@ -1,2 +1,2 @@
 -- Load liblau
-LL:RequireFolder("liblau")
+LL.RequireFolder("liblau")

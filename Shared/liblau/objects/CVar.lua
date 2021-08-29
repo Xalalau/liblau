@@ -65,37 +65,37 @@ end
     Return:
         nil
 ]]
-function CVar:Add(cvar, description, default, value, flags, func, player)
+function CVar.Add(cvar, description, default, value, flags, func, player)
     if not cvar then return end
 
-    local concommand = ConCommand:Get(cvar)
+    local concommand = ConCommand.Get(cvar)
 
-    if concommand or CVar:Exists(cvar) or (player and CVar:Exists(cvar, player)) then
-        Package:Error("Console variable '" .. cvar .. "' can't be registered. The name is already taken")
-        Package:Error(debug.traceback())
+    if concommand or CVar.Exists(cvar) or (player and CVar.Exists(cvar, player)) then
+        Package.Error("Console variable '" .. cvar .. "' can't be registered. The name is already taken")
+        Package.Error(debug.traceback())
         return
     end
 
     flags = SetFlags(flags)
 
     if player and not IsFlagSet(flags, FCVAR_USERINFO) then
-        Package:Warn("Warning! You need FCVAR_USERINFO to set up a player in the CVar '" .. cvar .. "'. Ignoring field and creating normal CVar...")
+        Package.Warn("Warning! You need FCVAR_USERINFO to set up a player in the CVar '" .. cvar .. "'. Ignoring field and creating normal CVar...")
         player = nil
     end
 
     if flags ~= FCVAR_NONE then
         local msg = "Error creating CVar '" .. cvar .. "'."
         if IsFlagSet(flags, FCVAR_GAMEDLL) and IsFlagSet(flags, FCVAR_CLIENTDLL) then
-            Package:Error(msg .. " You can't set both flags FCVAR_GAMEDLL and FCVAR_CLIENTDLL at the same time")
-            Package:Error(debug.traceback())
+            Package.Error(msg .. " You can't set both flags FCVAR_GAMEDLL and FCVAR_CLIENTDLL at the same time")
+            Package.Error(debug.traceback())
             return
         elseif IsFlagSet(flags, FCVAR_USERINFO) and not IsFlagSet(flags, FCVAR_CLIENTDLL) then
-            Package:Error(msg .. " Please, set the flag FCVAR_CLIENTDLL to use FCVAR_USERINFO")
-            Package:Error(debug.traceback())
+            Package.Error(msg .. " Please, set the flag FCVAR_CLIENTDLL to use FCVAR_USERINFO")
+            Package.Error(debug.traceback())
             return
         elseif (IsFlagSet(flags, FCVAR_PROTECTED) or IsFlagSet(flags, FCVAR_REPLICATED) or IsFlagSet(flags, FCVAR_NOTIFY)) and not IsFlagSet(flags, FCVAR_GAMEDLL) then
-            Package:Error(msg .. " Please, set the flag FCVAR_GAMEDLL to use FCVAR_PROTECTED, FCVAR_REPLICATED or FCVAR_NOTIFY")
-            Package:Error(debug.traceback())
+            Package.Error(msg .. " Please, set the flag FCVAR_GAMEDLL to use FCVAR_PROTECTED, FCVAR_REPLICATED or FCVAR_NOTIFY")
+            Package.Error(debug.traceback())
             return
         end
     end
@@ -122,7 +122,7 @@ end
     Return:
         bool
 ]]
-function CVar:Exists(cvar, player)
+function CVar.Exists(cvar, player)
     local list = cvar_list[player or "Scope"]
     return list and list[string.upper(cvar or "")] and true or false
 end
@@ -138,7 +138,7 @@ end
         table cvar = Cvar list entry
         nil
 ]]
-function CVar:Get(cvar, player)
+function CVar.Get(cvar, player)
     local list = cvar_list[player or "Scope"]
     local res = list and table.Copy(list[string.upper(cvar)])
 
@@ -161,8 +161,8 @@ end
         type value = Console variable value as string by default or converted to number or boolean
         nil
 ]]
-function CVar:GetValue(cvar, change_type, player)
-    local cvar_tab = CVar:Get(cvar, player)
+function CVar.GetValue(cvar, change_type, player)
+    local cvar_tab = CVar.Get(cvar, player)
 
     if cvar_tab then
         local changeType = change_type == "number" and tonumber or change_type == "bool" and toBool or function(val) return val end
@@ -180,7 +180,7 @@ end
     Return:
         table cvars = Cvar list
 ]]
-function CVar:GetAll(player)
+function CVar.GetAll(player)
     local copy = table.Copy(cvar_list[player or "Scope"])
 
     if CLIENT and copy then
@@ -206,10 +206,10 @@ end
     Return:
         nil
 ]]
-function CVar:SetValue(cvar, value, player)
-    if CVar:GetValue(cvar, nil, player) == value then return end
+function CVar.SetValue(cvar, value, player)
+    if CVar.GetValue(cvar, nil, player) == value then return end
 
-    local cvar_tab = CVar:Get(cvar, player)
+    local cvar_tab = CVar.Get(cvar, player)
 
     if cvar_tab then
         local flags = cvar_tab.flags
@@ -220,57 +220,57 @@ function CVar:SetValue(cvar, value, player)
 
             --[[ TO-DO: Implement
             if IsFlagSet(flags, FCVAR_SPONLY) and "max players == 1" then
-                Package:Error("You can't set '".. cvar .. "' in singleplayer")
+                Package.Error("You can't set '".. cvar .. "' in singleplayer")
                 return
             end ]]
 
-            if IsFlagSet(flags, FCVAR_CHEAT) and not CVar:GetValue("sv_cheats", "bool") then
-                Package:Error("Enable sv_cheats to use '".. cvar .. "'")
+            if IsFlagSet(flags, FCVAR_CHEAT) and not CVar.GetValue("sv_cheats", "bool") then
+                Package.Error("Enable sv_cheats to use '".. cvar .. "'")
                 return
             end
 
             if CLIENT and (IsFlagSet(flags, FCVAR_GAMEDLL)) then
-                Package:Error("Only the Server can modify '".. cvar .. "'")
+                Package.Error("Only the Server can modify '".. cvar .. "'")
                 return
             end
 
             if SERVER and IsFlagSet(flags, FCVAR_CLIENTDLL) then
-                Package:Error("Only the Client can modify '".. cvar .. "'")
+                Package.Error("Only the Client can modify '".. cvar .. "'")
                 return
             end
 
             -- Set user info
             if CLIENT and IsFlagSet(flags, FCVAR_USERINFO) then
-                Events:CallRemote("LL_CVar_SetUserInfo", {
+                Events.CallRemote("LL_CVar_SetUserInfo",
                     cvar,
                     cvar_tab.description,
                     cvar_tab.default,
                     value,
                     cvar_tab.flags,
                     cvar_tab.func
-                }) 
+                )
             end
             
             -- Notify
             if SERVER and IsFlagSet(flags, FCVAR_NOTIFY) then
-                Server:BroadcastChatMessage("<blue>" .. cvar .. "</> has been changed to <blue>" .. value .. "</>")
+                Server.BroadcastChatMessage("<blue>" .. cvar .. "</> has been changed to <blue>" .. value .. "</>")
             end
 
             -- Replicate
             if SERVER and IsFlagSet(flags, FCVAR_REPLICATED) then
-                Events:BroadcastRemote("LL_CVar_Replicate", {
+                Events.BroadcastRemote("LL_CVar_Replicate",
                     cvar,
                     cvar_tab.description,
                     cvar_tab.default,
                     value,
                     cvar_tab.flags,
-                    cvar_tab.func,
-                }) 
+                    cvar_tab.func
+                ) 
             end
 
             -- Archive
             if IsFlagSet(flags, FCVAR_ARCHIVE) then
-                Package:SetPersistentData("LL_CVar_" .. (player or "Scope") .. "_" .. cvar, value)
+                Package.SetPersistentData("LL_CVar_" .. (player or "Scope") .. "_" .. cvar, value)
             end
         end
 
@@ -280,7 +280,7 @@ function CVar:SetValue(cvar, value, player)
 
         -- Callback
         if cvar_tab.func then
-            cvar_tab.func(CLIENT and NanosWorld:GetLocalPlayer(), cvar, value)
+            cvar_tab.func(CLIENT and Client.GetLocalPlayer(), cvar, value)
         end
     end
 end
@@ -290,7 +290,7 @@ end
 -- Run cvars in the console
 Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
     local parts = string.Explode(text, " ")
-    local cvar_tab = parts[1] and (CVar:Get(parts[1]) or CLIENT and CVar:Get(parts[1], NanosWorld:GetLocalPlayer()))
+    local cvar_tab = parts[1] and (CVar.Get(parts[1]) or CLIENT and CVar.Get(parts[1], Client.GetLocalPlayer()))
 
     if cvar_tab then
         if not parts[2] then
@@ -302,16 +302,16 @@ Subscribe(Client or Server, "Console", "LL_CvarConsole", function(text)
 
             print("\n\n\t\"" .. parts[1] .. "\" = \"" .. value .. "\" " .. default .. "\n" .. (description ~= "" and "\n\t" .. description .. "\n" or ""))
         else
-            CVar:SetValue(parts[1], table.Concat(parts, " ", 2), player)
+            CVar.SetValue(parts[1], table.Concat(parts, " ", 2), player)
         end
     end
 end)
 
 -- Receive FCVAR_REPLICATED vars from server
 if CLIENT then
-    Events:Subscribe("LL_CVar_Replicate", function(cvar, description, default, value, flags, func)
-        if not CVar:Exists(cvar) then
-            CVar:Add(cvar, description, default, value, flags, func)
+    Events.Subscribe("LL_CVar_Replicate", function(cvar, description, default, value, flags, func)
+        if not CVar.Exists(cvar) then
+            CVar.Add(cvar, description, default, value, flags, func)
         else
             cvar_list["Scope"][string.upper(cvar)].value = tostring(value)
         end
@@ -321,51 +321,52 @@ end
 -- Send FCVAR_REPLICATED vars to clients
 if SERVER then
     local function InitReplicated(player)
-        for cvar, cvar_tab in pairs(CVar:GetAll()) do
+        for cvar, cvar_tab in pairs(CVar.GetAll()) do
             if IsFlagSet(cvar_tab.flags, FCVAR_REPLICATED) then
-                Events:CallRemote("LL_CVar_Replicate", player, {
+                Events.CallRemote("LL_CVar_Replicate",
+                    player,
                     cvar,
                     cvar_tab.description,
                     cvar_tab.default,
                     cvar_tab.value,
                     cvar_tab.flags,
-                    cvar_tab.func,
-                }) 
+                    cvar_tab.func
+                ) 
             end
         end
     end
 
-    Package:Subscribe("Load", function()
-        for _, player in ipairs(NanosWorld:GetPlayers()) do
+    Package.Subscribe("Load", function()
+        for _, player in ipairs(Player.GetAll()) do
             InitReplicated(player)
         end
     end)
 
-    Player:Subscribe("Spawn", function (player)
+    Player.Subscribe("Spawn", function (player)
         InitReplicated(player)
     end)
 end
 
 -- Initialize cvar_list[player] for FCVAR_USERINFO
-Package:Subscribe("Load", function()
+Package.Subscribe("Load", function()
     if SERVER then
-        for _, player in ipairs(NanosWorld:GetPlayers()) do
+        for _, player in ipairs(Player.GetAll()) do
             cvar_list[player] = {}
         end
-    elseif NanosWorld:GetLocalPlayer() then
-        cvar_list[NanosWorld:GetLocalPlayer()] = {}
+    elseif Client.GetLocalPlayer() then
+        cvar_list[Client.GetLocalPlayer()] = {}
     end
 end)
 
-Player:Subscribe("Spawn", function (player)
+Player.Subscribe("Spawn", function (player)
     cvar_list[player] = {}
 end)
 
 -- Receive FCVAR_USERINFO vars from client
 if SERVER then
-    Events:Subscribe("LL_CVar_SetUserInfo", function(player, cvar, description, default, value, flags, func)
-        if not CVar:Exists(cvar, player) then
-            CVar:Add(cvar, description, default, value, flags, func, player)
+    Events.Subscribe("LL_CVar_SetUserInfo", function(player, cvar, description, default, value, flags, func)
+        if not CVar.Exists(cvar, player) then
+            CVar.Add(cvar, description, default, value, flags, func, player)
         else
             cvar_list[player][string.upper(cvar)].value = tostring(value)
         end
@@ -374,14 +375,14 @@ end
 
 -- Update FCVAR_ARCHIVE cvars
 local function LoadPersistentData()
-    _Timer:Simple(0.1, function()
-        for k,v in pairs(Package:GetPersistentData()) do
+    _Timer.Simple(0.1, function()
+        for k,v in pairs(Package.GetPersistentData()) do
             if string.find(k, "LL_CVar") == 1 then
                 k = k:sub(9, #k)
                 local id = string.Explode(k, "_")
                 local owner = id[1]
                 local cvar = table.Concat(id, "_", 2)
-                local cvar_tab = CVar:Get(cvar, owner)
+                local cvar_tab = CVar.Get(cvar, owner)
 
                 if cvar_tab and IsFlagSet(cvar_tab.flags, FCVAR_ARCHIVE) and
                    not (CLIENT and IsFlagSet(cvar_tab.flags, FCVAR_GAMEDLL)) and
@@ -393,10 +394,10 @@ local function LoadPersistentData()
     end)
 end
 
-Package:Subscribe("Load", function()
+Package.Subscribe("Load", function()
     LoadPersistentData()
 end)
 
-Player:Subscribe("Spawn", function (player)
+Player.Subscribe("Spawn", function (player)
     LoadPersistentData()
 end)

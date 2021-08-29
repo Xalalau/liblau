@@ -11,7 +11,7 @@ local listeners = {}
         nil
 ]]
 local function RefreshSubscriptions(originator, event)
-    originator:Subscribe(event, function(...)
+    originator.Subscribe(event, function(...)
         for k, listener in pairs(listeners[originator][event]) do
             listener(...)
         end
@@ -36,7 +36,7 @@ function Subscribe(originator, event, identifier, func)
     listeners[originator] = listeners[originator] or {}
 
     if listeners[originator][event] then
-        originator:Unsubscribe(event)
+        originator.Unsubscribe(event)
     end
 
     listeners[originator][event] = listeners[originator][event] or {}
@@ -57,7 +57,7 @@ end
 ]]
 function Unsubscribe(originator, event, identifier)
     if listeners[originator] and listeners[originator][event] then
-        originator:Unsubscribe(event)
+        originator.Unsubscribe(event)
 
         listeners[originator][event][identifier] = nil
 
