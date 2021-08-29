@@ -34,7 +34,7 @@ function table.Copy(tab)
 
     for k,v in pairs(tab) do
         if IsBasicTable(v) then
-            copy[k] = table.Copy(v, v)
+            copy[k] = table.Copy(v)
         else
             copy[k] = CopyCustomTableType(v)
         end
