@@ -13,7 +13,6 @@ SERVER = Server and true
 ]]
 function IsBasicTable(var) return type(var) == "table" and not getmetatable(var) end -- Pure Lua table type
 function IsBool(var) return type(var) == "boolean" end
-function IsBool(var) return type(var) == "boolean" end
 function IsColor(var) return getmetatable(var) == Color end
 function IsFunction(var) return type(var) == "function" end
 function IsNil(var) return var == nil end
