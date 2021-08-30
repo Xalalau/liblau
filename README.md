@@ -101,21 +101,21 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 :white_medium_small_square: | 🔗 [Global](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | IsBasicTableI
-![img](https://i.imgur.com/jsK5p2b.png) | IsBoolI
-![img](https://i.imgur.com/jsK5p2b.png) | IsColorI
-![img](https://i.imgur.com/jsK5p2b.png) | IsFunctionI
-![img](https://i.imgur.com/jsK5p2b.png) | IsNilI
-![img](https://i.imgur.com/jsK5p2b.png) | IsNumberI
-![img](https://i.imgur.com/jsK5p2b.png) | IsQuatI
-![img](https://i.imgur.com/jsK5p2b.png) | IsRotatorI
-![img](https://i.imgur.com/jsK5p2b.png) | IsStringI
-![img](https://i.imgur.com/jsK5p2b.png) | IsTableI
-![img](https://i.imgur.com/jsK5p2b.png) | IsVectorI
-![img](https://i.imgur.com/jsK5p2b.png) | IsVector2DI
-![img](https://i.imgur.com/jsK5p2b.png) | IsUserdataI
-![img](https://i.imgur.com/jsK5p2b.png) | SortedPairsI
-![img](https://i.imgur.com/jsK5p2b.png) | toBoolI
+![img](https://i.imgur.com/jsK5p2b.png) | IsBasicTable
+![img](https://i.imgur.com/jsK5p2b.png) | IsBool
+![img](https://i.imgur.com/jsK5p2b.png) | IsColor
+![img](https://i.imgur.com/jsK5p2b.png) | IsFunction
+![img](https://i.imgur.com/jsK5p2b.png) | IsNil
+![img](https://i.imgur.com/jsK5p2b.png) | IsNumber
+![img](https://i.imgur.com/jsK5p2b.png) | IsQuat
+![img](https://i.imgur.com/jsK5p2b.png) | IsRotator
+![img](https://i.imgur.com/jsK5p2b.png) | IsString
+![img](https://i.imgur.com/jsK5p2b.png) | IsTable
+![img](https://i.imgur.com/jsK5p2b.png) | IsVector
+![img](https://i.imgur.com/jsK5p2b.png) | IsVector2D
+![img](https://i.imgur.com/jsK5p2b.png) | IsUserdata
+![img](https://i.imgur.com/jsK5p2b.png) | SortedPairs
+![img](https://i.imgur.com/jsK5p2b.png) | toBool
 
 <br/>
 
