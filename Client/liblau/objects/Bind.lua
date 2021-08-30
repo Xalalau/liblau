@@ -59,6 +59,15 @@ local function BindRemove(...)
         if Bind.Exists(key_name) then
             print("Removing '".. key_name .."' bind...")
             bind_list[string.upper(key_name)] = nil
+
+            local keyPartialName = "LL_Bind_" .. string.upper(key_name)
+            for k,v in pairs(Package.GetPersistentData()) do
+                if string.find(k, keyPartialName) == 1 then
+                    Package.SetPersistentData(k, nil)
+
+                    break
+                end
+            end
         end
     end
 end
