@@ -1,4 +1,4 @@
-_Timer = {}
+Timerx = {}
 
 local timer_list = {
     --[[
@@ -13,7 +13,7 @@ local timer_list = {
         function func               = Callback
         table    args               = { any var, ... } -- Arguments table for func.
 
-        -- Note: "args" actually has only one use: making _Timer.Change capable of keeping a function state. Otherwise it's useless.
+        -- Note: "args" actually has only one use: making Timerx.Change capable of keeping a function state. Otherwise it's useless.
     }
     ]]
 }
@@ -31,7 +31,7 @@ local timer_list = {
     Return:
         bool
 ]]
-function _Timer.Change(identifier, delay, repetitions, func, args)
+function Timerx.Change(identifier, delay, repetitions, func, args)
     local timer = identifier and timer_list[identifier]
 
     -- Check if we have something to change
@@ -55,15 +55,15 @@ function _Timer.Change(identifier, delay, repetitions, func, args)
     timer.delay = delay or timer.delay
 
     -- Do a delay compensation and start the changed timer
-    local time_to_next = _Timer.TimeLeft(identifier)
-    _Timer.Simple(time_to_next < 0 and 0 or time_to_next, function()
+    local time_to_next = Timerx.TimeLeft(identifier)
+    Timerx.Simple(time_to_next < 0 and 0 or time_to_next, function()
         timer.start = os.clock()
 
         timer.func(table.unpack(timer.args))
 
         timer.current_repetition = timer.current_repetition + 1
 
-        _Timer.Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
+        Timerx.Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
     end)
 
     return true
@@ -72,7 +72,7 @@ end
 --[[
     Create and register a timer
 
-    Note: for timers that run only once, use _Timer.Simple
+    Note: for timers that run only once, use Timerx.Simple
 
     Arguments:
         string   identifier  = Timer name
@@ -84,7 +84,7 @@ end
     Return:
         nil
 ]]
-function _Timer.Create(identifier, delay, repetitions, func, args)
+function Timerx.Create(identifier, delay, repetitions, func, args)
     if not identifier or not delay or not repetitions or not func then return end
 
     local i = timer_list[identifier] and timer_list[identifier].current_repetition or 1
@@ -132,7 +132,7 @@ end
     Return:
         bool
 ]]
-function _Timer.Exists(identifier)
+function Timerx.Exists(identifier)
     return timer_list[identifier] and true or false
 end
 
@@ -146,7 +146,7 @@ end
         table timer_list[identifier]
         nil
 ]]
-function _Timer.Get(identifier)
+function Timerx.Get(identifier)
     return table.Copy(timer_list[identifier])
 end
 
@@ -159,7 +159,7 @@ end
     Return:
         table timer_list
 ]]
-function _Timer.GetAll()
+function Timerx.GetAll()
     return table.Copy(timer_list)
 end
 
@@ -172,7 +172,7 @@ end
     Return:
         bool
 ]]
-function _Timer.Pause(identifier)
+function Timerx.Pause(identifier)
     local timer = identifier and timer_list[identifier]
 
     if not timer or not timer.id then return false end
@@ -193,7 +193,7 @@ end
     Return:
         bool
 ]]
-function _Timer.Remove(identifier)
+function Timerx.Remove(identifier)
     local timer = identifier and timer_list[identifier]
 
     if not timer or not timer.id then return false end
@@ -213,7 +213,7 @@ end
     Return:
         int repetitions_left = Repetitions left
 ]]
-function _Timer.RepsLeft(identifier)
+function Timerx.RepsLeft(identifier)
     local timer = timer_list[identifier]
 
     if not timer then return end
@@ -230,14 +230,14 @@ end
     Return:
         bool
 ]]
-function _Timer.Restart(identifier)
+function Timerx.Restart(identifier)
     local timer = identifier and timer_list[identifier]
 
     if not timer or not timer.id then return false end
 
     Timer.ClearTimeout(timer.id)
     timer.current_repetition = 1
-    _Timer.Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
+    Timerx.Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
 end
 
 --[[
@@ -251,7 +251,7 @@ end
     Return:
         nil
 ]]
-function _Timer.Simple(delay, func, args)
+function Timerx.Simple(delay, func, args)
     if not delay or not func then return end
 
     local error_break = false
@@ -278,7 +278,7 @@ end
         float total_time_left = Time left to finish the current and next repetitions (seconds)
         nil
 ]]
-function _Timer.TimeLeft(identifier)
+function Timerx.TimeLeft(identifier)
     local timer = timer_list[identifier]
 
     if not timer then return end
@@ -298,15 +298,15 @@ end
     Return:
         bool
 ]]
-function _Timer.Toggle(identifier)
+function Timerx.Toggle(identifier)
     local timer = identifier and timer_list[identifier]
 
     if not timer then return false end
 
     if timer.pause then
-        _Timer.UnPause(identifier)
+        Timerx.UnPause(identifier)
     else
-        _Timer.Pause(identifier)
+        Timerx.Pause(identifier)
     end
 
     return true
@@ -321,7 +321,7 @@ end
     Return:
         bool
 ]]
-function _Timer.UnPause(identifier)
+function Timerx.UnPause(identifier)
     local timer = identifier and timer_list[identifier]
 
     if not timer then return false end
@@ -330,12 +330,12 @@ function _Timer.UnPause(identifier)
     timer.start = os.clock() - time_to_next
     timer.pause = nil
 
-    _Timer.Simple(time_to_next, function()
+    Timerx.Simple(time_to_next, function()
         timer.func(table.unpack(timer.args))
 
         timer.current_repetition = timer.current_repetition + 1
 
-        _Timer.Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
+        Timerx.Create(identifier, timer.delay, timer.repetitions, timer.func, timer.args)
     end)
 
     return true

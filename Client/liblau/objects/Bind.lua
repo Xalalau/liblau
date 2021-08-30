@@ -168,7 +168,7 @@ end)
 
 -- Restore old binds
 Package.Subscribe("Load", function()
-    _Timer.Simple(0.1, function()
+    Timerx.Simple(0.1, function()
         local applyied = {}
 
         for k,v in pairs(Package.GetPersistentData()) do

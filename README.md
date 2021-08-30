@@ -159,18 +159,18 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | 🔗 [_Timer](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_Timer.lua)
+:white_medium_small_square: | 🔗 [Timerx](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/Timerx.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Change
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Create
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Exists
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Get
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.GetAll
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Pause
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Remove
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.RepsLeft
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Restart
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Simple
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.TimeLeft
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.Toggle
-![img](https://i.imgur.com/jsK5p2b.png) | _Timer.UnPause
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Change
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Create
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Exists
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Get
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.GetAll
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Pause
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Remove
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.RepsLeft
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Restart
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Simple
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.TimeLeft
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Toggle
+![img](https://i.imgur.com/jsK5p2b.png) | Timerx.UnPause

@@ -375,7 +375,7 @@ end
 
 -- Update FCVAR_ARCHIVE cvars
 local function LoadPersistentData()
-    _Timer.Simple(0.1, function()
+    Timerx.Simple(0.1, function()
         for k,v in pairs(Package.GetPersistentData()) do
             if string.find(k, "LL_CVar") == 1 then
                 k = k:sub(9, #k)
