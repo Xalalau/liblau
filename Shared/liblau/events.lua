@@ -15,9 +15,6 @@ local listeners = {}
 function Subscribe(originator, event, identifier, func)
     listeners[originator] = listeners[originator] or {}
 
-    listeners[originator][event] = listeners[originator][event] or {}
-    listeners[originator][event][identifier] = func
-
     if not listeners[originator][event] then
         originator.Subscribe(event, function(...)
             for k, listener in pairs(listeners[originator][event]) do
@@ -25,6 +22,9 @@ function Subscribe(originator, event, identifier, func)
             end
         end)
     end
+
+    listeners[originator][event] = listeners[originator][event] or {}
+    listeners[originator][event][identifier] = func
 end
 
 --[[
