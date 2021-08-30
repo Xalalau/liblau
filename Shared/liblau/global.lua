@@ -72,6 +72,6 @@ end
     Return:
         bool
 ]]
-function toBool(var)
+function ToBool(var)
     return var and var ~= "" and tonumber(var) ~= 0 and var ~= "false" and true or false
 end

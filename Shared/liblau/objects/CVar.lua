@@ -165,7 +165,7 @@ function CVar.GetValue(cvar, change_type, player)
     local cvar_tab = CVar.Get(cvar, player)
 
     if cvar_tab then
-        local changeType = change_type == "number" and tonumber or change_type == "bool" and toBool or function(val) return val end
+        local changeType = change_type == "number" and tonumber or change_type == "bool" and ToBool or function(val) return val end
 
         return changeType(cvar_tab.value)
     end
