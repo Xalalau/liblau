@@ -7,7 +7,7 @@
 ]]
 
 
-_File = {
+Filex = {
     -- File lists
     list = {}, -- { string path, ... }
     list_easy_check = {}  -- { [string path] = string creation date, ... }
@@ -21,17 +21,17 @@ local function Init()
         -- Ignore git files
         if not string.find(v, ".git") then
             -- Add item to the file list
-            table.insert(_File.list, v) 
+            table.insert(Filex.list, v) 
             if SERVER then
                 -- Add item to the file creation date list
-                _File.list_easy_check[v] = File.Time("Packages/" .. package_name .. "/" .. v)
+                Filex.list_easy_check[v] = File.Time("Packages/" .. package_name .. "/" .. v)
             end
         end
     end
 end
 Init()
 
--- Sort file list according to the documentation of _File.Find
+-- Sort file list according to the documentation of Filex.Find
 -- Less points = the file has precedence
 local function SortFileList(list, sorting)
     table.sort(list, function(a, b)
@@ -70,8 +70,8 @@ local function SortFileList(list, sorting)
         -- Precedence: selected sorting
         if sorting == "nameasc" and a:lower() < b:lower() or 
            sorting == "namedesc" and a:lower() > b:lower() or 
-           sorting == "dateasc" and _File.list_easy_check[a] < _File.list_easy_check[b] or
-           sorting == "datedesc" and _File.list_easy_check[a] > _File.list_easy_check[b]
+           sorting == "dateasc" and Filex.list_easy_check[a] < Filex.list_easy_check[b] or
+           sorting == "datedesc" and Filex.list_easy_check[a] > Filex.list_easy_check[b]
             then
             points_b = points_b + 0.00001
         else
@@ -128,7 +128,7 @@ end
     Return:
         bool
 ]]
-function _File.Find(name, path, sorting)
+function Filex.Find(name, path, sorting)
     local is_wildcarts_on = string.find(path, "*") and true or false
     local filename = not name and "*" or string.StripExtension(name)
     local extension = string.GetExtension(name)
@@ -148,7 +148,7 @@ function _File.Find(name, path, sorting)
     -- Get module files 
     local package_files = {}
     local in_folder
-    for _, cur_path in ipairs(_File.list) do
+    for _, cur_path in ipairs(Filex.list) do
         local FindPath = is_wildcarts_on and FindWildcart or string.find
 
         if FindPath(cur_path, path) == 1 then -- Relative path

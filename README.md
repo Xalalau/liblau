@@ -60,9 +60,9 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
   Client Command: https://i.imgur.com/DEGvkBi.png
  --->
 
-:white_medium_small_square: | 🔗 [_File](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/_File.lua)
+:white_medium_small_square: | 🔗 [Filex](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/Filex.lua)
 ------------ | -------------
-![img](https://i.imgur.com/jsK5p2b.png) | _File.Find
+![img](https://i.imgur.com/jsK5p2b.png) | Filex.Find
 
 <br/>
 
