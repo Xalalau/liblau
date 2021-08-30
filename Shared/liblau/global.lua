@@ -36,12 +36,11 @@ function IsUserdata(var) return type(var) == "userdata" end
         function iterator
 ]]
 function SortedPairs(tab, desc)
-    local skeys, len = {}, 0
+    local skeys = {}
 
     for k, v in pairs(tab) do
         if IsString(k) then
-            len = len + 1
-            skeys[len] = k
+            table.insert(skeys, k)
         end
     end
 
