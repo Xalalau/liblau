@@ -115,7 +115,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 ![img](https://i.imgur.com/jsK5p2b.png) | IsVector2D
 ![img](https://i.imgur.com/jsK5p2b.png) | IsUserdata
 ![img](https://i.imgur.com/jsK5p2b.png) | SortedPairs
-![img](https://i.imgur.com/jsK5p2b.png) | toBool
+![img](https://i.imgur.com/jsK5p2b.png) | ToBool
 
 <br/>
 
