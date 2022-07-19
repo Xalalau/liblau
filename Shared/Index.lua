@@ -51,14 +51,14 @@ end
     Populate a entry in LL.read folder
 
     Arguments:
-        string addon_path    = The relative target addon path in any scope
         string package_name  = The calling package name
+        string addon_path    = The relative target addon path in any scope
         string current_scope = The calling scope
 
     Return:
         nil
 ]]
-function LL.ReadFolder(addon_path, package_name, current_scope)
+function LL.ReadFolder(package_name, addon_path, current_scope)
     -- Init files structure
     if not LL.read[package_name] then
         LL.read[package_name] = {}
@@ -78,12 +78,12 @@ function LL.ReadFolder(addon_path, package_name, current_scope)
 
     -- Get module files 
     local package_files = {}
-    for k,v in ipairs(Package.GetFiles()) do
-        if not string.find(v, ".git") and
-           string.sub(v, -4, -1) == ".lua" and
-           not string.find(v, "/Index.lua") and
-           string.find(v, addon_path .. "/") then
-            table.insert(package_files, v)
+    for k, path in ipairs(Package.GetFiles()) do
+        if not string.find(path, ".git") and
+           string.sub(path, -4, -1) == ".lua" and
+           not string.find(path, "/Index.lua") and
+           string.find(path, addon_path .. "/") then
+            table.insert(package_files, path)
         end
     end
 
@@ -159,16 +159,12 @@ function LL.RequireFolder(addon_path, list_files)
 
     -- Get call info
     local package_name, current_scope = LL.GetCallInfo(3)
-    local isRequired = LL.GetCallInfo(4)
-
-    -- Don't autoload
-    if not (package_name ~= "liblau" or isRequired) then return end
 
     -- Set package title (once)
     local title = not LL.loaded[package_name] and package_name
 
     -- Read folder
-    LL.ReadFolder(addon_path, package_name, current_scope)
+    LL.ReadFolder(package_name, addon_path, current_scope)
 
     -- Prepare / Check the LL.loaded table
     if not LL.loaded[package_name] then
@@ -192,11 +188,11 @@ function LL.RequireFolder(addon_path, list_files)
 
     for _,info in ipairs(LL.loaded[package_name][addon_path][current_scope]) do
         -- Require Lua file
-        Package.Require(string.sub(info.path, 7, -1))
+        Package.Require(package_name .. "/" .. info.path)
 
         -- Print message (file)
         if list_files then
-            Package.Log("| " .. current_scope .. "/" .. info.path)
+            Package.Log("| Package/" .. package_name .. "/" .. info.path)
         end
     end
 
