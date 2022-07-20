@@ -52,21 +52,21 @@ end
 
     Arguments:
         string package_name  = The calling package name
-        string addon_path    = The relative target addon path in any scope
+        string addon_folder  = The relative target addon path in any scope
         string current_scope = The calling scope
 
     Return:
         nil
 ]]
-function LL.ReadFolder(package_name, addon_path, current_scope)
+function LL.ReadFolder(package_name, addon_folder, current_scope)
     -- Init files structure
     if not LL.read[package_name] then
         LL.read[package_name] = {}
     end
 
-    if not LL.read[package_name][addon_path] then
+    if not LL.read[package_name][addon_folder] then
         LL.read[package_name] = {
-            [addon_path] = {
+            [addon_folder] = {
                 ["Shared"] = {},
                 ["Server"] = {},
                 ["Client"] = {}
@@ -82,7 +82,7 @@ function LL.ReadFolder(package_name, addon_path, current_scope)
         if not string.find(path, ".git") and
            string.sub(path, -4, -1) == ".lua" and
            not string.find(path, "/Index.lua") and
-           string.find(path, addon_path .. "/") then
+           string.find(path, addon_folder .. "/") then
             table.insert(package_files, path)
         end
     end
@@ -122,9 +122,9 @@ function LL.ReadFolder(package_name, addon_path, current_scope)
         -- Store the file path and file creation time
         if scope then
             if Server then
-                table.insert(LL.read[package_name][addon_path][scope], { path = path, time = File.Time("Packages/" .. package_name .. "/" .. path) })
+                table.insert(LL.read[package_name][addon_folder][scope], { path = path, time = File.Time("Packages/" .. package_name .. "/" .. path) })
             else
-                table.insert(LL.read[package_name][addon_path][scope], { path = path })
+                table.insert(LL.read[package_name][addon_folder][scope], { path = path })
             end
         end
     end
@@ -133,7 +133,7 @@ end
 --[[
     Require lua files from "Package/Scope/MyAddon" folder
 
-    To load files from a scope (Shared/Server/Client) just call LL.RequireFolder(addon_path) in the respective Index.lua
+    To load files from a scope (Shared/Server/Client) just call LL.RequireFolder(addon_folder) in the respective Index.lua
 
     In addition, internal dependencies must also be structured in folders for everything to work well. e.g.
 
@@ -144,66 +144,63 @@ end
     So iuselibA.lua and ialsouselibA.lua will load after libA.lua and access its global functions and variables
 
     Arguments:
-        string addon_path = The relative target addon path in any scope
-        bool   list_files = Show all the loaded files for a detailed overview
+        string addon_folder = The relative target addon path in any scope
+        bool   list_files   = Show all the loaded files for a detailed overview
 
     Return:
         nil
 ]]
-function LL.RequireFolder(addon_path, list_files)
-    if not addon_path then return end
+function LL.RequireFolder(addon_folder, list_files)
+    if not addon_folder then return end
+    list_files = true
 
     -- Remove folder bars
-    addon_path:gsub("/", "")
-    addon_path:gsub("\\", "")
+    addon_folder:gsub("/", "")
+    addon_folder:gsub("\\", "")
 
-    -- Get call info
-    local package_name, current_scope = LL.GetCallInfo(3)
+    -- Call info
+    local package_name, current_scope = LL.GetCallInfo(4)
 
-    -- Set package title (once)
-    local title = not LL.loaded[package_name] and package_name
-
-    -- Read folder
-    LL.ReadFolder(package_name, addon_path, current_scope)
-
-    -- Prepare / Check the LL.loaded table
+    -- Build LL.loaded table
     if not LL.loaded[package_name] then
         LL.loaded[package_name] = {}
     end
 
-    if not LL.loaded[package_name][addon_path] then
-        LL.loaded[package_name][addon_path] = {}
+    if not LL.loaded[package_name][addon_folder] then
+        LL.loaded[package_name][addon_folder] = {}
     end
 
-    if not LL.loaded[package_name][addon_path][current_scope] then
-        LL.loaded[package_name][addon_path][current_scope] = LL.read[package_name][addon_path][current_scope]
+    if not LL.loaded[package_name][addon_folder][current_scope] then
+        -- Read folder
+        LL.ReadFolder(package_name, addon_folder, current_scope)
+        LL.loaded[package_name][addon_folder][current_scope] = LL.read[package_name][addon_folder][current_scope]
     else
         return
     end
 
     -- Print the package name
+    local title = not LL.loaded[package_name] and package_name
+
     if title then
         Package.Warn("# Loading - " .. package_name)
     end
 
-    for _,info in ipairs(LL.loaded[package_name][addon_path][current_scope]) do
-        -- Require Lua file
+    -- Require Lua files and print the results
+    for _,info in ipairs(LL.loaded[package_name][addon_folder][current_scope]) do
         Package.Require(package_name .. "/" .. info.path)
-
-        -- Print message (file)
-        if list_files then
-            Package.Log("| Package/" .. package_name .. "/" .. info.path)
+        
+        if list_files then -- Detailed print message
+            Package.Log("| Packages/" .. package_name .. "/" .. info.path)
         end
     end
 
-    -- Print message (folder)
-    if not list_files then
-        Package.Log("| " .. current_scope .. "/" .. addon_path .. "/*")
+    if not list_files then -- General
+        Package.Log("| " .. current_scope .. "/" .. addon_folder .. "/*")
     end
 end
 
 -- Load liblau
-LL.RequireFolder("liblau")
+LL.RequireFolder("libs")
 
 -- Cvar
 if CVar then

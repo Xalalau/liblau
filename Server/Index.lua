@@ -1,5 +1,3 @@
-LL = LL
-
 if LL.sv_initialized then return end
 LL.sv_initialized = true
 

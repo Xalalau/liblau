@@ -1,2 +1,5 @@
+if LL.cl_initialized then return end
+LL.cl_initialized = true
+
 -- Load liblau
-LL.RequireFolder("liblau")
+LL.RequireFolder("libs")
