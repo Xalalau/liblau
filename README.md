@@ -63,7 +63,7 @@ E.g.
 And add this line to Index.lua (in this case on the server):
 > LL.RequireScope(Package.GetFiles())
 
-![image](https://user-images.githubusercontent.com/5098527/187351578-b7e7d279-24d0-4d36-97b8-818ce81e220f.png)
+![image](https://user-images.githubusercontent.com/5098527/187357591-f0aaf426-f537-460a-8101-055d5e768b8a.png)
 
 That's it! Reload the packages/game and check the console:
 
