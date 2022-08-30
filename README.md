@@ -148,7 +148,7 @@ E.g.
 
 <br/>
 
-:white_medium_small_square: | 🔗 [Global](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/global.lua)
+:white_medium_small_square: | 🔗 [Global](https://github.com/Xalalau/liblau/blob/master/Shared/libs/global.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | IsBasicTable
 ![img](https://i.imgur.com/jsK5p2b.png) | IsBool
@@ -168,7 +168,7 @@ E.g.
 
 <br/>
 
-:white_medium_small_square: | 🔗 [Events](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/events.lua)
+:white_medium_small_square: | 🔗 [Events](https://github.com/Xalalau/liblau/blob/master/Shared/libs/events.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | Subscribe
 ![img](https://i.imgur.com/jsK5p2b.png) | Unubscribe
