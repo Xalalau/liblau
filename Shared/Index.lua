@@ -58,31 +58,27 @@ end
     Return:
         nil
 ]]
-function LL.ReadFolder(package_name, addon_folder, current_scope)
+function LL.ReadFolder(package_name, addon_folder, files_list, current_scope)
     -- Init files structure
     if not LL.read[package_name] then
         LL.read[package_name] = {}
     end
 
     if not LL.read[package_name][addon_folder] then
-        LL.read[package_name] = {
-            [addon_folder] = {
-                ["Shared"] = {},
-                ["Server"] = {},
-                ["Client"] = {}
-            }
+        LL.read[package_name][addon_folder] = {
+            ["Shared"] = {},
+            ["Server"] = {},
+            ["Client"] = {}
         }
-    else
-        return
     end
 
     -- Get module files 
     local package_files = {}
-    for k, path in ipairs(Package.GetFiles()) do
+    for k, path in ipairs(files_list) do
         if not string.find(path, ".git") and
            string.sub(path, -4, -1) == ".lua" and
            not string.find(path, "/Index.lua") and
-           string.find(path, addon_folder .. "/") then
+           addon_folder == "*" or string.find(path, addon_folder .. "/") then
             table.insert(package_files, path)
         end
     end
@@ -107,7 +103,7 @@ function LL.ReadFolder(package_name, addon_folder, current_scope)
     end)
 
     -- Get package files
-    for _,path in ipairs(package_files) do
+    for _, path in ipairs(package_files) do
         local scope 
 
         -- Get the current file scope
@@ -120,7 +116,9 @@ function LL.ReadFolder(package_name, addon_folder, current_scope)
         end
 
         -- Store the file path and file creation time
-        if scope then
+        local isCurrentScope = scope and (not current_scope or current_scope == scope)
+
+        if isCurrentScope then
             if Server then
                 table.insert(LL.read[package_name][addon_folder][scope], { path = path, time = File.Time("Packages/" .. package_name .. "/" .. path) })
             else
@@ -144,15 +142,14 @@ end
     So iuselibA.lua and ialsouselibA.lua will load after libA.lua and access its global functions and variables
 
     Arguments:
-        string addon_folder = The relative target addon path in any scope
-        bool   list_files   = Show all the loaded files for a detailed overview
+        string addon_folder = The relative target addon path in any scope or "*" to include the entire scope
+        table  files_list   = Package.GetFiles() output
 
     Return:
         nil
 ]]
-function LL.RequireFolder(addon_folder, list_files)
+function LL.RequireFolder(addon_folder, files_list)
     if not addon_folder then return end
-    list_files = true
 
     -- Remove folder bars
     addon_folder:gsub("/", "")
@@ -160,6 +157,16 @@ function LL.RequireFolder(addon_folder, list_files)
 
     -- Call info
     local package_name, current_scope = LL.GetCallInfo(4)
+    if not current_scope then
+        package_name, current_scope = LL.GetCallInfo(3)
+    end
+
+    -- Print the package name
+    local title = not LL.loaded[package_name] and package_name
+
+    if title then
+        Package.Warn("# Loading - " .. package_name)
+    end
 
     -- Build LL.loaded table
     if not LL.loaded[package_name] then
@@ -172,35 +179,28 @@ function LL.RequireFolder(addon_folder, list_files)
 
     if not LL.loaded[package_name][addon_folder][current_scope] then
         -- Read folder
-        LL.ReadFolder(package_name, addon_folder, current_scope)
+        LL.ReadFolder(package_name, addon_folder, files_list, current_scope)
         LL.loaded[package_name][addon_folder][current_scope] = LL.read[package_name][addon_folder][current_scope]
     else
         return
-    end
-
-    -- Print the package name
-    local title = not LL.loaded[package_name] and package_name
-
-    if title then
-        Package.Warn("# Loading - " .. package_name)
     end
 
     -- Require Lua files and print the results
     for _,info in ipairs(LL.loaded[package_name][addon_folder][current_scope]) do
         Package.Require(package_name .. "/" .. info.path)
         
-        if list_files then -- Detailed print message
-            Package.Log("| Packages/" .. package_name .. "/" .. info.path)
-        end
-    end
-
-    if not list_files then -- General
-        Package.Log("| " .. current_scope .. "/" .. addon_folder .. "/*")
+        Package.Log("| " .. package_name .. "/" .. info.path)
     end
 end
 
+-- Shortcut to include the whole scope
+-- See LL.RequireFolder
+function LL.RequireScope(files_list)
+    LL.RequireFolder("*", files_list)
+end
+
 -- Load liblau
-LL.RequireFolder("libs")
+LL.RequireScope(Package.GetFiles())
 
 -- Cvar
 if CVar then

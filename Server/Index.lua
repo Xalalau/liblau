@@ -11,13 +11,14 @@ local LL_live_reloading = {}
     Arguments:
         string scope        = "Server", "Client" or "Shared". Can be set as "All" to easyly select the three
         string path         = Any path from any package and scope. No path = the entire scope
+        table files_list    = Package.GetFiles() output
 
-        string package_name = Repass the package name, internal use only
+        string package_name = (Internal use only) Repass the package name
 
     Return:
         nil
 ]]
-function LL.SetLiveReloading(scope, path, package_name)
+function LL.SetLiveReloading(scope, path, files_list, package_name)
     if not path then path = "" end
     if scope ~= "All" and scope ~= "Server" and scope ~= "Client" and scope ~= "Shared" then
         Package.Error("| [Live Reloading] Bad Scope selected for '" .. path .. "'")
@@ -41,9 +42,9 @@ function LL.SetLiveReloading(scope, path, package_name)
         end
 
         -- Set each scope
-        LL.SetLiveReloading("Shared", path, package_name)
-        LL.SetLiveReloading("Server", path, package_name)
-        LL.SetLiveReloading("Client", path, package_name)
+        LL.SetLiveReloading("Shared", path, files_list, package_name)
+        LL.SetLiveReloading("Server", path, files_list, package_name)
+        LL.SetLiveReloading("Client", path, files_list, package_name)
 
         return
     -- Prepare / Check the LL_live_reloading table for the selected operation
@@ -60,8 +61,8 @@ function LL.SetLiveReloading(scope, path, package_name)
         if LL_live_reloading[package_name][path][scope] then
             return
         else
-            if not LL.read[package_name][path] then
-                LL.ReadFolder(path, package_name, scope)
+            if not LL.read[package_name][path] or #LL.read[package_name][path][scope] == 0 then
+                LL.ReadFolder(package_name, path, files_list, scope)
             end
 
             LL_live_reloading[package_name][path][scope] = LL.read[package_name][path][scope]
@@ -70,7 +71,7 @@ function LL.SetLiveReloading(scope, path, package_name)
 
     -- Print the package name
     if title then
-        Package.Warn("# Set Live Reloading - " .. package_name)
+        Package.Warn("# Live Reloading - " .. package_name)
     end
 
     -- Ignore empty folders
@@ -100,3 +101,6 @@ function LL.SetLiveReloading(scope, path, package_name)
         end
     end, 330, package_name, path)
 end
+
+-- Load liblau
+LL.RequireScope(Package.GetFiles())

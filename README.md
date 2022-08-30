@@ -1,6 +1,8 @@
 # liblau
 
-A Nano's World package that consists of:
+**Updated until Nano's World version a1.14.4 build 9354387**
+
+This package consists of:
 
   - Libraries to expand the basic Lua functionality;
   - A generic initialization system;
@@ -8,47 +10,98 @@ A Nano's World package that consists of:
 
 For singleplayer and multiplayer.
 
-## Usage Instructions
+# Instructions
 
-Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see an example of real usage.
+Check [SublimeBase](https://github.com/Xalalau/SublimeBase) if you want to see a small example of real usage.
 
-### 1) Download
-> Obviously you'll need to download the lib and place it in your Packages folder on your server before anything. The folder name must be "liblau".
+## 1) Download
 
-### 2) Initialize liblau to access its functions
-> Now just include the code in another package and start using the custom functions.
+<details>
+<summary>Expand</summary><p>
+Clone or download the lib, place it in your server Packages directory and rename the folder to "liblau".
 
-1. Choose a package or create your own, like ``Packages/MyPack``
-1. Open or create ``Packages/MyPack/Shared/Index.lua``
-1. Write ``Call Package.RequirePackage("liblau")`` before anything and save
+```sh
+git clone https://github.com/Xalalau/liblau.git
+```
 
-### 3) (Optional) Initialize your own code using liblau
-> If you set up a folder structure like
-> - Packages/MyPack/Shared/MyStuff
-> - Packages/MyPack/Server/MyStuff
-> - Packages/MyPack/Client/MyStuff
-> 
-> you can initialize "MyStuff" with liblau.
->
-> If you want to do so, the files will be loaded from the most superficial folder layers to the deepest ones, following the alphabetical order. This means you can build code dependencies through the folder hierarchy. It looks like this:
-> 
-> - /Server/MyStuff/Lib1.lua
-> - /Server/MyStuff/Subfolder/ICanAccessLib1GlobalThings.lua
+![image](https://user-images.githubusercontent.com/5098527/187351046-dc71d025-12ba-4882-9ae1-596449e5dc9c.png)
+</p></details>
+<br/>
 
-1. Create your Lua files like ``Scope/MyAddon/mycode.lua``. e.g _Client/FlyingCars/tothemoon.lua_
-1. Open or create ``Scope/Index.lua``. e.g. _Client/Index.lua_
-1. Call ``LL.RequireFolder("MyAddon")``. e.g _LL.RequireFolder("FlyingCars")_
+## 2) Including the lib
 
-### 4) (Optional) Set live reloading to some folders
-> To facilitate development you can configure some folders to reload their package if any files inside them are updated. This procedure is always managed at server scope.
+<details>
+<summary>Expand</summary><p>
+Just include the code in another package like this:
+
+1. Choose a package or create a new one, like ``Packages/MyPack``
+1. Open or create and open ``Packages/MyPack/Shared/Index.lua``
+1. Write ``Call Package.RequirePackage("liblau")`` at the top of the file and save it
+
+![image](https://user-images.githubusercontent.com/5098527/187350946-5ccfff73-af29-4b9f-a263-9a47950af288.png)
+
+At this point all liblau's functions are already accessible on your package. Check the console after reloading the packages/game:
+
+![image](https://user-images.githubusercontent.com/5098527/187351831-33861c2a-538f-460e-8acf-9c31f3719194.png)
+
+</p></details>
+<br/>
+
+## 3) Initializing your code
+
+<details>
+<summary>Expand</summary><p>
+You can simply write your code as usual, but if you want to give a try there's a included loading system that's pretty straight forward.
+
+All you need to do is set up your file structure following this logic:
+> - /Server/Lib1.lua
+> - /Server/Subfolder/ICanSafelyAccessLib1GlobalVariables.lua
+> - /Server/Subfolder/Zz_ImTheLastFileBecauseOfTheAlphabeticalOrder.lua
+
+E.g.
+
+![image](https://user-images.githubusercontent.com/5098527/187353323-7e503e2c-4ac8-47f9-8518-a4c4b65f8c09.png)
+
+And add this line to Index.lua (in this case on the server):
+> LL.RequireScope(Package.GetFiles())
+
+![image](https://user-images.githubusercontent.com/5098527/187351578-b7e7d279-24d0-4d36-97b8-818ce81e220f.png)
+
+That's it! Reload the packages/game and check the console:
+
+![image](https://user-images.githubusercontent.com/5098527/187355045-605ca08e-ad10-48b5-bc81-7bd4a68f28a1.png)
+
+You can also set up a folder structure like this:
+> - Packages/MyPack/Shared/IncludeMe
+> - Packages/MyPack/Shared/IgnoreMe
+
+And selectively load it (in this case on the Index.lua from the shared scope):
+> LL.RequireFolder("IncludeMe", Package.GetFiles())
+</p></details>
+<br/>
+
+## 4) Setting up Live Reloading
+
+<details>
+<summary>Expand</summary><p>
+To facilitate development you can configure some folders to reload the packages if any file inside them is updated. This procedure is always set up on the server side.
 
 1. Choose a folder like ``Scope/MyAddon``. e.g _Client/FlyingCars_
-1. Open or create ``Server/Index.lua``
-1. Call ``LL.SetLiveReloading("Client", "MyAddon")``. e.g _LL.SetLiveReloading("Client", "FlyingCars")_
+1. Open or create and open ``Server/Index.lua``
+1. Call ``LL.SetLiveReloading("Client", "MyAddon", Package.GetFiles())``. e.g _LL.SetLiveReloading("Client", "FlyingCars", Package.GetFiles())_
 
-Note: The available scope options are "Shared", "Server", "Client" and "All". "All" is a shortcut to configure all the scopes at once.
+The available scope options are "Shared", "Server", "Client" and "All". "All" is a shortcut to configure all the scopes at once.
 
-## Functions
+E.g.
+
+![image](https://user-images.githubusercontent.com/5098527/187356233-0ad2bd5e-f267-425d-835e-79784460791a.png)
+
+![image](https://user-images.githubusercontent.com/5098527/187356453-31a43243-2020-4974-a54d-1effdb6444bb.png)
+
+</p></details>
+<br/>
+
+# Functions
 
 <!---
   Shared: https://i.imgur.com/jsK5p2b.png
@@ -60,13 +113,13 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
   Client Command: https://i.imgur.com/DEGvkBi.png
  --->
 
-:white_medium_small_square: | 🔗 [Filex](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/Filex.lua)
+:white_medium_small_square: | 🔗 [Filex](https://github.com/Xalalau/liblau/blob/master/Shared/libs/sub/Filex.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | Filex.Find
 
 <br/>
 
-:white_medium_small_square: | 🔗 [Bind](https://github.com/Xalalau/liblau/blob/master/Client/liblau/objects/Bind.lua)
+:white_medium_small_square: | 🔗 [Bind](https://github.com/Xalalau/liblau/blob/master/Client/libs/Bind.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/NTaK5Vd.png) | Bind.Exists
 ![img](https://i.imgur.com/NTaK5Vd.png) | Bind.Get
@@ -78,7 +131,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | 🔗 [ConCommand](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/ConCommand.lua)
+:white_medium_small_square: | 🔗 [ConCommand](https://github.com/Xalalau/liblau/blob/master/Shared/libs/sub/ConCommand.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.Add
 ![img](https://i.imgur.com/jsK5p2b.png) | ConCommand.Exists
@@ -88,7 +141,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | 🔗 [CVar](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/CVar.lua)
+:white_medium_small_square: | 🔗 [CVar](https://github.com/Xalalau/liblau/blob/master/Shared/libs/sub/CVar.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | CVar.Add
 ![img](https://i.imgur.com/jsK5p2b.png) | CVar.Exists
@@ -135,7 +188,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | 🔗 [string](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/string.lua)
+:white_medium_small_square: | 🔗 [string](https://github.com/Xalalau/liblau/blob/master/Shared/libs/sub/string.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | string.Explode
 ![img](https://i.imgur.com/jsK5p2b.png) | string.FormatPattern
@@ -146,7 +199,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | 🔗 [table](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/table.lua)
+:white_medium_small_square: | 🔗 [table](https://github.com/Xalalau/liblau/blob/master/Shared/libs/sub/table.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | table.Copy
 ![img](https://i.imgur.com/jsK5p2b.png) | table.Concat
@@ -159,7 +212,7 @@ Note: The available scope options are "Shared", "Server", "Client" and "All". "A
 
 <br/>
 
-:white_medium_small_square: | 🔗 [Timerx](https://github.com/Xalalau/liblau/blob/master/Shared/liblau/objects/Timerx.lua)
+:white_medium_small_square: | 🔗 [Timerx](https://github.com/Xalalau/liblau/blob/master/Shared/libs/sub/Timerx.lua)
 ------------ | -------------
 ![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Change
 ![img](https://i.imgur.com/jsK5p2b.png) | Timerx.Create
