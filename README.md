@@ -26,7 +26,6 @@ git clone https://github.com/Xalalau/liblau.git
 
 ![image](https://user-images.githubusercontent.com/5098527/187351046-dc71d025-12ba-4882-9ae1-596449e5dc9c.png)
 </p></details>
-<br/>
 
 ## 2) Including the lib
 
@@ -45,7 +44,6 @@ At this point all liblau's functions are already accessible on your package. Che
 ![image](https://user-images.githubusercontent.com/5098527/187351831-33861c2a-538f-460e-8acf-9c31f3719194.png)
 
 </p></details>
-<br/>
 
 ## 3) Initializing your code
 
@@ -78,7 +76,6 @@ You can also set up a folder structure like this:
 And selectively load it (in this case on the Index.lua from the shared scope):
 > LL.RequireFolder("IncludeMe", Package.GetFiles())
 </p></details>
-<br/>
 
 ## 4) Setting up Live Reloading
 
@@ -99,7 +96,6 @@ E.g.
 ![image](https://user-images.githubusercontent.com/5098527/187356453-31a43243-2020-4974-a54d-1effdb6444bb.png)
 
 </p></details>
-<br/>
 
 # Functions
 
